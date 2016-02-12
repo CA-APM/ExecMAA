@@ -7,30 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25856F8C1C5CB479004A649D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F871C5CB479004A649D /* AppDelegate.m */; };
-		25856F8D1C5CB479004A649D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F891C5CB479004A649D /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		25856F8E1C5CB479004A649D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F8B1C5CB479004A649D /* ViewController.m */; };
-		25856FA01C5CB4B3004A649D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25856F9F1C5CB4B3004A649D /* Settings.bundle */; };
-		25856FA21C5CB4C9004A649D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856FA11C5CB4C9004A649D /* main.m */; };
-		25856FA51C5CB4F2004A649D /* ExecMAATests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856FA31C5CB4F2004A649D /* ExecMAATests.m */; };
-		25856FA61C5CB4F2004A649D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25856FA41C5CB4F2004A649D /* Info.plist */; };
-		25856FA91C5CB50F004A649D /* ExecMAAUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856FA71C5CB50F004A649D /* ExecMAAUITests.m */; };
-		25856FAA1C5CB50F004A649D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25856FA81C5CB50F004A649D /* Info.plist */; };
-		25856FAF1C5CB590004A649D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25856FAB1C5CB590004A649D /* LaunchScreen.storyboard */; };
-		25856FB01C5CB590004A649D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25856FAD1C5CB590004A649D /* Main.storyboard */; };
-		25856FB41C5CB682004A649D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25856FB31C5CB682004A649D /* Assets.xcassets */; };
-		48DA71A61C6E630B00C29ED6 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */; };
-		48DA71B21C6E632300C29ED6 /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A71C6E632300C29ED6 /* bootstrap.min.js */; };
-		48DA71B31C6E632300C29ED6 /* bselect.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A81C6E632300C29ED6 /* bselect.css */; };
-		48DA71B41C6E632300C29ED6 /* bselect.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A91C6E632300C29ED6 /* bselect.js */; };
-		48DA71B51C6E632300C29ED6 /* calogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AA1C6E632300C29ED6 /* calogo.jpg */; };
-		48DA71B61C6E632300C29ED6 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AB1C6E632300C29ED6 /* d3.min.js */; };
-		48DA71B71C6E632300C29ED6 /* d3pie.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AC1C6E632300C29ED6 /* d3pie.min.js */; };
-		48DA71B81C6E632300C29ED6 /* dashboard.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AD1C6E632300C29ED6 /* dashboard.html */; };
-		48DA71B91C6E632300C29ED6 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AE1C6E632300C29ED6 /* index.html */; };
-		48DA71BA1C6E632300C29ED6 /* jquery-2.2.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */; };
-		48DA71BB1C6E632300C29ED6 /* normalize.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71B01C6E632300C29ED6 /* normalize.min.css */; };
-		48DA71BC1C6E632300C29ED6 /* spin.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71B11C6E632300C29ED6 /* spin.min.js */; };
+		48DA71E21C6EA44500C29ED6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA71DD1C6EA44500C29ED6 /* AppDelegate.m */; };
+		48DA71E31C6EA44500C29ED6 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA71DF1C6EA44500C29ED6 /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		48DA71E41C6EA44500C29ED6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA71E11C6EA44500C29ED6 /* ViewController.m */; };
+		48DA71E61C6EA45100C29ED6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71E51C6EA45100C29ED6 /* Assets.xcassets */; };
+		48DA71E81C6EA47500C29ED6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71E71C6EA47500C29ED6 /* Settings.bundle */; };
+		48DA71EB1C6EA48E00C29ED6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71E91C6EA48E00C29ED6 /* Info.plist */; };
+		48DA71EC1C6EA48E00C29ED6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA71EA1C6EA48E00C29ED6 /* main.m */; };
+		48DA72021C6EA4F300C29ED6 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71F61C6EA4F300C29ED6 /* bootstrap.min.css */; };
+		48DA72031C6EA4F300C29ED6 /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71F71C6EA4F300C29ED6 /* bootstrap.min.js */; };
+		48DA72041C6EA4F300C29ED6 /* bselect.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71F81C6EA4F300C29ED6 /* bselect.css */; };
+		48DA72051C6EA4F300C29ED6 /* bselect.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71F91C6EA4F300C29ED6 /* bselect.js */; };
+		48DA72061C6EA4F300C29ED6 /* calogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FA1C6EA4F300C29ED6 /* calogo.jpg */; };
+		48DA72071C6EA4F300C29ED6 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FB1C6EA4F300C29ED6 /* d3.min.js */; };
+		48DA72081C6EA4F300C29ED6 /* d3pie.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FC1C6EA4F300C29ED6 /* d3pie.min.js */; };
+		48DA72091C6EA4F300C29ED6 /* dashboard.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FD1C6EA4F300C29ED6 /* dashboard.html */; };
+		48DA720A1C6EA4F300C29ED6 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FE1C6EA4F300C29ED6 /* index.html */; };
+		48DA720B1C6EA4F300C29ED6 /* jquery-2.2.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71FF1C6EA4F300C29ED6 /* jquery-2.2.0.min.js */; };
+		48DA720C1C6EA4F300C29ED6 /* normalize.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA72001C6EA4F300C29ED6 /* normalize.min.css */; };
+		48DA720D1C6EA4F300C29ED6 /* spin.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA72011C6EA4F300C29ED6 /* spin.min.js */; };
+		48DA72181C6EA67D00C29ED6 /* ExecMAAUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA72161C6EA67D00C29ED6 /* ExecMAAUITests.m */; };
+		48DA72191C6EA67D00C29ED6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48DA72171C6EA67D00C29ED6 /* Info.plist */; };
+		48DA721C1C6EA68B00C29ED6 /* ExecMAATests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA721A1C6EA68B00C29ED6 /* ExecMAATests.m */; };
+		48DA721D1C6EA68B00C29ED6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48DA721B1C6EA68B00C29ED6 /* Info.plist */; };
+		48DA72221C6EA71D00C29ED6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48DA721E1C6EA71D00C29ED6 /* LaunchScreen.storyboard */; };
+		48DA72231C6EA71D00C29ED6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48DA72201C6EA71D00C29ED6 /* Main.storyboard */; };
 		D60B64E31C5267E8006B7A5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60B64E21C5267E8006B7A5B /* Security.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,46 +53,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25856F861C5CB479004A649D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ExecMAA/AppDelegate.h; sourceTree = SOURCE_ROOT; };
-		25856F871C5CB479004A649D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ExecMAA/AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		25856F881C5CB479004A649D /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItemWrapper.h; path = ExecMAA/KeychainItemWrapper.h; sourceTree = SOURCE_ROOT; };
-		25856F891C5CB479004A649D /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeychainItemWrapper.m; path = ExecMAA/KeychainItemWrapper.m; sourceTree = SOURCE_ROOT; };
-		25856F8A1C5CB479004A649D /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ExecMAA/ViewController.h; sourceTree = SOURCE_ROOT; };
-		25856F8B1C5CB479004A649D /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ExecMAA/ViewController.m; sourceTree = SOURCE_ROOT; };
-		25856F9F1C5CB4B3004A649D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ExecMAA/Settings.bundle; sourceTree = SOURCE_ROOT; };
-		25856FA11C5CB4C9004A649D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ExecMAA/main.m; sourceTree = SOURCE_ROOT; };
-		25856FA31C5CB4F2004A649D /* ExecMAATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExecMAATests.m; path = ExecMAATests/ExecMAATests.m; sourceTree = SOURCE_ROOT; };
-		25856FA41C5CB4F2004A649D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ExecMAATests/Info.plist; sourceTree = SOURCE_ROOT; };
-		25856FA71C5CB50F004A649D /* ExecMAAUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExecMAAUITests.m; path = ExecMAAUITests/ExecMAAUITests.m; sourceTree = SOURCE_ROOT; };
-		25856FA81C5CB50F004A649D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ExecMAAUITests/Info.plist; sourceTree = SOURCE_ROOT; };
-		25856FAC1C5CB590004A649D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ExecMAA/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
-		25856FAE1C5CB590004A649D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ExecMAA/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
-		25856FB11C5CB61E004A649D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ExecMAA/Info.plist; sourceTree = SOURCE_ROOT; };
-		25856FB31C5CB682004A649D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ExecMAA/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		48DA71801C6E612800C29ED6 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bootstrap.min.css; path = ../www/bootstrap.min.css; sourceTree = "<group>"; };
-		48DA71821C6E615000C29ED6 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bootstrap.min.js; path = ../www/bootstrap.min.js; sourceTree = "<group>"; };
-		48DA71831C6E615000C29ED6 /* bselect.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bselect.css; path = ../www/bselect.css; sourceTree = "<group>"; };
-		48DA71841C6E615000C29ED6 /* bselect.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bselect.js; path = ../www/bselect.js; sourceTree = "<group>"; };
-		48DA71851C6E615000C29ED6 /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calogo.jpg; path = ../www/calogo.jpg; sourceTree = "<group>"; };
-		48DA71861C6E615000C29ED6 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3.min.js; path = ../www/d3.min.js; sourceTree = "<group>"; };
-		48DA71871C6E615000C29ED6 /* d3pie.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3pie.min.js; path = ../www/d3pie.min.js; sourceTree = "<group>"; };
-		48DA71881C6E615000C29ED6 /* dashboard.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = dashboard.html; path = ../www/dashboard.html; sourceTree = "<group>"; };
-		48DA71891C6E615000C29ED6 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../www/index.html; sourceTree = "<group>"; };
-		48DA718A1C6E615000C29ED6 /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery-2.2.0.min.js"; path = "../www/jquery-2.2.0.min.js"; sourceTree = "<group>"; };
-		48DA718B1C6E615000C29ED6 /* normalize.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = normalize.min.css; path = ../www/normalize.min.css; sourceTree = "<group>"; };
-		48DA718C1C6E615000C29ED6 /* spin.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = spin.min.js; path = ../www/spin.min.js; sourceTree = "<group>"; };
-		48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bootstrap.min.css; path = ../www/bootstrap.min.css; sourceTree = "<group>"; };
-		48DA71A71C6E632300C29ED6 /* bootstrap.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bootstrap.min.js; path = ../www/bootstrap.min.js; sourceTree = "<group>"; };
-		48DA71A81C6E632300C29ED6 /* bselect.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bselect.css; path = ../www/bselect.css; sourceTree = "<group>"; };
-		48DA71A91C6E632300C29ED6 /* bselect.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bselect.js; path = ../www/bselect.js; sourceTree = "<group>"; };
-		48DA71AA1C6E632300C29ED6 /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calogo.jpg; path = ../www/calogo.jpg; sourceTree = "<group>"; };
-		48DA71AB1C6E632300C29ED6 /* d3.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = d3.min.js; path = ../www/d3.min.js; sourceTree = "<group>"; };
-		48DA71AC1C6E632300C29ED6 /* d3pie.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = d3pie.min.js; path = ../www/d3pie.min.js; sourceTree = "<group>"; };
-		48DA71AD1C6E632300C29ED6 /* dashboard.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = dashboard.html; path = ../www/dashboard.html; sourceTree = "<group>"; };
-		48DA71AE1C6E632300C29ED6 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../www/index.html; sourceTree = "<group>"; };
-		48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "jquery-2.2.0.min.js"; path = "../www/jquery-2.2.0.min.js"; sourceTree = "<group>"; };
-		48DA71B01C6E632300C29ED6 /* normalize.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = normalize.min.css; path = ../www/normalize.min.css; sourceTree = "<group>"; };
-		48DA71B11C6E632300C29ED6 /* spin.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = spin.min.js; path = ../www/spin.min.js; sourceTree = "<group>"; };
+		48DA71DC1C6EA44500C29ED6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/ExecMAA/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		48DA71DD1C6EA44500C29ED6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/ExecMAA/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		48DA71DE1C6EA44500C29ED6 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItemWrapper.h; path = iOS/ExecMAA/KeychainItemWrapper.h; sourceTree = SOURCE_ROOT; };
+		48DA71DF1C6EA44500C29ED6 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeychainItemWrapper.m; path = iOS/ExecMAA/KeychainItemWrapper.m; sourceTree = SOURCE_ROOT; };
+		48DA71E01C6EA44500C29ED6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = iOS/ExecMAA/ViewController.h; sourceTree = SOURCE_ROOT; };
+		48DA71E11C6EA44500C29ED6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = iOS/ExecMAA/ViewController.m; sourceTree = SOURCE_ROOT; };
+		48DA71E51C6EA45100C29ED6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = iOS/ExecMAA/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		48DA71E71C6EA47500C29ED6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = iOS/ExecMAA/Settings.bundle; sourceTree = SOURCE_ROOT; };
+		48DA71E91C6EA48E00C29ED6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/ExecMAA/Info.plist; sourceTree = SOURCE_ROOT; };
+		48DA71EA1C6EA48E00C29ED6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/ExecMAA/main.m; sourceTree = SOURCE_ROOT; };
+		48DA71F61C6EA4F300C29ED6 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
+		48DA71F71C6EA4F300C29ED6 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
+		48DA71F81C6EA4F300C29ED6 /* bselect.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bselect.css; sourceTree = "<group>"; };
+		48DA71F91C6EA4F300C29ED6 /* bselect.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bselect.js; sourceTree = "<group>"; };
+		48DA71FA1C6EA4F300C29ED6 /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calogo.jpg; sourceTree = "<group>"; };
+		48DA71FB1C6EA4F300C29ED6 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
+		48DA71FC1C6EA4F300C29ED6 /* d3pie.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3pie.min.js; sourceTree = "<group>"; };
+		48DA71FD1C6EA4F300C29ED6 /* dashboard.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = dashboard.html; sourceTree = "<group>"; };
+		48DA71FE1C6EA4F300C29ED6 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		48DA71FF1C6EA4F300C29ED6 /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-2.2.0.min.js"; sourceTree = "<group>"; };
+		48DA72001C6EA4F300C29ED6 /* normalize.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = normalize.min.css; sourceTree = "<group>"; };
+		48DA72011C6EA4F300C29ED6 /* spin.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = spin.min.js; sourceTree = "<group>"; };
+		48DA72161C6EA67D00C29ED6 /* ExecMAAUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExecMAAUITests.m; path = iOS/ExecMAAUITests/ExecMAAUITests.m; sourceTree = SOURCE_ROOT; };
+		48DA72171C6EA67D00C29ED6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/ExecMAAUITests/Info.plist; sourceTree = SOURCE_ROOT; };
+		48DA721A1C6EA68B00C29ED6 /* ExecMAATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExecMAATests.m; path = iOS/ExecMAATests/ExecMAATests.m; sourceTree = SOURCE_ROOT; };
+		48DA721B1C6EA68B00C29ED6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/ExecMAATests/Info.plist; sourceTree = SOURCE_ROOT; };
+		48DA721F1C6EA71D00C29ED6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iOS/ExecMAA/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		48DA72211C6EA71D00C29ED6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iOS/ExecMAA/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		D60B64E21C5267E8006B7A5B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D62543011C311EF70079185E /* ExecMAA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExecMAA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D625431D1C311EF70079185E /* ExecMAA.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExecMAA.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,40 +121,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		48DA71311C6E5FCE00C29ED6 /* www */ = {
+		48DA71F51C6EA4F300C29ED6 /* www */ = {
 			isa = PBXGroup;
 			children = (
-				48DA71801C6E612800C29ED6 /* bootstrap.min.css */,
-				48DA71821C6E615000C29ED6 /* bootstrap.min.js */,
-				48DA71831C6E615000C29ED6 /* bselect.css */,
-				48DA71841C6E615000C29ED6 /* bselect.js */,
-				48DA71851C6E615000C29ED6 /* calogo.jpg */,
-				48DA71861C6E615000C29ED6 /* d3.min.js */,
-				48DA71871C6E615000C29ED6 /* d3pie.min.js */,
-				48DA71881C6E615000C29ED6 /* dashboard.html */,
-				48DA71891C6E615000C29ED6 /* index.html */,
-				48DA718A1C6E615000C29ED6 /* jquery-2.2.0.min.js */,
-				48DA718B1C6E615000C29ED6 /* normalize.min.css */,
-				48DA718C1C6E615000C29ED6 /* spin.min.js */,
+				48DA71F61C6EA4F300C29ED6 /* bootstrap.min.css */,
+				48DA71F71C6EA4F300C29ED6 /* bootstrap.min.js */,
+				48DA71F81C6EA4F300C29ED6 /* bselect.css */,
+				48DA71F91C6EA4F300C29ED6 /* bselect.js */,
+				48DA71FA1C6EA4F300C29ED6 /* calogo.jpg */,
+				48DA71FB1C6EA4F300C29ED6 /* d3.min.js */,
+				48DA71FC1C6EA4F300C29ED6 /* d3pie.min.js */,
+				48DA71FD1C6EA4F300C29ED6 /* dashboard.html */,
+				48DA71FE1C6EA4F300C29ED6 /* index.html */,
+				48DA71FF1C6EA4F300C29ED6 /* jquery-2.2.0.min.js */,
+				48DA72001C6EA4F300C29ED6 /* normalize.min.css */,
+				48DA72011C6EA4F300C29ED6 /* spin.min.js */,
 			);
-			name = www;
-			sourceTree = "<group>";
+			path = www;
+			sourceTree = SOURCE_ROOT;
 		};
 		D62542F81C311EF60079185E = {
 			isa = PBXGroup;
 			children = (
-				48DA71A71C6E632300C29ED6 /* bootstrap.min.js */,
-				48DA71A81C6E632300C29ED6 /* bselect.css */,
-				48DA71A91C6E632300C29ED6 /* bselect.js */,
-				48DA71AA1C6E632300C29ED6 /* calogo.jpg */,
-				48DA71AB1C6E632300C29ED6 /* d3.min.js */,
-				48DA71AC1C6E632300C29ED6 /* d3pie.min.js */,
-				48DA71AD1C6E632300C29ED6 /* dashboard.html */,
-				48DA71AE1C6E632300C29ED6 /* index.html */,
-				48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */,
-				48DA71B01C6E632300C29ED6 /* normalize.min.css */,
-				48DA71B11C6E632300C29ED6 /* spin.min.js */,
-				48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */,
 				D62543031C311EF70079185E /* ExecMAA */,
 				D62543201C311EF70079185E /* ExecMAATests */,
 				D625432B1C311EF70079185E /* ExecMAAUITests */,
@@ -187,17 +164,17 @@
 		D62543031C311EF70079185E /* ExecMAA */ = {
 			isa = PBXGroup;
 			children = (
-				48DA71311C6E5FCE00C29ED6 /* www */,
-				25856F861C5CB479004A649D /* AppDelegate.h */,
-				25856F871C5CB479004A649D /* AppDelegate.m */,
-				25856F881C5CB479004A649D /* KeychainItemWrapper.h */,
-				25856F891C5CB479004A649D /* KeychainItemWrapper.m */,
-				25856F8A1C5CB479004A649D /* ViewController.h */,
-				25856F8B1C5CB479004A649D /* ViewController.m */,
-				25856FB31C5CB682004A649D /* Assets.xcassets */,
-				25856FAB1C5CB590004A649D /* LaunchScreen.storyboard */,
-				25856FAD1C5CB590004A649D /* Main.storyboard */,
-				25856F9F1C5CB4B3004A649D /* Settings.bundle */,
+				48DA71F51C6EA4F300C29ED6 /* www */,
+				48DA71DC1C6EA44500C29ED6 /* AppDelegate.h */,
+				48DA71DD1C6EA44500C29ED6 /* AppDelegate.m */,
+				48DA71DE1C6EA44500C29ED6 /* KeychainItemWrapper.h */,
+				48DA71DF1C6EA44500C29ED6 /* KeychainItemWrapper.m */,
+				48DA71E01C6EA44500C29ED6 /* ViewController.h */,
+				48DA71E11C6EA44500C29ED6 /* ViewController.m */,
+				48DA71E51C6EA45100C29ED6 /* Assets.xcassets */,
+				48DA721E1C6EA71D00C29ED6 /* LaunchScreen.storyboard */,
+				48DA72201C6EA71D00C29ED6 /* Main.storyboard */,
+				48DA71E71C6EA47500C29ED6 /* Settings.bundle */,
 				D62543041C311EF70079185E /* Supporting Files */,
 			);
 			name = ExecMAA;
@@ -207,8 +184,8 @@
 		D62543041C311EF70079185E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				25856FB11C5CB61E004A649D /* Info.plist */,
-				25856FA11C5CB4C9004A649D /* main.m */,
+				48DA71E91C6EA48E00C29ED6 /* Info.plist */,
+				48DA71EA1C6EA48E00C29ED6 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -216,8 +193,8 @@
 		D62543201C311EF70079185E /* ExecMAATests */ = {
 			isa = PBXGroup;
 			children = (
-				25856FA31C5CB4F2004A649D /* ExecMAATests.m */,
-				25856FA41C5CB4F2004A649D /* Info.plist */,
+				48DA721A1C6EA68B00C29ED6 /* ExecMAATests.m */,
+				48DA721B1C6EA68B00C29ED6 /* Info.plist */,
 			);
 			name = ExecMAATests;
 			path = MAAConsoleAppTests;
@@ -226,8 +203,8 @@
 		D625432B1C311EF70079185E /* ExecMAAUITests */ = {
 			isa = PBXGroup;
 			children = (
-				25856FA71C5CB50F004A649D /* ExecMAAUITests.m */,
-				25856FA81C5CB50F004A649D /* Info.plist */,
+				48DA72161C6EA67D00C29ED6 /* ExecMAAUITests.m */,
+				48DA72171C6EA67D00C29ED6 /* Info.plist */,
 			);
 			name = ExecMAAUITests;
 			path = MAAConsoleAppUITests;
@@ -336,22 +313,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48DA71A61C6E630B00C29ED6 /* bootstrap.min.css in Resources */,
-				48DA71B21C6E632300C29ED6 /* bootstrap.min.js in Resources */,
-				48DA71B31C6E632300C29ED6 /* bselect.css in Resources */,
-				48DA71B41C6E632300C29ED6 /* bselect.js in Resources */,
-				48DA71B51C6E632300C29ED6 /* calogo.jpg in Resources */,
-				48DA71B61C6E632300C29ED6 /* d3.min.js in Resources */,
-				48DA71B71C6E632300C29ED6 /* d3pie.min.js in Resources */,
-				48DA71B81C6E632300C29ED6 /* dashboard.html in Resources */,
-				48DA71B91C6E632300C29ED6 /* index.html in Resources */,
-				48DA71BA1C6E632300C29ED6 /* jquery-2.2.0.min.js in Resources */,
-				48DA71BB1C6E632300C29ED6 /* normalize.min.css in Resources */,
-				48DA71BC1C6E632300C29ED6 /* spin.min.js in Resources */,
-				25856FAF1C5CB590004A649D /* LaunchScreen.storyboard in Resources */,
-				25856FB01C5CB590004A649D /* Main.storyboard in Resources */,
-				25856FB41C5CB682004A649D /* Assets.xcassets in Resources */,
-				25856FA01C5CB4B3004A649D /* Settings.bundle in Resources */,
+				48DA72081C6EA4F300C29ED6 /* d3pie.min.js in Resources */,
+				48DA72031C6EA4F300C29ED6 /* bootstrap.min.js in Resources */,
+				48DA72091C6EA4F300C29ED6 /* dashboard.html in Resources */,
+				48DA72071C6EA4F300C29ED6 /* d3.min.js in Resources */,
+				48DA72021C6EA4F300C29ED6 /* bootstrap.min.css in Resources */,
+				48DA720A1C6EA4F300C29ED6 /* index.html in Resources */,
+				48DA72231C6EA71D00C29ED6 /* Main.storyboard in Resources */,
+				48DA72061C6EA4F300C29ED6 /* calogo.jpg in Resources */,
+				48DA72041C6EA4F300C29ED6 /* bselect.css in Resources */,
+				48DA71E81C6EA47500C29ED6 /* Settings.bundle in Resources */,
+				48DA72221C6EA71D00C29ED6 /* LaunchScreen.storyboard in Resources */,
+				48DA72051C6EA4F300C29ED6 /* bselect.js in Resources */,
+				48DA720D1C6EA4F300C29ED6 /* spin.min.js in Resources */,
+				48DA71E61C6EA45100C29ED6 /* Assets.xcassets in Resources */,
+				48DA720C1C6EA4F300C29ED6 /* normalize.min.css in Resources */,
+				48DA720B1C6EA4F300C29ED6 /* jquery-2.2.0.min.js in Resources */,
+				48DA71EB1C6EA48E00C29ED6 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856FA61C5CB4F2004A649D /* Info.plist in Resources */,
+				48DA721D1C6EA68B00C29ED6 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856FAA1C5CB50F004A649D /* Info.plist in Resources */,
+				48DA72191C6EA67D00C29ED6 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,10 +356,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856F8C1C5CB479004A649D /* AppDelegate.m in Sources */,
-				25856F8E1C5CB479004A649D /* ViewController.m in Sources */,
-				25856FA21C5CB4C9004A649D /* main.m in Sources */,
-				25856F8D1C5CB479004A649D /* KeychainItemWrapper.m in Sources */,
+				48DA71E21C6EA44500C29ED6 /* AppDelegate.m in Sources */,
+				48DA71E41C6EA44500C29ED6 /* ViewController.m in Sources */,
+				48DA71EC1C6EA48E00C29ED6 /* main.m in Sources */,
+				48DA71E31C6EA44500C29ED6 /* KeychainItemWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856FA51C5CB4F2004A649D /* ExecMAATests.m in Sources */,
+				48DA721C1C6EA68B00C29ED6 /* ExecMAATests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856FA91C5CB50F004A649D /* ExecMAAUITests.m in Sources */,
+				48DA72181C6EA67D00C29ED6 /* ExecMAAUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,18 +395,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		25856FAB1C5CB590004A649D /* LaunchScreen.storyboard */ = {
+		48DA721E1C6EA71D00C29ED6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				25856FAC1C5CB590004A649D /* Base */,
+				48DA721F1C6EA71D00C29ED6 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		25856FAD1C5CB590004A649D /* Main.storyboard */ = {
+		48DA72201C6EA71D00C29ED6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				25856FAE1C5CB590004A649D /* Base */,
+				48DA72211C6EA71D00C29ED6 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -524,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ExecMAA/Info.plist;
+				INFOPLIST_FILE = iOS/ExecMAA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ca.mdo.ExecMAA;
@@ -540,7 +518,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ExecMAA/Info.plist;
+				INFOPLIST_FILE = iOS/ExecMAA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ca.mdo.ExecMAA;
