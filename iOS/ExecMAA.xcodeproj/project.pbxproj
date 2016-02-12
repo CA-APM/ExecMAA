@@ -10,13 +10,6 @@
 		25856F8C1C5CB479004A649D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F871C5CB479004A649D /* AppDelegate.m */; };
 		25856F8D1C5CB479004A649D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F891C5CB479004A649D /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		25856F8E1C5CB479004A649D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856F8B1C5CB479004A649D /* ViewController.m */; };
-		25856F971C5CB49A004A649D /* calogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25856F8F1C5CB49A004A649D /* calogo.jpg */; };
-		25856F991C5CB49A004A649D /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25856F911C5CB49A004A649D /* d3.min.js */; };
-		25856F9A1C5CB49A004A649D /* d3pie.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25856F921C5CB49A004A649D /* d3pie.min.js */; };
-		25856F9B1C5CB49A004A649D /* dashboard.html in Resources */ = {isa = PBXBuildFile; fileRef = 25856F931C5CB49A004A649D /* dashboard.html */; };
-		25856F9C1C5CB49A004A649D /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 25856F941C5CB49A004A649D /* index.html */; };
-		25856F9D1C5CB49A004A649D /* jquery-2.2.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25856F951C5CB49A004A649D /* jquery-2.2.0.min.js */; };
-		25856F9E1C5CB49A004A649D /* normalize.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 25856F961C5CB49A004A649D /* normalize.min.css */; };
 		25856FA01C5CB4B3004A649D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25856F9F1C5CB4B3004A649D /* Settings.bundle */; };
 		25856FA21C5CB4C9004A649D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856FA11C5CB4C9004A649D /* main.m */; };
 		25856FA51C5CB4F2004A649D /* ExecMAATests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25856FA31C5CB4F2004A649D /* ExecMAATests.m */; };
@@ -26,9 +19,18 @@
 		25856FAF1C5CB590004A649D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25856FAB1C5CB590004A649D /* LaunchScreen.storyboard */; };
 		25856FB01C5CB590004A649D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25856FAD1C5CB590004A649D /* Main.storyboard */; };
 		25856FB41C5CB682004A649D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25856FB31C5CB682004A649D /* Assets.xcassets */; };
-		48932C611C61546200C5D8FF /* spin.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48932C601C61546200C5D8FF /* spin.min.js */; };
-		BDAD149E1C61CEAF00BD06E1 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = BDAD149C1C61CEAF00BD06E1 /* bootstrap.min.css */; };
-		BDAD149F1C61CEAF00BD06E1 /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = BDAD149D1C61CEAF00BD06E1 /* bootstrap.min.js */; };
+		48DA71A61C6E630B00C29ED6 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */; };
+		48DA71B21C6E632300C29ED6 /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A71C6E632300C29ED6 /* bootstrap.min.js */; };
+		48DA71B31C6E632300C29ED6 /* bselect.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A81C6E632300C29ED6 /* bselect.css */; };
+		48DA71B41C6E632300C29ED6 /* bselect.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71A91C6E632300C29ED6 /* bselect.js */; };
+		48DA71B51C6E632300C29ED6 /* calogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AA1C6E632300C29ED6 /* calogo.jpg */; };
+		48DA71B61C6E632300C29ED6 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AB1C6E632300C29ED6 /* d3.min.js */; };
+		48DA71B71C6E632300C29ED6 /* d3pie.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AC1C6E632300C29ED6 /* d3pie.min.js */; };
+		48DA71B81C6E632300C29ED6 /* dashboard.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AD1C6E632300C29ED6 /* dashboard.html */; };
+		48DA71B91C6E632300C29ED6 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AE1C6E632300C29ED6 /* index.html */; };
+		48DA71BA1C6E632300C29ED6 /* jquery-2.2.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */; };
+		48DA71BB1C6E632300C29ED6 /* normalize.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71B01C6E632300C29ED6 /* normalize.min.css */; };
+		48DA71BC1C6E632300C29ED6 /* spin.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 48DA71B11C6E632300C29ED6 /* spin.min.js */; };
 		D60B64E31C5267E8006B7A5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60B64E21C5267E8006B7A5B /* Security.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,13 +58,6 @@
 		25856F891C5CB479004A649D /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeychainItemWrapper.m; path = ExecMAA/KeychainItemWrapper.m; sourceTree = SOURCE_ROOT; };
 		25856F8A1C5CB479004A649D /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ExecMAA/ViewController.h; sourceTree = SOURCE_ROOT; };
 		25856F8B1C5CB479004A649D /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ExecMAA/ViewController.m; sourceTree = SOURCE_ROOT; };
-		25856F8F1C5CB49A004A649D /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calogo.jpg; path = ExecMAA/calogo.jpg; sourceTree = SOURCE_ROOT; };
-		25856F911C5CB49A004A649D /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3.min.js; path = ExecMAA/d3.min.js; sourceTree = SOURCE_ROOT; };
-		25856F921C5CB49A004A649D /* d3pie.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3pie.min.js; path = ExecMAA/d3pie.min.js; sourceTree = SOURCE_ROOT; };
-		25856F931C5CB49A004A649D /* dashboard.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = dashboard.html; path = ExecMAA/dashboard.html; sourceTree = SOURCE_ROOT; };
-		25856F941C5CB49A004A649D /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ExecMAA/index.html; sourceTree = SOURCE_ROOT; };
-		25856F951C5CB49A004A649D /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery-2.2.0.min.js"; path = "ExecMAA/jquery-2.2.0.min.js"; sourceTree = SOURCE_ROOT; };
-		25856F961C5CB49A004A649D /* normalize.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = normalize.min.css; path = ExecMAA/normalize.min.css; sourceTree = SOURCE_ROOT; };
 		25856F9F1C5CB4B3004A649D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ExecMAA/Settings.bundle; sourceTree = SOURCE_ROOT; };
 		25856FA11C5CB4C9004A649D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ExecMAA/main.m; sourceTree = SOURCE_ROOT; };
 		25856FA31C5CB4F2004A649D /* ExecMAATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExecMAATests.m; path = ExecMAATests/ExecMAATests.m; sourceTree = SOURCE_ROOT; };
@@ -73,9 +68,30 @@
 		25856FAE1C5CB590004A649D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ExecMAA/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		25856FB11C5CB61E004A649D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ExecMAA/Info.plist; sourceTree = SOURCE_ROOT; };
 		25856FB31C5CB682004A649D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ExecMAA/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		48932C601C61546200C5D8FF /* spin.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = spin.min.js; path = ExecMAA/spin.min.js; sourceTree = SOURCE_ROOT; };
-		BDAD149C1C61CEAF00BD06E1 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bootstrap.min.css; path = ExecMAA/bootstrap.min.css; sourceTree = SOURCE_ROOT; };
-		BDAD149D1C61CEAF00BD06E1 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bootstrap.min.js; path = ExecMAA/bootstrap.min.js; sourceTree = SOURCE_ROOT; };
+		48DA71801C6E612800C29ED6 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bootstrap.min.css; path = ../www/bootstrap.min.css; sourceTree = "<group>"; };
+		48DA71821C6E615000C29ED6 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bootstrap.min.js; path = ../www/bootstrap.min.js; sourceTree = "<group>"; };
+		48DA71831C6E615000C29ED6 /* bselect.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bselect.css; path = ../www/bselect.css; sourceTree = "<group>"; };
+		48DA71841C6E615000C29ED6 /* bselect.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bselect.js; path = ../www/bselect.js; sourceTree = "<group>"; };
+		48DA71851C6E615000C29ED6 /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calogo.jpg; path = ../www/calogo.jpg; sourceTree = "<group>"; };
+		48DA71861C6E615000C29ED6 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3.min.js; path = ../www/d3.min.js; sourceTree = "<group>"; };
+		48DA71871C6E615000C29ED6 /* d3pie.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = d3pie.min.js; path = ../www/d3pie.min.js; sourceTree = "<group>"; };
+		48DA71881C6E615000C29ED6 /* dashboard.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = dashboard.html; path = ../www/dashboard.html; sourceTree = "<group>"; };
+		48DA71891C6E615000C29ED6 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../www/index.html; sourceTree = "<group>"; };
+		48DA718A1C6E615000C29ED6 /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery-2.2.0.min.js"; path = "../www/jquery-2.2.0.min.js"; sourceTree = "<group>"; };
+		48DA718B1C6E615000C29ED6 /* normalize.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = normalize.min.css; path = ../www/normalize.min.css; sourceTree = "<group>"; };
+		48DA718C1C6E615000C29ED6 /* spin.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = spin.min.js; path = ../www/spin.min.js; sourceTree = "<group>"; };
+		48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bootstrap.min.css; path = ../www/bootstrap.min.css; sourceTree = "<group>"; };
+		48DA71A71C6E632300C29ED6 /* bootstrap.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bootstrap.min.js; path = ../www/bootstrap.min.js; sourceTree = "<group>"; };
+		48DA71A81C6E632300C29ED6 /* bselect.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bselect.css; path = ../www/bselect.css; sourceTree = "<group>"; };
+		48DA71A91C6E632300C29ED6 /* bselect.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bselect.js; path = ../www/bselect.js; sourceTree = "<group>"; };
+		48DA71AA1C6E632300C29ED6 /* calogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calogo.jpg; path = ../www/calogo.jpg; sourceTree = "<group>"; };
+		48DA71AB1C6E632300C29ED6 /* d3.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = d3.min.js; path = ../www/d3.min.js; sourceTree = "<group>"; };
+		48DA71AC1C6E632300C29ED6 /* d3pie.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = d3pie.min.js; path = ../www/d3pie.min.js; sourceTree = "<group>"; };
+		48DA71AD1C6E632300C29ED6 /* dashboard.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = dashboard.html; path = ../www/dashboard.html; sourceTree = "<group>"; };
+		48DA71AE1C6E632300C29ED6 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../www/index.html; sourceTree = "<group>"; };
+		48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "jquery-2.2.0.min.js"; path = "../www/jquery-2.2.0.min.js"; sourceTree = "<group>"; };
+		48DA71B01C6E632300C29ED6 /* normalize.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = normalize.min.css; path = ../www/normalize.min.css; sourceTree = "<group>"; };
+		48DA71B11C6E632300C29ED6 /* spin.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = spin.min.js; path = ../www/spin.min.js; sourceTree = "<group>"; };
 		D60B64E21C5267E8006B7A5B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D62543011C311EF70079185E /* ExecMAA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExecMAA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D625431D1C311EF70079185E /* ExecMAA.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExecMAA.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,23 +124,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25A80EE91C5C87AD0028799A /* www */ = {
-			isa = PBXGroup;
-			children = (
-				BDAD149C1C61CEAF00BD06E1 /* bootstrap.min.css */,
-				BDAD149D1C61CEAF00BD06E1 /* bootstrap.min.js */,
-				25856F8F1C5CB49A004A649D /* calogo.jpg */,
-				25856F911C5CB49A004A649D /* d3.min.js */,
-				25856F921C5CB49A004A649D /* d3pie.min.js */,
-				48932C601C61546200C5D8FF /* spin.min.js */,
-				25856F931C5CB49A004A649D /* dashboard.html */,
-				25856F941C5CB49A004A649D /* index.html */,
-				25856F951C5CB49A004A649D /* jquery-2.2.0.min.js */,
-				25856F961C5CB49A004A649D /* normalize.min.css */,
-			);
-			name = www;
-			sourceTree = "<group>";
-		};
 		25A80EEA1C5C87E20028799A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,9 +132,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		48DA71311C6E5FCE00C29ED6 /* www */ = {
+			isa = PBXGroup;
+			children = (
+				48DA71801C6E612800C29ED6 /* bootstrap.min.css */,
+				48DA71821C6E615000C29ED6 /* bootstrap.min.js */,
+				48DA71831C6E615000C29ED6 /* bselect.css */,
+				48DA71841C6E615000C29ED6 /* bselect.js */,
+				48DA71851C6E615000C29ED6 /* calogo.jpg */,
+				48DA71861C6E615000C29ED6 /* d3.min.js */,
+				48DA71871C6E615000C29ED6 /* d3pie.min.js */,
+				48DA71881C6E615000C29ED6 /* dashboard.html */,
+				48DA71891C6E615000C29ED6 /* index.html */,
+				48DA718A1C6E615000C29ED6 /* jquery-2.2.0.min.js */,
+				48DA718B1C6E615000C29ED6 /* normalize.min.css */,
+				48DA718C1C6E615000C29ED6 /* spin.min.js */,
+			);
+			name = www;
+			sourceTree = "<group>";
+		};
 		D62542F81C311EF60079185E = {
 			isa = PBXGroup;
 			children = (
+				48DA71A71C6E632300C29ED6 /* bootstrap.min.js */,
+				48DA71A81C6E632300C29ED6 /* bselect.css */,
+				48DA71A91C6E632300C29ED6 /* bselect.js */,
+				48DA71AA1C6E632300C29ED6 /* calogo.jpg */,
+				48DA71AB1C6E632300C29ED6 /* d3.min.js */,
+				48DA71AC1C6E632300C29ED6 /* d3pie.min.js */,
+				48DA71AD1C6E632300C29ED6 /* dashboard.html */,
+				48DA71AE1C6E632300C29ED6 /* index.html */,
+				48DA71AF1C6E632300C29ED6 /* jquery-2.2.0.min.js */,
+				48DA71B01C6E632300C29ED6 /* normalize.min.css */,
+				48DA71B11C6E632300C29ED6 /* spin.min.js */,
+				48DA71A51C6E630B00C29ED6 /* bootstrap.min.css */,
 				D62543031C311EF70079185E /* ExecMAA */,
 				D62543201C311EF70079185E /* ExecMAATests */,
 				D625432B1C311EF70079185E /* ExecMAAUITests */,
@@ -157,7 +187,7 @@
 		D62543031C311EF70079185E /* ExecMAA */ = {
 			isa = PBXGroup;
 			children = (
-				25A80EE91C5C87AD0028799A /* www */,
+				48DA71311C6E5FCE00C29ED6 /* www */,
 				25856F861C5CB479004A649D /* AppDelegate.h */,
 				25856F871C5CB479004A649D /* AppDelegate.m */,
 				25856F881C5CB479004A649D /* KeychainItemWrapper.h */,
@@ -266,7 +296,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = "Sangharsh Aglave";
+				ORGANIZATIONNAME = "CA Inc.";
 				TargetAttributes = {
 					D62543001C311EF60079185E = {
 						CreatedOnToolsVersion = 7.0;
@@ -306,20 +336,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25856F9E1C5CB49A004A649D /* normalize.min.css in Resources */,
-				25856F9A1C5CB49A004A649D /* d3pie.min.js in Resources */,
-				25856F9B1C5CB49A004A649D /* dashboard.html in Resources */,
+				48DA71A61C6E630B00C29ED6 /* bootstrap.min.css in Resources */,
+				48DA71B21C6E632300C29ED6 /* bootstrap.min.js in Resources */,
+				48DA71B31C6E632300C29ED6 /* bselect.css in Resources */,
+				48DA71B41C6E632300C29ED6 /* bselect.js in Resources */,
+				48DA71B51C6E632300C29ED6 /* calogo.jpg in Resources */,
+				48DA71B61C6E632300C29ED6 /* d3.min.js in Resources */,
+				48DA71B71C6E632300C29ED6 /* d3pie.min.js in Resources */,
+				48DA71B81C6E632300C29ED6 /* dashboard.html in Resources */,
+				48DA71B91C6E632300C29ED6 /* index.html in Resources */,
+				48DA71BA1C6E632300C29ED6 /* jquery-2.2.0.min.js in Resources */,
+				48DA71BB1C6E632300C29ED6 /* normalize.min.css in Resources */,
+				48DA71BC1C6E632300C29ED6 /* spin.min.js in Resources */,
 				25856FAF1C5CB590004A649D /* LaunchScreen.storyboard in Resources */,
-				25856F9D1C5CB49A004A649D /* jquery-2.2.0.min.js in Resources */,
 				25856FB01C5CB590004A649D /* Main.storyboard in Resources */,
 				25856FB41C5CB682004A649D /* Assets.xcassets in Resources */,
-				25856F9C1C5CB49A004A649D /* index.html in Resources */,
-				48932C611C61546200C5D8FF /* spin.min.js in Resources */,
-				BDAD149E1C61CEAF00BD06E1 /* bootstrap.min.css in Resources */,
-				BDAD149F1C61CEAF00BD06E1 /* bootstrap.min.js in Resources */,
-				25856F991C5CB49A004A649D /* d3.min.js in Resources */,
 				25856FA01C5CB4B3004A649D /* Settings.bundle in Resources */,
-				25856F971C5CB49A004A649D /* calogo.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
