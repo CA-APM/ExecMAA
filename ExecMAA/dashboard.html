@@ -1,0 +1,697 @@
+<!--
+//  ExecMAA
+//
+//  Created by CA Technologies Inc. on 28/12/15.
+//  Copyright © 2016 CA Technologies Inc. All rights reserved.
+//
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Dashboard - MAA</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta id="viewport" name="viewport" content="user-scalable = yes">
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<script src="jquery-2.2.0.min.js"></script>
+	<script src="d3pie.min.js"></script>
+	<script src="spin.min.js"></script>
+	<script data-require="d3@*" data-semver="3.4.6" src="d3.min.js"></script>
+</head>
+<style>
+	body {
+		background: #30415A !important;
+		font-size: 18;
+	}
+	
+	.panel-body {
+		background: #30415A !important;
+		color: white;
+		height: 100%;
+	}
+	
+	.panel-heading2 {
+		/*background: #30415F !important;*/
+		/*color: white;*/
+		border-color: #30415A;
+	}
+	
+	.h2sessions {
+		font-size: 3em
+	}
+	
+	.h2custom {
+		font-size: 2.5em
+	}
+	/*.panel-heading {
+    color: white;
+    border-color: #30415A;
+}*/
+	
+	.panel-footer {
+		background: #337ab7 !important;
+		color: white;
+	}
+	
+	.col-center-block {
+		float: none;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.selectpicker {
+		background: #337ab7 !important;
+		color: black !important;
+		font-size: 2.5em;
+	}
+	/*@media (max-width: 480px) {*/
+	
+	.span2 {
+		width: 50%;
+		position: relative;
+		float: left;
+		padding: 0px 5px;
+	}
+	
+	.cspan2 {
+		position: relative;
+		width: 33.33%;
+		float: left;
+	}
+	
+	.container {
+		/*background: #30415A !important;*/
+	}
+	
+	.card {
+		background: #30435A;
+	}
+	
+	.mtop {
+		margin-top: 10px;
+		text-color: white !important;
+		margin-bottom: -1px;
+	}
+	
+	.navbar-inverse {
+		background-color: #30435A;
+		border-color: #E7E7E7;
+	}
+	
+	.panel-footer {
+		width: 100%;
+		bottom: 0;
+	}
+	
+	@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+		.margin25 {
+			margin-top: 40%;
+		}
+		.margin10 {
+			margin-top: 10%;
+		}
+		.margin5 {
+			margin-top: 5%;
+		}
+	}
+	
+	.headerDivider {
+		width: 2px;
+	}
+	
+	.chartsrow {
+		height: 70% !important;
+	}
+	
+	.height80 {
+		height: 90%;
+	}
+	/*}*/
+</style>
+
+<body>
+	<div class="container-fluid ">
+		<div class="container-fluid height80" style="margin-top:50px">
+			<!-- <nav class="navbar mtop navbar-inverse">
+            <a class="navbar-brand" href="#">CA Mobile App Analytics</a>
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Performance</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Crashes &amp; Errors</a>
+                </li>
+            </ul>
+        </nav> -->
+			<div class="panel panel-primary">
+				<div class="panel-heading ">
+					<h1 id="tenant" style="text-align:center;">Executive Dashboard</h1>
+				</div>
+				<div class="panel-body">
+					<div class="row height10">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row" height10>
+									<form class="form-inline " style="padding-left:5px;">
+										<div class="form-group span2" align="left">
+											<select style="width: 100%;" id="appDropDown" name="apps" class="selectpicker">
+                                                <option value="all apps">All Apps</option>
+                                            </select>
+										</div>
+										<div class="form-group span2 " align="right">
+											<select style="width: 100%;" id="timeDropDown" name="time_filter" class="selectpicker">
+                                                <option value="today">Today</option>
+                                                <option value="week">Week</option>
+                                                <option value="month">Month</option>
+                                                <option value="forever">Forever</option>
+                                            </select>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row height10" align="center">
+						<div class="col-xs-6">
+							<h2 align="center" id="sessions" class="h2sessions"><span id="Sessions_Value" class="label label-success">0</span>&nbsp;Sessions</h2></div>
+						<div class="col-xs-6">
+							<h2 align="center" id="maus" class="h2sessions"><span id="MAU_Value" class="label label-success">0</span>&nbsp;MAUs</h2> </div>
+					</div>
+					<hr/>
+					<div class="chartsrow">
+						<div class="row " align="center">
+							<div id="ubpPie" class="span2 card">
+							</div>
+							<div id="ubrPie" class="span2 card">
+							</div>
+						</div>
+						<div class="row " align="center">
+							<div id="cbpPie" class="span2 card chart">
+							</div>
+							<div id="cbdPie" class="span2 card">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid margin10">
+				<div class="row">
+					<div class="panel-footer">
+						<div class="row" align="center">
+							<div id="avgreq" class="cspan2" style=" vertical-align: text-top">
+								<h2 class="h2custom"><span id="average_requests" class="label label-success">0</span>&nbsp;avg n/w requests</h2> </div>
+							<div id="avgerror" class="cspan2">
+								<h2 class="h2custom"><span id="average_errors" class="label label-success" >0</span>&nbsp;avg n/w errors</h2> </div>
+							<div id="avglatency" class="cspan2">
+								<h2 class="h2custom"> <span id="average_latency" class="label label-success" >0</span>&nbsp;avg n/w latency</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+		<script type="text/javascript">
+            
+            var APPS_URL        = '/mdo/v1/apps';
+            var CRASHES_URL     = '/mdo/v1/crashes/crash_summary';
+            var USAGE_URL       = '/mdo/v1/usage/users/platform';
+            var GEO_URL         = '/mdo/v1/usage/geo';
+            var MAUS_URL        = '/mdo/v1/usage/active_users';
+            var SESSIONS_URL    = '/mdo/v1/usage/sessions';
+            var PERF_URL        = '/mdo/v1/performance/apps';
+            
+			function addSpinner(targetId) {
+				var opts = {
+					lines: 14, // The number of lines to draw
+					length: 20, // The length of each line
+					width: 6, // The line thickness
+					radius: 16, // The radius of the inner circle
+					scale: 1, // Scales overall size of the spinner
+					corners: 1, // Corner roundness (0..1)
+					color: '#FFE4C4', // #rgb or #rrggbb or array of colors
+					opacity: 0.25, // Opacity of the lines
+					rotate: 0, // The rotation offset
+					direction: 1, // 1: clockwise, -1: counterclockwise
+					speed: 1, // Rounds per second
+					trail: 60, // Afterglow percentage
+					fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+					zIndex: 2e9, // The z-index (defaults to 2000000000)
+					className: 'spinner', // The CSS class to assign to the spinner
+					top: '50%', // Top position relative to parent
+					left: '50%', // Left position relative to parent
+					shadow: false, // Whether to render a shadow
+					hwaccel: false, // Whether to use hardware acceleration
+					position: 'absolute' // Element positioning
+				}
+				var target = document.getElementById(targetId)
+				return new Spinner(opts).spin(target);
+			}
+        
+            function queryMake() {
+                if (appId == "all apps" || appId == null) {
+                    parameters = {
+                        'aggregation': aggregation,
+                        'start_date': startDate,
+                        'end_date': endDate
+                    };
+                } else {
+                    parameters = {
+                        'aggregation': aggregation,
+                        'start_date': startDate,
+                        'end_date': endDate,
+                        'app_id': appId
+                    }
+                }
+            }
+
+            function startDateMake(startDateSelected) {
+				startDate = startDateSelected.getFullYear() + '-' + (startDateSelected.getMonth() + 1) + '-' + startDateSelected.getDate();
+            }
+        
+            function setViewportScaleable(scalable) {
+                var viewport = document.querySelector("meta[name=viewport]");
+                viewport.setAttribute('content', 'user-scalable = ' + scalable);
+            }
+        
+            function d3ChartJSON(content, title, sub_title) {
+                if (content.length == 0) {
+                    content.push({
+                                 "label": "no data",
+                                 "value": 0
+                                 });
+                                 if (sub_title == null) {
+                                     sub_title = "no data";
+                                 }
+                }
+                return {
+                    "header": {
+                        "title": {
+                            "text": title,
+                            "color": "#e1e1e1",
+                            "fontSize": 36,
+                            "font": "Helvetica Neue",
+                        },
+                        "subtitle": {
+                            "text": sub_title,
+                            "color": "#e1e1e1",
+                            "fontSize": 24,
+                            "font": "Helvetica Neue",
+                        }
+                    },
+                    "size": {
+                        "pieOuterRadius": "70%"
+                    },
+                    
+                    "data": {
+                        "content": content,
+                        "smallSegmentGrouping": {
+                            "enabled": true,
+                            "value": 5
+                        },
+                    },
+                    "labels": {
+                        "outer": {
+                            "pieDistance": 20,
+                            "fontSize": 24
+                        },
+                        "inner": {
+                            "hideWhenLessThanPercentage": 5,
+                            "fontSize": 24,
+                            "format": "value"
+                        },
+                        "mainLabel": {
+                            "fontSize": 15,
+                            "font": "Helvetica Neue",
+                            "color": "#ffffff",
+                        },
+                        "percentage": {
+                            "color": "#e1e1e1",
+                            "font": "Helvetica Neue",
+                            "decimalPlaces": 0
+                        },
+                        "value": {
+                            "fontSize": 20,
+                            "color": "#e1e1e1",
+                            "font": "Helvetica Neue"
+                        },
+                        "lines": {
+                            "enabled": true,
+                            "color": "#e1e1e1"
+                        },
+                        "truncation": {
+                            "enabled": true
+                        }
+                    },
+                    "effects": {
+                        "pullOutSegmentOnClick": {
+                            "effect": "linear",
+                            "speed": 400,
+                            "size": 8
+                        }
+                    },
+                    "tooltips": {
+                        "enabled": true,
+                        "type": "placeholder",
+                        "string": "{label}, {value}, {percentage}%",
+                        "styles": {
+                            "backgroundColor": "#040404",
+                            "borderRadius": 5,
+                            "fontSize": 20
+                        }
+                    }
+                }
+            }
+            
+			var t = window.sessionStorage.getItem('tenant');
+			$('#tenant').html(t + ' Exec MAA');
+
+			var datasetcbp = [],
+				datasetcbd = [],
+				datasetubp = [],
+				datasetubr = [],
+				parameters = {};
+                
+			var maus = 0,
+				sessions = 0;
+                
+			var avgreq = 0,
+				avgerr = 0,
+				avglat = 0;
+
+			var now = new Date(),
+				dayAgo = new Date(),
+				weekAgo = new Date(),
+				monthAgo = new Date(),
+				eonsAgo = new Date();
+
+			dayAgo.setDate(now.getDate() - 1);
+			weekAgo.setDate(now.getDate() - 7);
+			monthAgo.setDate(now.getDate() - 30);
+			eonsAgo.setDate(now.getDate() - 1000);
+            
+			var startDate = new Date();
+			var endDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+
+			var timeFilter = window.sessionStorage.getItem("timeFilter");
+            
+			if (timeFilter == null || timeFilter == "week") {
+				$("#timeDropDown").val("week");
+				startDateMake(weekAgo);
+			} else if (timeFilter == "today") {
+				$("#timeDropDown").val("today");
+				startDateMake(dayAgo);
+			} else if (timeFilter == "month") {
+				$("#timeDropDown").val("month");
+				startDateMake(monthAgo);
+			} else if (timeFilter == "forever") {
+				$("#timeDropDown").val("forever");
+				startDateMake(eonsAgo);
+			}
+
+			var aggregation = 'week';
+			var appId = window.sessionStorage.getItem("appId");
+			if (appId == null || appId == "all apps") {
+				appId = "all apps";
+			}
+        
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + APPS_URL,
+				type: 'get',
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$(data).each(function(key, value) {
+						$('#appDropDown')
+							.append("<option>" + value.appId + "</option>");
+					});
+
+					$("#appDropDown").val(appId);
+				},
+				error: function(request, status, error) {},
+				complete: function() {
+
+				}
+			});
+
+			queryMake();
+
+			var crashAjaxError = null;
+			var cbpSpinner = addSpinner("cbpPie");
+			var cbrSpinner = addSpinner("cbdPie");
+			var cbpPie = new d3pie("cbpPie", d3ChartJSON([], "Crashes by platform", "fetching data"));
+			var cbrPie = new d3pie("cbdPie", d3ChartJSON([], "Crashes by device", "fetching data"));
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + CRASHES_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$.each(data.platform, function(key, value) {
+						if (value[0] != "platform" && value[1] != 0) {
+							datasetcbp.push({
+								"label": value[0],
+								"value": value[1]
+							});
+						}
+					});
+
+					$.each(data.device, function(key, value) {
+						if (value[0] != "device_make" && value[1] != 0) {
+							datasetcbd.push({
+								"label": value[0],
+								"value": value[1]
+							});
+						}
+					});
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+					crashAjaxError = error;
+				},
+				complete: function() {
+					cbpSpinner.stop();
+					cbrSpinner.stop();
+					cbpPie.destroy();
+					cbrPie.destroy();
+					new d3pie("cbpPie", d3ChartJSON(datasetcbp, "Crashes by platform", crashAjaxError));
+					new d3pie("cbdPie", d3ChartJSON(datasetcbd, "Crashes by device", crashAjaxError));
+
+				}
+			});
+
+			var platformAjaxError = null;
+			var ubpSpinner = addSpinner("ubpPie");
+			var ubpPie = new d3pie("ubpPie", d3ChartJSON([], "Users by platform", "fetching data"));
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + USAGE_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$.each(data.result, function(key, value) {
+						if (value[0] != "name") {
+							datasetubp.push({
+								"label": value[0],
+								"value": value[1]
+							});
+						}
+					});
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+					platformAjaxError = error;
+				},
+				complete: function() {
+					ubpSpinner.stop();
+					ubpPie.destroy();
+					new d3pie("ubpPie", d3ChartJSON(datasetubp, "Users by platform", platformAjaxError));
+				}
+			});
+
+			var geoAjaxError = null;
+			var ubrSpinner = addSpinner("ubrPie");
+			var ubrPie = new d3pie("ubrPie", d3ChartJSON([], "Users by top 10 regions", "fetching data"));
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + GEO_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$.each(data.countries, function(key, value) {
+						if (value[0] != "country") {
+							datasetubr.push({
+								"label": value[0],
+								"value": value[1]
+							});
+						}
+					});
+
+					datasetubr.sort(function(a, b) {
+						if (a.value > b.value) {
+							return -1;
+						}
+						if (a.value < b.value) {
+							return 1;
+						}
+						return 0;
+					});
+					datasetubr = datasetubr.slice(0, 10);
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+					geoAjaxError = error;
+				},
+				complete: function() {
+					ubrSpinner.stop();
+					ubrPie.destroy();
+					new d3pie("ubrPie", d3ChartJSON(datasetubr, "Users by top 10 regions", geoAjaxError));
+				}
+			});
+
+			var mauSpinner = addSpinner("maus");
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + MAUS_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$.each(data.monthly_active_users, function(key, value) {
+						if (value[0] != "time_unit") {
+							maus += value[1];
+						}
+					});
+					$("#MAU_Value").text(maus);
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+				},
+				complete: function() {
+					mauSpinner.stop();
+				}
+			});
+            
+			var sessionsSpinner = addSpinner("sessions");
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + SESSIONS_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					$.each(data.result, function(key, value) {
+						if (value[0] != "time_unit") {
+							sessions += value[2];
+						}
+					});
+					$("#Sessions_Value").text(sessions);
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+				},
+				complete: function() {
+					sessionsSpinner.stop();
+				}
+			});
+
+			var avgerrorSpinner = addSpinner("avgerror");
+			$.ajax({
+				url: window.sessionStorage.getItem("url") + PERF_URL,
+				type: 'get',
+				data: parameters,
+				datatype: 'json',
+				async: true,
+				timeout: 60000,
+				headers: {
+					"Authorization": window.sessionStorage.getItem("authToken")
+				},
+				success: function(data) {
+					avgreq = data.averages.http_request;
+					avgerr = data.averages.http_request_errors;
+					avglat = data.averages.avg_latency / 1000;
+					$("#average_requests").text(avgreq.toFixed(2));
+					$("#average_errors").text(avgerr.toFixed(2));
+					$("#average_latency").text(avglat.toFixed(2));
+				},
+				error: function(request, status, error) {
+                   if (request.status == 401) {
+                        window.history.back();
+                   }
+				},
+				complete: function() {
+					avgerrorSpinner.stop();
+				}
+			});
+
+			$('#appDropDown').change(function() {
+				var appIdSelected = this.value;
+				window.sessionStorage.setItem("appId", appIdSelected);
+				$("#appDropDown").val(appIdSelected);
+				location.reload();
+				setViewportScaleable('yes');
+			});
+
+			$('#appDropDown').mousedown(function() {
+				setViewportScaleable('no');
+			});
+
+			$('#timeDropDown').mousedown(function() {
+				setViewportScaleable('no');
+			});
+
+			$('#timeDropDown').change(function() {
+				var timeFilterSelected = this.value;
+				window.sessionStorage.setItem("timeFilter", timeFilterSelected);
+				$("#timeDropDown").val(timeFilterSelected);
+				location.reload();
+				setViewportScaleable('yes');
+			});
+
+		</script>
+</body>
+
+</html>

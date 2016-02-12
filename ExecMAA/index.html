@@ -1,0 +1,329 @@
+<!--
+ //  ExecMAA
+ //
+ //  Created by CA Technologies Inc. on 28/12/15.
+ //  Copyright © 2016 CA Technologies Inc. All rights reserved.
+ //
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="user-scalable = yes,initial-scale=0.7">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery-2.2.0.min.js"></script>
+    <script src="spin.min.js"></script>
+    <style type="text/css">
+    .logo {
+        margin: 100px auto;
+        background: #fff;
+        width: 80%;
+        height: 600px;
+        margin-left: 10%;
+        text-align: center;
+    }
+    
+    .vertical-center {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        /* align the inline(-block) elements horizontally */
+        /* remove the gap between inline(-block) elements */
+    }
+    
+    .vertical-center:before {
+        /* create a full-height inline block pseudo=element */
+        content: " ";
+        display: inline-block;
+        vertical-align: middle;
+        /* vertical alignment of the inline element */
+        height: 100%;
+    }
+    
+    .vertical-center > .container {
+        max-width: 100%;
+        display: inline-block;
+        vertical-align: middle;
+        /* vertical alignment of the inline element */
+        /* reset the font property */
+    }
+    
+    .calogo-container {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+    
+    .calogo {
+        width: 100px;
+    }
+    
+    .signin {
+        margin-top: 100px;
+    }
+    
+    .textfield {
+        margin-top: 90px;
+        font-size: 14px;
+        border: 0;
+        border-bottom: 1px solid #4A4A4A;
+    }
+    
+    .textfield1 {
+        margin-top: 30px;
+        font-size: 14px;
+        border: 0;
+        border-bottom: 1px solid #4A4A4A;
+    }
+    
+    h1 {
+        color: #0183C9;
+        font-family: sans-serif;
+        font-size: 200%;
+    }
+    
+    .buttons {
+        margin-top: 50px;
+    }
+    
+    .button1 {
+        margin-top: 70px;
+        font-size: 13px;
+        margin-right: 80px;
+    }
+    
+    .button2 {
+        margin-top: 70px;
+        font-size: 13px;
+    }
+    
+    a {
+        text-decoration: none !important;
+    }
+    
+    .myButton {
+        background-color: #44c767;
+        -moz-border-radius: 9px;
+        -webkit-border-radius: 9px;
+        border-radius: 9px;
+        border: 1px solid #18ab29;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 13px;
+        padding: 8px 19px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #2f6627;
+        margin-right: 20px;
+    }
+    
+    .myButton:hover {
+        background-color: #5cbf2a;
+    }
+    
+    .myButton:active {
+        position: relative;
+        top: 1px;
+    }
+    
+    .forgot {
+        background-color: #778899;
+        -moz-border-radius: 9px;
+        -webkit-border-radius: 9px;
+        border-radius: 9px;
+        border: 1px solid #18ab29;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 13px;
+        padding: 8px 19px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #2f6627;
+    }
+    
+    .forgot:hover {
+        background-color: #ff0303;
+    }
+    
+    .forgot:active {
+        position: relative;
+        top: 1px;
+    }
+    
+    body {
+        background: #30415A !important;
+        font-size: 2em;
+    }
+    
+    .panel-heading {
+        background: #30415F !important;
+        color: white;
+        border-color: #30415A;
+    }
+    
+    .panel-footer {
+        background: #30415A !important;
+        color: white;
+    }
+    
+    .center_div {
+        margin: 0 auto;
+        width: 80%/* value of your choice which suits your alignment */
+    }
+
+    @media screen and ( min-height: 380px) {
+        .marginlogo {
+            margin-top: 30%;
+        }
+    }
+
+    .ckontainer {
+    	heigth:70%;
+    	align:center;
+        font-size:20px;
+    	padding-left:5%;
+    	padding-right:5%;
+    }
+    
+    .form-control {
+        color:black;
+    }
+    .panel {
+        height:100%
+    }
+
+    </style>
+</head>
+
+<body bgcolor="30415A">
+    <div class="ckontainer">
+        <div class="calogo-container marginlogo">
+            <img class="calogo" src="calogo.jpg">
+        </div>
+        <div id="loginbox" style="margin-top:30px;" class="">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">Sign In</div>
+                </div>
+                <div style="padding-top:30px" class="panel-body">
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                    <form id="loginform" class="form-horizontal" role="form">
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon "></i></span>
+                            <input id="url" type="url" class="form-control" name="url" value="https://mdo.mobility.ca.com" placeholder="https://mdo.mobility.ca.com" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon "></i></span>
+                            <input id="username" type="email" class="form-control" name="username" value="" placeholder="username or email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon "></i></span>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon "></i></span>
+                            <input id="tenant" type="text" class="form-control" name="username" value="" placeholder="Tenant" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <div style="margin-top:10px" class="form-group" align="center">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <a id="buttons" href="#" class="btn btn-success" onClick="javascript:getToken()">Sign In  </a>
+                                <a id="btn-fblogin" href="#" class="btn btn-primary">Forgot Password</a>
+                            </div>
+                        </div>
+                        <div class="form-group" align="center">
+                            <div class="col-md-12 control">
+                                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                    Don't have an account!
+                                    <a href="http://trials.ca.com/us/ca-mobile-app-analytics.aspx" target="_blank" >
+                                            Sign Up Here
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var TOKEN_URL   = "/ess/security/v1/token";
+        
+        function addSpinner(targetId) {
+            var opts = {
+                lines: 20, // The number of lines to draw
+                length: 40, // The length of each line
+                width: 6, // The line thickness
+                radius: 20, // The radius of the inner circle
+                scale: 1, // Scales overall size of the spinner
+                corners: 1, // Corner roundness (0..1)
+                color: '#4682B4', // #rgb or #rrggbb or array of colors
+                opacity: 0.25, // Opacity of the lines
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                className: 'spinner', // The CSS class to assign to the spinner
+                top: '50%', // Top position relative to parent
+                left: '50%', // Left position relative to parent
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                position: 'absolute' // Element positioning
+            }
+            var target = document.getElementById(targetId);
+            return new Spinner(opts).spin(target);
+        }
+
+        function getToken() {
+            var tokenSpinner = addSpinner("buttons");
+            var url1 = $('#url').val();
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var tenant = $('#tenant').val();
+            var tenantbase64 = "Basic " + btoa(tenant);
+            if (window.webkit) {
+                window.webkit.messageHandlers.camaa.postMessage({
+                    'username': username,
+                    'password': password,
+                    'tenant': tenant,
+                    'url': url1
+                });
+            }
+            $.ajax({
+                url: url1 + TOKEN_URL,
+                type: 'post',
+                data: {
+                    grant_type: 'PASSWORD',
+                    username: username,
+                    password: password
+                },
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    "Authorization": tenantbase64
+                },
+                success: function(data) {
+                    window.sessionStorage.setItem("authToken", "Bearer " + btoa("{\"tkn\":\"" + data.tkn + "\",\"global\":true}"));
+                    window.sessionStorage.setItem("url", url1);
+                    window.sessionStorage.setItem("tenant", tenant);
+                    window.location.href = "dashboard.html";
+                },
+                error: function(request, status, error) {
+                    alert(request.responseJSON.msg);
+                },
+                complete: function() {
+                    tokenSpinner.stop();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
