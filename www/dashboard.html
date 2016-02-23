@@ -272,7 +272,10 @@
             }
 
             function startDateMake(startDateSelected) {
-				startDate = startDateSelected.getFullYear() + '-' + (startDateSelected.getMonth() + 1) + '-' + startDateSelected.getDate();
+                
+<!--                startDate = startDateSelected.toISOString().split('T')[0];-->
+                startDate = startDateSelected.toISOString();
+<!--				startDate = startDateSelected.getFullYear() + '-' + (startDateSelected.getMonth() + 1) + '-' + startDateSelected.getDate();-->
             }
         
             function setViewportScaleable(scalable) {
@@ -397,8 +400,9 @@
 			eonsAgo.setDate(now.getDate() - 1000);
             
 			var startDate = new Date();
-			var endDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-
+<!--			var endDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();-->
+            var endDate = now.toISOString();
+            
 			var timeFilter = window.sessionStorage.getItem("timeFilter");
             
 			if (timeFilter == null || timeFilter == "week") {
