@@ -219,13 +219,13 @@
         
 		<script type="text/javascript">
             
-            var APPS_URL        = '/mdo/v2/apps';
-            var CRASHES_URL     = '/mdo/v2/crashes/crash_summary';
-            var USAGE_URL       = '/mdo/v2/usage/users/platform';
-            var GEO_URL         = '/mdo/v2/usage/geo';
-            var MAUS_URL        = '/mdo/v2/usage/active_users';
-            var SESSIONS_URL    = '/mdo/v2/usage/sessions';
-            var PERF_URL        = '/mdo/v2/performance/apps';
+            var APPS_URL        = '/mdo/v3/apps';
+            var CRASHES_URL     = '/mdo/v3/crashes/crash_summary';
+            var USAGE_URL       = '/mdo/v3/usage/users/platform';
+            var GEO_URL         = '/mdo/v3/usage/geo';
+            var MAUS_URL        = '/mdo/v3/usage/active_users';
+            var SESSIONS_URL    = '/mdo/v3/usage/sessions';
+            var PERF_URL        = '/mdo/v3/performance/apps';
             
 			function addSpinner(targetId) {
 				var opts = {
@@ -405,12 +405,12 @@
             
 			var timeFilter = window.sessionStorage.getItem("timeFilter");
             
-			if (timeFilter == null || timeFilter == "week") {
-				$("#timeDropDown").val("week");
-				startDateMake(weekAgo);
-			} else if (timeFilter == "today") {
+			if (timeFilter == null || timeFilter == "today") {
 				$("#timeDropDown").val("today");
 				startDateMake(dayAgo);
+			} else if (timeFilter == "week") {
+				$("#timeDropDown").val("week");
+				startDateMake(weekAgo);
 			} else if (timeFilter == "month") {
 				$("#timeDropDown").val("month");
 				startDateMake(monthAgo);

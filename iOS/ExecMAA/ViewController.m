@@ -99,7 +99,7 @@
         [_keychain setObject:[args objectForKey:@"tenant"] forKey:(__bridge id)kSecAttrService];
 
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-        [prefs setObject:[args objectForKey:@"tenant"] forKey:message.name];
+        [prefs setObject:[args objectForKey:@"url"] forKey:@"maaurl"];
     }
 }
 
@@ -113,6 +113,31 @@
                                     completionHandler();
                                 }]];
     [self presentViewController:alertController animated:YES completion:^{}];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = defaultText;
+    }];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSString *input = ((UITextField *)alertController.textFields.firstObject).text;
+        completionHandler(input);
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        completionHandler(nil);
+    }]];
+    [self presentViewController:alertController animated:YES completion:^{}];
+    
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    if(action == @selector(copy:)) {
+        return YES;
+    }
+    else {
+        return [super canPerformAction:action withSender:sender];
+    }
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
