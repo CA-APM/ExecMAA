@@ -1,2 +1,3 @@
 ExecMAA.xcodeproj/xcuserdata/*
-
+# ignore node_modules (it is about 525 mb, you must to npm install upon first downloading the project)
+ReactNative/node_modules/
