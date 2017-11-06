@@ -5,7 +5,9 @@ export const ACTIONS = {
     switchConfig : "SWITCH_CONFIG_PICKER",
     rememberLogin :"shouldRemember",
     updateProfileList :"UPDATE_PROFILE_LIST",
-    updateAppList : "UPDATE_APP_LIST"
+    updateAppList : "UPDATE_APP_LIST",
+    updateVersionList : "UPDATE_VERSION_LIST"
+
 
 }
 export const UTIL_ACTION_TYPES = {
@@ -23,6 +25,8 @@ const util = (state = InitialState("util"), action) => {
             return Object.assign({}, state, {shouldRemember: action.shouldRemember});
         case ACTIONS.updateAppList:
             return Object.assign({},state,{profileList : action.payload});
+        case ACTIONS.updateVersionList:
+            return Object.assign({},state,{appVersions : action.payload});
         default:
             return state;
     }

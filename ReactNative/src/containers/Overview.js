@@ -10,7 +10,7 @@ import {
 } from "react-native"
 
 import NavigatorBar from "./NavigationBar";
-import {componentStyle} from "../styles/componentStyle";
+import {ComponentStyle} from "../styles/componentStyle";
 import {HEIGHT, PRIMARY_COLOR_800, WIDTH} from "../constants";
 import {FlatLayout, GridLayout} from "../presentationViews/Layouts/FlatLayout";
 import Fade from "../presentationViews/Layouts/Fade";
@@ -24,6 +24,8 @@ import * as Util from "../redux/Util/Action";
 import LiveDataView from "../presentationViews/CustomDataviews/LiveDataView";
 import {getTest} from "../../projectTest/isTesting";
 import AppList from "../presentationViews/CustomDataviews/AppList";
+import {formatDate, getTimeFilter} from "../utils/Util";
+import {Icon} from "react-native-elements";
 
 
 const Style = StyleSheet.create({
@@ -45,9 +47,9 @@ class Overview extends Component {
     static navigationOptions = {
         drawerLabel: "Overview",
         drawerIcon: ({tintColor}) => (
-            <Image
-                source={require("../../res/chats-icon.jpg")}
-                style={[componentStyle.drawerIcon, {tintColor: tintColor}]}
+            <Icon
+                type="FontAwesome"
+                name="home"
             />
         ),
     };
@@ -75,6 +77,13 @@ class Overview extends Component {
         const padding = 20;
         const rowWidth = WIDTH / 5 * 2 + padding;
         const refreshRate = 13 * 1000;
+
+        let currentMeta = this.props.metadata;
+        let tf1 = getTimeFilter(currentMeta.timeFilter.jsEndDate, currentMeta.aggregation);
+        let tf2 = getTimeFilter(tf1.jsStartDate, currentMeta.aggregation);
+        let d1 =  `${formatDate(tf1.jsStartDate)}-${formatDate(tf1.jsEndDate)}`;
+        let d2 =  `${formatDate(tf2.jsStartDate)}-${formatDate(tf2.jsEndDate)}`;
+
 // /*style={{opacity:this.props.updateStatus === UpdateStatus.failed ? 0.8 : 0.0}*/
         //                {this.props.updateStatus === UpdateStatus.failed  ? <Text>Error loading please try again</Text>: undefined}
 
@@ -88,7 +97,7 @@ class Overview extends Component {
 
                 <NavigatorBar {...this.props}/>
 
-                <View>
+                <View style={{flex: 1}}>
                     <Fade opacity={0} finalOpacity={1} duration={300}>
                         {/*<View style={{width:WIDTH,height:10}}/>*/}
 
@@ -96,14 +105,30 @@ class Overview extends Component {
                             <View style={{width: WIDTH, height: 10, backgroundColor: "#f7f7f7"}}/>
 
 
-                            <View style={{width: WIDTH, height: HEIGHT + 1200, backgroundColor: "#f7f7f7"}}>
+                            <View style={{width: WIDTH, backgroundColor: "#f7f7f7"}}>
 
 
                                 <FlatLayout widthPercent={"93%"}>
-                                    <LiveDataView style={{width: WIDTH}}
-                                                  data={this.transformCompareSummary(this.props.compareSummary.data, this.props.compareSummary.metadata.status)}
-                                                  metadata={this.props.compareSummary.metadata}
-                                                  aggregation={this.props.metadata.aggregation}/>
+                                    <LiveDataView
+                                        titleView={
+                                            <View style={{flex: 1, alignItems:'center'}}>
+                                                <View style={{flex:1}}/>
+                                                <Text>{"Comparing "}</Text>
+                                                <Text style={[ComponentStyle.description]}>
+                                                    {d2}
+                                                </Text>
+                                                <Text>{"to"}</Text>
+                                                <Text style={[ComponentStyle.description]}>
+                                                    {d1}
+                                                </Text>
+
+                                                <View style={{flex:1}}/>
+
+                                            </View>}
+                                        style={{width: WIDTH}}
+                                        data={this.transformCompareSummary(this.props.compareSummary.data, this.props.compareSummary.metadata.status)}
+                                        metadata={this.props.compareSummary.metadata}
+                                        aggregation={this.props.metadata.aggregation}/>
 
 
                                     <UserBarChart data={userVisits.totalUsers}

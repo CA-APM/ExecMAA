@@ -44,7 +44,7 @@ export const getPreviousAggregation = (agg)=>{
             return "week";
         }
     }
-}
+};
 export const getFilterParameters =  (meta)=>{
     let toReturn = {
         "aggregation":meta.aggregation,
@@ -54,11 +54,28 @@ export const getFilterParameters =  (meta)=>{
     if(meta.app_id && meta.app_id !== "All" && meta.app_id !== "all apps"){
         toReturn["app_id"] = meta.app_id;
     }
+    if(meta.version && meta.version !== "default"){
+        toReturn["app_version"] = meta.version;
+    }
 
     return toReturn;
 };
 
 
+
+export const getQueryString= (obj)=>{
+    let start = "/?";
+    let initialize = true;
+    return Object.keys(obj).reduce((builder,key)=>{
+        if(initialize){
+            initialize = false;
+            return builder + `${key}=${obj[key]}`;
+        }else{
+            return builder + `&${key}=${obj[key]}`;
+        }
+
+    },start);
+};
 
 export const getFilterQueryString = (filterParams)=>{
     if(filterParams.app_id){

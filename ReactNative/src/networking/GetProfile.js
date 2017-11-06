@@ -1,7 +1,10 @@
 import react from 'react'
-import {getFilterParameters, getPreviousTimeMeta, getFilterQueryString, getPreviousAggregation} from "./NetworkUtil";
+import {
+    getFilterParameters, getPreviousTimeMeta, getFilterQueryString, getPreviousAggregation,
+    getQueryString
+} from "./NetworkUtil";
 import {getLogLevel, LOG_NETWORK} from "../../projectTest/isTesting";
-import {AllApps} from "../redux/ReduxUtil";
+import {AllApps, DataStatus} from "../redux/ReduxUtil";
 import {getTimeFilter} from "../utils/Util";
 
 export const BASE_URL = 'https://cloud.ca.com';
@@ -15,17 +18,18 @@ const SESSIONS_URL = '/mdo/v3/usage/sessions';
 const PERF_URL = '/mdo/v3/performance/apps';
 const USERS_URL = '/mdo/v3/usage/users';
 const APP_SUMMARY = '/mdo/v3/performance/apps_summary';
+const APP_VERSIONS = '/mdo/v3/master_data/versionsByPlatform';
 
 
 const NETWORK_PREFIX = "<--NETWORKING-->";
 const getRequest = (nameOfCaller, authorization, url, meta) => {
     let verbose = false;
     // get apps returns a ton of data i do not use
-    if (getLogLevel() & LOG_NETWORK && nameOfCaller !== "getApps" ) {
+    if (getLogLevel() & LOG_NETWORK && nameOfCaller !== "getApps") {
         verbose = true;
     }
 
-    const finalURL = url + (meta !== null ? getFilterQueryString(getFilterParameters(meta)) : "");
+    const finalURL = url + (meta !== null ? getQueryString(getFilterParameters(meta)) : "");
     if (verbose) {
         console.log(`${NETWORK_PREFIX} ${nameOfCaller} sending ${finalURL}`);
     }
@@ -76,15 +80,15 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
  *
  *   [theFunction(currentMeta).json,theFunction(previousMeta).json]
  */
-export const getCompareRequest = (theFunction,authorization,meta) => {
-    let currentMeta = Object.assign({},meta);
-    currentMeta.timeFilter = getTimeFilter(meta.timeFilter.jsEndDate,meta.aggregation);
-    let previousMeta = Object.assign({},meta);
-    previousMeta.timeFilter = getTimeFilter(currentMeta.timeFilter.jsStartDate,meta.aggregation);
+export const getCompareRequest = (theFunction, authorization, meta) => {
+    let currentMeta = Object.assign({}, meta);
+    currentMeta.timeFilter = getTimeFilter(meta.timeFilter.jsEndDate, meta.aggregation);
+    let previousMeta = Object.assign({}, meta);
+    previousMeta.timeFilter = getTimeFilter(currentMeta.timeFilter.jsStartDate, meta.aggregation);
     return Promise.all([
-        theFunction(authorization,currentMeta),
-        theFunction(authorization,previousMeta),
-    ]).then((data)=>{
+        theFunction(authorization, currentMeta),
+        theFunction(authorization, previousMeta),
+    ]).then((data) => {
         return data;
     });
 };
@@ -97,9 +101,38 @@ export const getCompareRequest = (theFunction,authorization,meta) => {
 export const getApps = (authorization) => {
     return getRequest("getApps", authorization, BASE_URL + APPS_URL, null).then((data) => {
         return data.map((item) => {
-            return item.appId;
+            return {
+                app_id: item.appId,
+                appLogo : item.appLogo
+            }
         });
     });
+};
+
+export const getAllAppVersions = (authorization, appIDList) => {
+    let promiseList = appIDList.map((app) => {
+        return getRequest("getAppVersions", authorization, BASE_URL + APP_VERSIONS + `?app_id=${app}`, null).then((data) => {
+            let toReturn =
+                {
+                    key: app,
+                    value: {
+                        "iOS": data.iOS ? data.iOS : [],
+                        "Android": data.Android ? data.Android : []
+                    }
+                };
+            return toReturn;
+        });
+    });
+
+    return Promise.all(promiseList).then((data) => {
+        let toReturn = {};
+        for (let obj of data) {
+            toReturn[obj.key] = obj.value;
+        }
+        return toReturn;
+    });
+
+
 };
 
 export const getCrashData = (authorization, meta) => {
@@ -167,7 +200,7 @@ export const getActiveUsers = (authorization, meta) => {
 };
 export const getUsers = (authorization, meta) => {
     return getRequest(`getUsers ${meta.aggregation}`, authorization, BASE_URL + USERS_URL, meta).then((json) => {
-        let toReturn = {newUsers: [], totalUsers: [], repeatUsers: [],users:0};
+        let toReturn = {newUsers: [], totalUsers: [], repeatUsers: [], users: 0};
         let {result} = json;
         // from this you can break down into daily and weekly active users
         result.shift();

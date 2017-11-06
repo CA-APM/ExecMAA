@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -51,6 +50,14 @@
 		C8BA5D6EE3D740F8988BB193 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA3E014B0C284B3C85FC0981 /* Zocial.ttf */; };
 		DCD3D12D747C4524986AEAE4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92EC93A6929E46DC8298180D /* MaterialCommunityIcons.ttf */; };
 		DE4146C71F7C76990036A765 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE41468F1F7C76850036A765 /* libART.a */; };
+		926D5C25029D47B78EF5CFA1 /* CA Sans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 246502A2048A4A368DF9729A /* CA Sans-Bold.otf */; };
+		7FE3AAF8145040B898465611 /* CA Sans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4DE92FD96EDB4EA8B3BCA57B /* CA Sans-BoldItalic.otf */; };
+		6D30429726CE4631A4F7458B /* CA Sans-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB412139E46E4B9581F5E783 /* CA Sans-Heavy.otf */; };
+		37E6C0D71D8E4D8796D6FB4F /* CA Sans-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 628B04B53C354A6792CFDCA0 /* CA Sans-HeavyItalic.otf */; };
+		3EFA375BEDD346E998302A54 /* CA Sans-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EC47A8A2E28549E1A881D750 /* CA Sans-Italic.otf */; };
+		6F0B4A1CD47548799314174A /* CA Sans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 568A1A41827C4BF3AB6A7FD0 /* CA Sans-Light.otf */; };
+		2164CC6B111348EA816E9A01 /* CA Sans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BA376393FBA242F7B4C5D45B /* CA Sans-LightItalic.otf */; };
+		3C8166D92BC748A5B78F464D /* CA Sans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9508A6808FC649FB9D80B548 /* CA Sans-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -378,6 +385,14 @@
 		DE4146891F7C76840036A765 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		EB3CC559C2F24AEF89F3C27C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FA577AAAE5394982950B228A /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		246502A2048A4A368DF9729A /* CA Sans-Bold.otf */ = {isa = PBXFileReference; name = "CA Sans-Bold.otf"; path = "../res/fonts/CA Sans-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4DE92FD96EDB4EA8B3BCA57B /* CA Sans-BoldItalic.otf */ = {isa = PBXFileReference; name = "CA Sans-BoldItalic.otf"; path = "../res/fonts/CA Sans-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EB412139E46E4B9581F5E783 /* CA Sans-Heavy.otf */ = {isa = PBXFileReference; name = "CA Sans-Heavy.otf"; path = "../res/fonts/CA Sans-Heavy.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		628B04B53C354A6792CFDCA0 /* CA Sans-HeavyItalic.otf */ = {isa = PBXFileReference; name = "CA Sans-HeavyItalic.otf"; path = "../res/fonts/CA Sans-HeavyItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EC47A8A2E28549E1A881D750 /* CA Sans-Italic.otf */ = {isa = PBXFileReference; name = "CA Sans-Italic.otf"; path = "../res/fonts/CA Sans-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		568A1A41827C4BF3AB6A7FD0 /* CA Sans-Light.otf */ = {isa = PBXFileReference; name = "CA Sans-Light.otf"; path = "../res/fonts/CA Sans-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BA376393FBA242F7B4C5D45B /* CA Sans-LightItalic.otf */ = {isa = PBXFileReference; name = "CA Sans-LightItalic.otf"; path = "../res/fonts/CA Sans-LightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9508A6808FC649FB9D80B548 /* CA Sans-Regular.otf */ = {isa = PBXFileReference; name = "CA Sans-Regular.otf"; path = "../res/fonts/CA Sans-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -672,6 +687,14 @@
 				20D383AB57FC4C938FBACBF6 /* Octicons.ttf */,
 				EB3CC559C2F24AEF89F3C27C /* SimpleLineIcons.ttf */,
 				CA3E014B0C284B3C85FC0981 /* Zocial.ttf */,
+				246502A2048A4A368DF9729A /* CA Sans-Bold.otf */,
+				4DE92FD96EDB4EA8B3BCA57B /* CA Sans-BoldItalic.otf */,
+				EB412139E46E4B9581F5E783 /* CA Sans-Heavy.otf */,
+				628B04B53C354A6792CFDCA0 /* CA Sans-HeavyItalic.otf */,
+				EC47A8A2E28549E1A881D750 /* CA Sans-Italic.otf */,
+				568A1A41827C4BF3AB6A7FD0 /* CA Sans-Light.otf */,
+				BA376393FBA242F7B4C5D45B /* CA Sans-LightItalic.otf */,
+				9508A6808FC649FB9D80B548 /* CA Sans-Regular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1155,6 +1178,14 @@
 				93788316B9C942479344C868 /* Octicons.ttf in Resources */,
 				33FEBE8F890A4C7FA8961351 /* SimpleLineIcons.ttf in Resources */,
 				C8BA5D6EE3D740F8988BB193 /* Zocial.ttf in Resources */,
+				926D5C25029D47B78EF5CFA1 /* CA Sans-Bold.otf in Resources */,
+				7FE3AAF8145040B898465611 /* CA Sans-BoldItalic.otf in Resources */,
+				6D30429726CE4631A4F7458B /* CA Sans-Heavy.otf in Resources */,
+				37E6C0D71D8E4D8796D6FB4F /* CA Sans-HeavyItalic.otf in Resources */,
+				3EFA375BEDD346E998302A54 /* CA Sans-Italic.otf in Resources */,
+				6F0B4A1CD47548799314174A /* CA Sans-Light.otf in Resources */,
+				2164CC6B111348EA816E9A01 /* CA Sans-LightItalic.otf in Resources */,
+				3C8166D92BC748A5B78F464D /* CA Sans-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

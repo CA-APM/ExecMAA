@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import BarChart from "../Dataviews/BarChart";
 import {Text} from "react-native-elements";
-import {componentStyle} from "../../styles/componentStyle";
+import {ComponentStyle} from "../../styles/componentStyle";
 import {LoadRestView} from "../Other/PresentationUtil";
 
 
@@ -35,7 +35,7 @@ export default class UserBarChart extends Component {
         return (
             <LoadRestView metadata={this.props.metadata} width={this.props.width} props={this.props}>
                 <View>
-                    <Text style={[componentStyle.text, {marginTop: 10}]}>
+                    <Text style={[ComponentStyle.label, {marginTop: 10}]}>
                         {`Total ${title} Users`}
                     </Text>
                     <BarChart

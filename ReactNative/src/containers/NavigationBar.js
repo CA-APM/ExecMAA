@@ -9,7 +9,7 @@ import {
     Picker
 } from 'react-native'
 import {HEIGHT, PRIMARY_COLOR_300, WIDTH} from "../constants";
-import {componentStyle} from "../styles/componentStyle";
+import {ComponentStyle} from "../styles/componentStyle";
 import LoginButton from "../presentationViews/Other/LoginButton";
 import * as constants from "../constants";
 import {Icon, Button, CheckBox, ButtonGroup, Header, List, ListItem, SearchBar} from "react-native-elements";
@@ -22,7 +22,21 @@ import * as Util from "../utils/Util";
 import AppList from "../presentationViews/CustomDataviews/AppList";
 import {DataStatus} from "../redux/ReduxUtil";
 import AppSelector from "../presentationViews/Other/AppSelector";
+import {formatDate} from "../utils/Util";
 
+
+formatMonitoringTitle = (meta) => {
+    let start = meta.timeFilter.jsStartDate;
+    let end = meta.timeFilter.jsEndDate;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let startString = `${months[start.getMonth()]} ${start.getDate()}`;
+    let endString = `${months[end.getMonth()]} ${end.getDate()}`;
+    if (meta.aggregation === "month") { // add the year
+        startString = `${startString} ${start.getFullYear()}`;
+        endString = `${endString} ${end.getFullYear()}`;
+    }
+    return `${startString}-${endString}`;
+}
 
 class NavigatorBar extends Component {
 
@@ -34,7 +48,7 @@ class NavigatorBar extends Component {
             showAppList: false,
             meta: Object.assign({}, props.metadata),
             changed: false,
-            filter :""
+            filter: "",
         };
         this.showDrawer = this.showDrawer.bind(this);
         this.renderDropDrown = this.renderDropDrown.bind(this);
@@ -46,6 +60,9 @@ class NavigatorBar extends Component {
         this.userDidChangeApp = this.userDidChangeApp.bind(this);
         this.dismissedCalendar = this.dismissedCalendar.bind(this);
         this.selectedApp = this.selectedApp.bind(this);
+        this.renderPicker = this.renderPicker.bind(this);
+        this.updateProfileVersion = this.updateProfileVersion.bind(this);
+        this.getAppVersionsFor = this.getAppVersionsFor.bind(this);
     }
 
 
@@ -55,27 +72,40 @@ class NavigatorBar extends Component {
         }
     }
 
-    selectedApp(app){
-        let oldApp= this.state.meta.app_id;
-        if(app !== oldApp){
-            let newMeta= Object.assign({},this.state.meta);
+    selectedApp(app) {
+        let oldApp = this.state.meta.app_id;
+        if (app !== oldApp) {
+            let newMeta = Object.assign({}, this.state.meta);
             newMeta.app_id = app;
-            this.setState({showAppList:false,shouldSendRequest:true,changed:true,meta:newMeta});
+            this.setState({
+                version: "default",
+                showAppList: false,
+                shouldSendRequest: true,
+                changed: true,
+                meta: newMeta
+            });
         }
     }
+
     render() {
 
         //                {this.renderAppList()}
 
+        let tf = this.props.metadata.timeFilter;
+        let begin = formatDate(tf.jsStartDate);
+        let end = formatDate(tf.jsEndDate);
 
         if (this.state.showAppList && this.props.util.profileList.metadata.status === DataStatus.success) {
             return <View>
-                <AppSelector data={this.props.util.profileList.data}
-                selectedApp={this.props.metadata.app_id}
-                    onDismiss={(chosenApp)=>{
-                    this.selectedApp(chosenApp);
-                        }
-                }/>
+                <AppSelector
+                    nameKey={"app_id"}
+                    imageKey={"appLogo"}
+                    data={this.props.util.profileList.data}
+                    selectedApp={this.state.meta.app_id}
+                    onDismiss={(chosenApp) => {
+                        this.selectedApp(chosenApp);
+                    }
+                    }/>
             </View>;
         } else {
 
@@ -85,7 +115,7 @@ class NavigatorBar extends Component {
                         width: Dimensions.get('window').width,
                         height: HEIGHT / 8.0,
                         backgroundColor: constants.PRIMARY_COLOR_800,
-                    }, componentStyle.center]}>
+                    }, ComponentStyle.center]}>
                         <View style={{flex: 1.0, paddingTop: 10}}>
                             <Icon
                                 raised
@@ -97,8 +127,8 @@ class NavigatorBar extends Component {
                         </View>
                         <View>
 
-                            <Text  numberOfLines={1}
-                                  style={{ fontSize: 22, color: '#FFFFFF'}}>
+                            <Text numberOfLines={1}
+                                  style={ComponentStyle.header}>
                                 {this.props.navigation.state.routeName}
                             </Text>
 
@@ -106,22 +136,49 @@ class NavigatorBar extends Component {
                         </View>
 
 
+                        <View style={{flex: 1.0}}>
 
-                        <View style={{flex: 1.0, paddingTop: 12}}>
-                            <CheckBox
+                            <View style={{alignItems: 'flex-end', paddingTop: 12}}>
+                                <CheckBox
+                                    containerStyle={{width: 50, height: 50}}
+                                    checkedIcon="chevron-down"
+                                    uncheckedIcon="chevron-up"
+                                    checked={this.props.util.showConfigPicker}
+                                    checkedColor={constants.PRIMARY_COLOR_800}
+                                    uncheckedColor={constants.PRIMARY_COLOR_800}
 
-                                checkedIcon="chevron-down"
-                                uncheckedIcon="chevron-up"
-                                checked={this.props.util.showConfigPicker}
-                                checkedColor={constants.PRIMARY_COLOR_800}
-                                uncheckedColor={constants.PRIMARY_COLOR_800}
-
-                                onPress={() => {
-                                    this.dismissedCalendar();
-                                }}/>
+                                    onPress={() => {
+                                        this.dismissedCalendar();
+                                    }}/>
+                            </View>
                         </View>
 
                     </View>
+                    {this.props.util.showConfigPicker ? undefined :
+                        <View style={{backgroundColor: "#f7f7f7"}}>
+                            <TouchableHighlight
+                                onPress={() => {
+                                    this.dismissedCalendar();
+                                }}
+                            >
+                                <View style={{
+                                    alignContent: 'center',
+                                    marginTop: 5,
+                                    borderBottomWidth: 3,
+                                    borderTopWidth: 3,
+                                    borderColor: "#205796",
+                                    flexDirection: 'column',
+                                    backgroundColor: "#ffffff",
+                                    height: HEIGHT / 12.0,
+                                    width: WIDTH
+                                }}>
+                                    <Text style={[ComponentStyle.description]}>{`${begin}-${end}`}</Text>
+                                    <Text style={[ComponentStyle.description]}>{this.state.meta.app_id}</Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    }
+
                     {this.renderDropDrown()}
                     {this.renderCalendar()}
                 </View>
@@ -211,6 +268,7 @@ class NavigatorBar extends Component {
 
                     <View style={{flex: 1}}/>
                 </View>
+                {this.renderPicker()}
 
 
                 <View style={{
@@ -225,6 +283,61 @@ class NavigatorBar extends Component {
         );
     }
 
+
+    updateProfileVersion(ver) {
+        let oldVersion = this.state.meta.version;
+        if (ver !== oldVersion) {
+            let newMeta = Object.assign({}, this.state.meta);
+            newMeta.version = ver;
+            this.setState({
+                showAppList: false,
+                shouldSendRequest: true,
+                changed: true,
+                meta: newMeta
+            });
+        }
+    }
+
+    getAppVersionsFor(app, data) {
+        let choseAllApps = app === "All";
+        let notLoaded = data.metadata.status !== DataStatus.success;
+        data = data.data;
+        if (!(choseAllApps || notLoaded)) {
+            let toReturn = [];
+            let items = data[app];
+            toReturn = toReturn.concat(items["iOS"]);
+            toReturn = toReturn.concat(items["Android"]);
+            return toReturn;
+        } else {
+            return [];
+        }
+    }
+
+    renderPicker() {
+        let data = this.getAppVersionsFor(this.state.meta.app_id, this.props.util.appVersions);
+        if (data.length) {
+            data.unshift("default");
+            return (
+                <Picker
+
+                    style={{height: 100}}
+                    itemStyle={{height: 100}}
+                    selectedValue={this.state.meta.version}
+                    onValueChange={(ver) => this.updateProfileVersion(ver)}
+                >
+                    {
+                        data.map((item) => {
+                            return (<Picker.Item label={item} value={item}/>)
+                        })
+                    }
+
+                </Picker>
+            )
+        } else {
+            return undefined;
+        }
+
+    }
 
     // This nasty function is needed to render the dates to the calendar
     getDateRange() {
@@ -338,7 +451,7 @@ const mapDispatchToActions = (dispatch) => ({
         dispatch(switchConfigPicker())
     },
     LoadWholeProfile: (auth, meta) => {
-        LoadWholeProfile(auth, meta, dispatch);
+        LoadWholeProfile(auth, meta, dispatch, false);
     },
 
 

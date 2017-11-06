@@ -69,6 +69,14 @@ NSAllowsLocalNetworking</key>
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>CA Sans-Bold.otf</string>
+		<string>CA Sans-BoldItalic.otf</string>
+		<string>CA Sans-Heavy.otf</string>
+		<string>CA Sans-HeavyItalic.otf</string>
+		<string>CA Sans-Italic.otf</string>
+		<string>CA Sans-Light.otf</string>
+		<string>CA Sans-LightItalic.otf</string>
+		<string>CA Sans-Regular.otf</string>
 	</array>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 import {ACTIONS, UTIL_ACTION_TYPES} from "./Reducer";
-import {getApps} from "../../networking/GetProfile";
+import {getAllAppVersions, getApps} from "../../networking/GetProfile";
 import {DataStatus, failedFetchingDataFor, fetchingDataFor, succeededFetchingDataFor} from "../ReduxUtil";
 
 
@@ -50,13 +50,31 @@ const failedCreateNewAppList = () => {
 
     }
 };
-
+const updateVersionList = (status,data) =>{
+    return {
+        type : ACTIONS.updateVersionList,
+        payload :{
+            metadata : {status : status},
+            data : data
+        }
+    };
+}
+export const LoadAllVersions= (appList,token,dispatch) => {
+    dispatch(updateVersionList(DataStatus.loading,null));
+    getAllAppVersions(token,appList).then((data) => {
+        dispatch(updateVersionList(DataStatus.success,data));
+    }).catch((err) => {
+        dispatch(updateVersionList(DataStatus.failed,null));
+    });
+}
 export const LoadAppList = (token,dispatch) => {
     dispatch(loadingAppList());
-    getApps(token).then((success) => {
+    return getApps(token).then((success) => {
         dispatch(createNewAppList(success));
+        return success;
     }).catch((err) => {
         dispatch(failedCreateNewAppList());
+        return [];
     });
 }
 //endregion

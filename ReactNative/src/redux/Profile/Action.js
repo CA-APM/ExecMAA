@@ -6,6 +6,7 @@ import {
 import {ACTION_TYPES} from "./Reducer";
 import * as GET  from "../../networking/GetProfile";
 import * as Util from "../Util/Action";
+import {LoadAllVersions} from "../Util/Action";
 
 export const AllProfile = "All";
 
@@ -33,22 +34,35 @@ export const changeMeta = (meta) => {
     }
 };
 
-export const LoadWholeProfile = (auth,metaObject,dispatch) =>{
+
+export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=true) =>{
 
     // I do not think its possible for the metaObject to change but perfect the object is a week
     // ref in which case we want to make a copy
     const meta  = Object.assign({},metaObject);
     dispatch(changeMeta(metaObject));
-    return Promise.all([
-        Util.LoadAppList(auth,dispatch),
+
+    let promises = [
+
         ProfileFetcher.userVisits(auth,meta,dispatch),
         ProfileFetcher.usersByPlatform(auth,meta,dispatch),
         ProfileFetcher.usersByCountry(auth,meta,dispatch),
         ProfileFetcher.crashes(auth,meta,dispatch),
         ProfileFetcher.sessionsStatistics(auth,meta,dispatch),
         ProfileFetcher.average(auth,meta,dispatch),
-        ProfileFetcher.compareSummary(auth,metaObject,dispatch)
-    ]).then((d)=>{}).catch((c)=>{});
+        ProfileFetcher.compareSummary(auth,metaObject,dispatch),
+    ];
+    if(loadProfileVersions){
+        promises.unshift(Util.LoadAppList(auth,dispatch).then((data)=>{
+            if(loadProfileVersions){
+                LoadAllVersions(data.map((item)=>item.app_id),auth,dispatch);
+            }
+        }));
+    }
+    Promise.all(promises);
+
+
+
 }
 
 export const ProfileFetcher ={

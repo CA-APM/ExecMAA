@@ -117,15 +117,6 @@ export default class BarChart extends Component {
 
     }
 
-    animFrameSquare(end, start, duration, frames) {
-        let durationPerFrame = duration / frames;
-        let frameNumber = (end - start) / durationPerFrame;
-
-        let addition = 10 * frameNumber * frameNumber;
-        return ((end + addition) - start) / duration;
-
-
-    }
 
     animate(start) {
         let self = this;
@@ -136,7 +127,7 @@ export default class BarChart extends Component {
 
             // Get the delta on how far long in our animation we are.
 
-            let delta = this.animFrameSquare(timestamp, start, self.props.animationDuration, 30)
+            let delta = timestamp - start / self.props.animationDuration;
 
             // If we're above 1 then our animation should be complete.
             if (delta > 1) {

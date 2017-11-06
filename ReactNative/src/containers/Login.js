@@ -8,6 +8,8 @@ import * as Auth from "../redux/Authentication/Action";
 import * as constants from "../constants";
 import {shouldRememberLogin} from "../redux/Util/Action";
 import {LoadWholeProfile} from "../redux/Profile/Action";
+import {HEIGHT} from "../constants";
+import {ComponentStyle} from "../styles/componentStyle";
 
 
 /**
@@ -36,7 +38,7 @@ class Login extends Component {
             login["isLoading"] = false;
             this.setState({auth: login});
 
-        }).catch((err)=>{
+        }).catch((err) => {
             login["isLoading"] = false;
             this.setState({auth: login});
 
@@ -99,10 +101,14 @@ class Login extends Component {
 
 
             <View style={{paddingTop: 30}}>
-                <Image source={require("../../res/ca-technologies-logo.png")}/>
-                <View>
+                <View style={{height:HEIGHT/4}}>
+                    <Image
+                        style={{marginTop:-30,alignContent: 'center', alignSelf: 'center'}}
+                        source={require("../../res/ca-technologies-logo.png")}/>
+                </View>
+                <View >
                     <ActivityIndicator animating={this.state.auth.isLoading} size={'large'}/>
-                    <FormLabel labelStyle={{color: constants.PRIMARY_COLOR_900}}>Username</FormLabel>
+                    <FormLabel labelStyle={[ComponentStyle.smallLabel,{textAlign:'left'}]}>Username</FormLabel>
                     <FormInput
                         autoCorrect={false}
                         autoCapitalize={'none'}
@@ -110,14 +116,14 @@ class Login extends Component {
                         inputStyle={{color: constants.PRIMARY_COLOR_900}}
                         onChangeText={(text) => this.didChangeText("username", text)}/>
                     <FormValidationMessage>{this.state.auth.usernameError == "" ? undefined : this.state.auth.usernameError}</FormValidationMessage>
-                    <FormLabel labelStyle={{color: constants.PRIMARY_COLOR_900}}>Password</FormLabel>
+                    <FormLabel labelStyle={[ComponentStyle.smallLabel,{textAlign:'left'}]}>Password</FormLabel>
                     <FormInput
                         autoCorrect={false}
                         autoCapitalize={'none'}
                         inputStyle={{color: constants.PRIMARY_COLOR_900}} secureTextEntry={true}
                         onChangeText={(text) => this.didChangeText("password", text)}/>
                     <FormValidationMessage>{this.state.auth.passwordError == "" ? undefined : this.state.auth.passwordError}</FormValidationMessage>
-                    <FormLabel labelStyle={{color: constants.PRIMARY_COLOR_900}}>Tenant</FormLabel>
+                    <FormLabel labelStyle={[ComponentStyle.smallLabel,{textAlign:'left'}]}>Tenant</FormLabel>
                     <FormInput
                         autoCorrect={false}
                         autoCapitalize={'none'}
@@ -125,7 +131,8 @@ class Login extends Component {
                         onChangeText={(text) => this.didChangeText("tenant", text)}/>
                     <FormValidationMessage>{this.state.auth.tenantError == "" ? undefined : this.state.auth.tenantError}</FormValidationMessage>
 
-                    <CheckBox checked={this.props.util.shouldRemember} title="Remember default login" iconRight
+                    <CheckBox
+                              checked={this.props.util.shouldRemember} title="Remember default login" iconRight
                               containerStyle={{alignItems: 'center', backgroundColor: "#FFFFFF"}}
                               uncheckedColor={constants.PRIMARY_COLOR_800}
                               onPress={() => this.didCheckBox(!this.props.util.shouldRemember)}
@@ -151,8 +158,8 @@ const mapDispatchToActions = (dispatch) => ({
     Loading: (status, defaultScreen) => {
         dispatch(Auth.loading(status, defaultScreen))
     },
-    LoadWholeProfile :(token,meta) =>{
-        LoadWholeProfile(token,meta,dispatch);
+    LoadWholeProfile: (token, meta) => {
+        LoadWholeProfile(token, meta, dispatch);
     },
     ShouldRememberLogin: (should) => {
         dispatch(shouldRememberLogin(should));

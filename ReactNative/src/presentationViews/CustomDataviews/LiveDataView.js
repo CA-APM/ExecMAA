@@ -10,6 +10,7 @@ import {PRIMARY_COLOR_800} from "../../constants";
 import * as Util from "../../utils/Util";
 import {DataStatus} from "../../redux/ReduxUtil";
 import {LoadRestView} from "../Other/PresentationUtil";
+import {ComponentStyle} from "../../styles/componentStyle";
 
 
 export default class LiveDataView extends Component {
@@ -52,7 +53,7 @@ export default class LiveDataView extends Component {
      */
     getDataInfo(old, current, agg, label, positiveIsGood) {
 
-        const green = "#00ff6a";
+        const green = "#00b941";
         const red = "#ff2c48";
 
         let color, cs;
@@ -77,10 +78,10 @@ export default class LiveDataView extends Component {
         color = didIncrease ? green : red;
 
 
-        if(old === 0) {
+        if (old === 0) {
             cs = `${sign}${delta} ${label}`;
-        }else{
-            cs = `${sign}${delta} (${deltaPercent}%) ${verb} ${label} than last ${agg}`;
+        } else {
+            cs = `${sign}${delta} (${deltaPercent}%) ${verb} ${label}`;
 
         }
         return {
@@ -108,24 +109,36 @@ export default class LiveDataView extends Component {
     render() {
         return (
 
-            <View style={{width:this.props.width}}>
+            <View style={{width: this.props.width}}>
                 <LoadRestView metadata={this.props.metadata} width={this.props.width} height={200} props={this.props}>
-                    <GridLayout rows={2} cols={2} seperatorColor={PRIMARY_COLOR_800}
+                    <GridLayout titleView={this.props.titleView}
+                                rows={2} cols={2} seperatorColor={PRIMARY_COLOR_800}
                                 height={200}
                     >
                         {
                             this.state.data.map((d) => {
                                 return (<View style={{flex: 1, alignSelf: "center", alignItems: "center"}}>
-                                        <Text style={{textAlign: "center"}}>{d.title}</Text>
-                                        <Blink duration={500}>
-                                            <Text style={{fontSize: 30, textAlign: "center"}}>{d.value}</Text>
-                                            <Text
-                                                style={{
-                                                    fontSize: 12,
+                                        <Text style={
+                                            [ComponentStyle.label,
+                                                {
+                                                    fontSize: 14,
                                                     textAlign: "center",
-                                                    fontWeight: "bold",
-                                                    color: d.color
-                                                }}>{d.changeString}</Text></Blink>
+                                                    fontWeight: "400",
+                                                    color: "black"
+                                                }
+                                            ]}>{d.title}</Text>
+                                        <Blink duration={500}>
+                                            <Text style={[ComponentStyle.label, {color: "black"}]}>{d.value}</Text>
+                                            <Text
+                                                style={
+                                                    [ComponentStyle.label,
+                                                        {
+                                                            fontSize: 14,
+                                                            textAlign: "center",
+                                                            fontWeight: "bold",
+                                                            color: d.color
+                                                        }
+                                                    ]}>{d.changeString}</Text></Blink>
 
                                     </View>
 
@@ -150,6 +163,7 @@ LiveDataView.propTypes = {
 LiveDataView.defaultProps = {
     metadata: {status: DataStatus.notFetching},
     aggregation: "",
+    titleView: null,
     data: [
         {label: "label", current: 0, past: 0, moreOfValueIsGood: true},
         {label: "label", current: 0, past: 0, moreOfValueIsGood: true},

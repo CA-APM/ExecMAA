@@ -10,7 +10,8 @@ import {
     loadToken, t1, testActiveUsers, testCrashes, testGetApps, testGetSessions, testPerformance, testUsers,
     testUsersByPlatform,
     testUsersByRegion,
-    testGetAppSummary, testCompareSummary
+    testGetAppSummary, testCompareSummary,
+    testAppVersions
 } from "./tester"
 import * as Tester from "./tester"
 import {AUTO_LOGIN_INFO, getTest, LOG_NETWORK, setLogLevel, setTesting} from "./projectTest/isTesting";
@@ -20,7 +21,7 @@ import AppSelector from "./src/presentationViews/Other/AppSelector";
 //TODO : We need to periodically sign back in and get a new refresh token
 let serverTesting = function (dispatch) {
     console.log("Testing begin");
-    Tester.loadToken("user","tenant","password").then(() => {
+    Tester.loadToken("krish02","manisha","dost1234@").then(() => {
         testGetApps();
         testCrashes();
         testUsersByRegion();
@@ -31,6 +32,7 @@ let serverTesting = function (dispatch) {
         testUsers();
         testGetAppSummary();
         testCompareSummary();
+        testAppVersions();
     });
 };
 //TODO : Otherwise the data flow will not work some times
@@ -39,14 +41,14 @@ export default class App extends Component {
         // test();
         console.disableYellowBox = true;
 
-        // setTesting(AUTO_LOGIN_INFO);
+        setTesting(AUTO_LOGIN_INFO);
+        // turn auto login off
         setLogLevel(LOG_NETWORK);
 
-        // setLogLevel(0);
         // if(getTest()){
         //     serverTesting();
-        //     return <View>
-        //      </View>
+        //     return (<View>
+        //      </View>)
         // }
 
         // serverTesting();

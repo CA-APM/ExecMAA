@@ -135,6 +135,20 @@ export const getTimeFilter = (endDate, aggregation) => {
 };
 
 
+// returns dd/mm/yyyy
+export const formatDate = (d) => {
+    let day,month,year;
+    day = d.getDate(); month = d.getMonth() + 1; year = d.getFullYear();
+    if(day < 10){
+        day = "0" + day;
+    }
+    if(month < 10){
+        month = "0" + month;
+    }
+
+    return `${month}/${day}/${year}`;
+
+}
 export const dateToReactCalendar = (tf, addMonth) => {
     // expects '2012-03-92'
     let year = tf.getFullYear();

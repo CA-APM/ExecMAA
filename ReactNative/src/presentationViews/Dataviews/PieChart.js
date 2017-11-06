@@ -9,6 +9,7 @@ import LoadingScreen from "../../../LoadingScreen";
 import {LoadRestView, LoadView} from "../Other/PresentationUtil";
 import {DataStatus} from "../../redux/ReduxUtil";
 import {WIDTH} from "../../constants";
+import {ComponentStyle} from "../../styles/componentStyle";
 // Thanks to
 // https://medium.com/the-react-native-log/animated-charts-in-react-native-using-d3-and-art-21cd9ccf6c58
 const {Group, Shape, Surface} = ART;
@@ -209,8 +210,8 @@ export default class PieChart extends Component {
 
 
             <LoadRestView metadata={metadata} width={width} height={height} props={props}>
-                <View style={{height: height,alignItems:'center' ,backgroundColor:"#00000000"}}>
-                    <Text>{title}</Text>
+                <View style={{alignItems:'center' ,backgroundColor:"#00000000"}}>
+                    <Text style={ComponentStyle.label}>{title}</Text>
 
 
                     <Surface width={width} height={height}>
@@ -245,7 +246,7 @@ export default class PieChart extends Component {
                                     return undefined;
                                 }
                                 return (
-                                    <Text  style={{alignSelf:'center', textAlign:'center', transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}}>{elem +" " + percent +"%"}</Text>
+                                    <Text  style={[ComponentStyle.label,{alignSelf:'center',fontSize:18,color:"#000000", transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}]}>{elem +" " + percent +"%"}</Text>
                                 )
                             })
                         }

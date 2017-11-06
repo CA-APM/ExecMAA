@@ -5,16 +5,17 @@ import {
     Text,
     View,
     Image,
-    ActivityIndicator, Modal
+    ActivityIndicator, Modal, ImageBackground
 } from 'react-native';
 import Login from "./src/containers/Login";
-import {componentStyle} from "./src/styles/componentStyle";
+import {ComponentStyle} from "./src/styles/componentStyle";
 import {connect} from 'react-redux'
 import * as Auth from "./src/redux/Authentication/Action";
 import {getLoginCredentials} from "./src/utils/InfoLogger";
 import {DashNavigator} from "./src/containers/containerControllers/DashNavigator";
-import {AUTO_LOGIN_INFO, getTest} from "./projectTest/isTesting";
+import {AUTO_LOGIN_INFO, getAutoLogin, getTest} from "./projectTest/isTesting";
 import {LoadWholeProfile} from "./src/redux/Profile/Action";
+import {HEIGHT, WIDTH} from "./src/constants";
 
 class LoadingScreen extends Component {
     constructor(props) {
@@ -24,53 +25,77 @@ class LoadingScreen extends Component {
     }
 
     tryDefaultLogin() {
-        if(getTest() & AUTO_LOGIN_INFO){
-            const username = "set this to a username";
-            const password = "set this to a password";
-            const tenant = "set this to a tenant";
+
+
+        getLoginCredentials().then(([username, password, tenant]) => {
+
+            if (getAutoLogin().length > 0) {
+                let l1 = getAutoLogin();
+                username = l1[0];
+                password = l1[1];
+                tenant = l1[2];
+            }
+            if (username === "" || username === null) {
+                this.props.Loading(false, false);
+                return;
+            }
+
 
             this.props.UserLoginAction(username, password, tenant).then((loginToken) => {
-                // load alll
-                this.props.LoadWholeProfile(loginToken,this.props.metadata);
-            })
-
-        }else {
-            getLoginCredentials().then(([username, password, tenant]) => {
-                if (username === "" || username === null) {
-                    this.props.Loading(false, false);
-                    return;
-                }
-                this.props.UserLoginAction(username, password, tenant).then((loginToken) => {
-                    this.props.LoadWholeProfile(loginToken,this.props.metadata);
-                });
-
-            }).catch((err) => {
-                console.log(err);
-                this.props.Loading(false, false);
+                this.props.LoadWholeProfile(loginToken, this.props.metadata);
             });
-        }
+
+        }).catch((err) => {
+            console.log(err);
+            this.props.Loading(false, false);
+        });
+
     }
-    renderContent() {
+
+    /*
+
+
+     */
+    render() {
+
+
+
+
         if (this.props.auth.isLoading && this.props.auth.defaultLogin) {
             return (
-                <View style={componentStyle.columnContainer}>
-                    <ActivityIndicator animating={true} size="large" color="blue"/>
-                    <Text>
-                        Loading
-                    </Text>
+                <View style={ComponentStyle.columnContainer}>
+
+                    <ImageBackground style={{width: WIDTH, height: HEIGHT}}
+                                     source={require('./res/splash.png')}
+                    >
+                        <View style={{flexDirection:'column',flex:1}}>
+                            <View style={{flex: 2.5}}/>
+                            <View >
+                                <ActivityIndicator
+                                    animating={true} size="large" color="white"/>
+                                <Text style={[ComponentStyle.header, {backgroundColor: "#FFFFFF00"}]}>
+                                    {"Loading..."}
+                                </Text>
+                            </View>
+
+                            <View style={{flex: 1}}/>
+
+                        </View>
+
+                    </ImageBackground>
+
+
                 </View>);
         } else if (this.props.auth.appToken && this.props.auth.appTenant) {
             return DashNavigator();
-        }else {
+        } else {
             return (
                 <Login/>
             );
         }
     }
 
-    render() {
-        return (this.renderContent());
-    }
+
 }
 
 
@@ -81,14 +106,14 @@ const mapDispatchToActions = (dispatch) => ({
     Loading: (status, defaultScreen) => {
         dispatch(Auth.loading(status, defaultScreen))
     },
-    LoadWholeProfile :(auth,meta) =>{
-        LoadWholeProfile(auth,meta,dispatch);
+    LoadWholeProfile: (auth, meta) => {
+        LoadWholeProfile(auth, meta, dispatch);
     }
 });
 const mapStateToProps = (state) => {
     return {
-        auth : state.authentication,
-        metadata : state.profile.metadata
+        auth: state.authentication,
+        metadata: state.profile.metadata
     }
 }
 

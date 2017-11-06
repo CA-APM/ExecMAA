@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Overview from '../Overview'
 import {View, Text, Dimensions,StyleSheet,Image} from 'react-native'
 import {DrawerNavigator} from 'react-navigation'
-import {componentStyle} from "../../styles/componentStyle";
+import {ComponentStyle} from "../../styles/componentStyle";
 import Crashes from "../toBeDrawerContainers/Crashes";
 import Performance from "../toBeDrawerContainers/Performance";
 import Sessions from "../toBeDrawerContainers/Sessions";
@@ -23,11 +23,11 @@ const DashNavigator = function () {
     DrawerNavigator.DrawerNavigatorConfig
     const TheNav = DrawerNavigator({
         Overview: {screen: Overview},
-        Crashes: {screen: Crashes},
-        Performance: {screen: Performance},
-        Sessions: {screen: Sessions},
-        Usage: {screen: Usage},
-        Settings: {screen: Settings},
+        // Crashes: {screen: Crashes},
+        // Performance: {screen: Performance},
+        // Sessions: {screen: Sessions},
+        // Usage: {screen: Usage},
+        // Settings: {screen: Settings},
         UserLogout       : {screen:Logout}
 
     }, configuration);

@@ -74,6 +74,10 @@ class GridLayout extends Component {
         };
         let newColumnStyle = Object.assign({},columnStyle);
         newColumnStyle ["height"] =  heightPerElement;
+
+
+
+
         React.Children.map(children, (child, index) => {
             if ((index % cols) === 0) {
                 j++;
@@ -96,6 +100,21 @@ class GridLayout extends Component {
                     backgroundColor: seperatorColor
                 }}/>));
         });
+
+        if(this.props.titleView){
+            // push row seperator
+            arrRows.unshift((<View style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
+            arrRows.unshift([
+                <View style={{
+                width: colSeperatorWidth,
+                backgroundColor: seperatorColor
+            }}/>,
+                <View style={{flex:1}}>{this.props.titleView}</View>,
+                <View style={{
+                    width: colSeperatorWidth,
+                    backgroundColor: seperatorColor
+                }}/>]);
+        }
         return (
             <View style={[this.props.containerStyle, {flexDirection: 'column'}]}>
                 <View style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>
@@ -121,6 +140,7 @@ GridLayout.defaultProps = {
     height: HEIGHT,
     rows: 2,
     cols: 2,
+    titleView : null,
     seperatorColor: "#f7f7f7",
     rowSeperatorWidth: 2,
     colSeperatorWidth: 2,

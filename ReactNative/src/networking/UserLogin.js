@@ -35,13 +35,6 @@ const getAuthTokenObject = function () {
     return {"tkn": appToken, "t": appTenant}
 };
 const UserLogin = function (user, pass, tenant) {
-
-    if (getTest()) {
-        user = TestData.USERNAME;
-        pass = TestData.PASSWORD;
-        tenant = TestData.TENANT;
-    }
-
     appTenant = tenant;
     var url1 = BASE_URL;
     var tenantbase64 = "Basic " + btoa(tenant);

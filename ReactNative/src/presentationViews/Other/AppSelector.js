@@ -17,31 +17,27 @@ export default class AppSelector extends Component {
 
         this.transform = this.transform.bind(this);
         this.state = {
-            cacheData: this.transform(this.props.data,""),
+            cacheData: this.transform(this.props.data, ""),
             selectedApp: this.props.selectedApp,
         };
     }
 
 
-
-
     transform(data, filter) {
+        let key = this.props.nameKey;
         if (filter !== "") {
             data = data.filter((val) => {
-                return val.indexOf(filter) >= 0;
+                return val[key].indexOf(filter) >= 0;
             });
         }
-        data.sort((a, b,) => {
-            if (a.toLowerCase() > b.toLowerCase()) {
+        return data.sort((a, b,) => {
+            if (a[key].toLowerCase() > b[key].toLowerCase()) {
                 return 1;
-            } else if (a.toLowerCase() < b.toLowerCase()) {
+            } else if (a[key].toLowerCase() < b[key].toLowerCase()) {
                 return -1;
             } else {
                 return 0;
             }
-        });
-        return data.map((ele) => {
-            return {key: ele};
         });
     }
 
@@ -53,7 +49,13 @@ export default class AppSelector extends Component {
 
 
             <View style={{height: HEIGHT}}>
-                <View style={{paddingTop:10,alignItems:"center",flexDirection: "row", height: HEIGHT / 8, backgroundColor: "#1429ff"}}>
+                <View style={{
+                    paddingTop: 10,
+                    alignItems: "center",
+                    flexDirection: "row",
+                    height: HEIGHT / 8,
+                    backgroundColor: "#1429ff"
+                }}>
                     <View style={{flex: 1}}>
                         <Icon
 
@@ -69,7 +71,7 @@ export default class AppSelector extends Component {
                         />
                     </View>
 
-                    <Text style={{ fontSize: 30}}>
+                    <Text style={{fontSize: 30}}>
                         {selectedApp}
                     </Text>
                     <View style={{flex: 1}}/>
@@ -84,12 +86,14 @@ export default class AppSelector extends Component {
                     autoCapitalize={'none'}
                     clearIcon={{color: '#86939e', name: 'clear'}}
                     onChangeText={(searchText) => {
-                        this.setState({cacheData:this.transform(this.props.data,searchText)})
+                        this.setState({cacheData: this.transform(this.props.data, searchText)})
                     }}
                     placeHolder="Search Apps..."/>
                 <AppList
                     data={finalData}
                     selectedApp={selectedApp}
+                    nameKey={this.props.nameKey}
+                    imageKey={this.props.imageKey}
                     onPress={(finalData) => {
                         this.setState({selectedApp: finalData});
                     }}
@@ -107,4 +111,6 @@ AppSelector.defaultProps = {
     onDismiss: null,
     data: null,
     selectedApp: "",
+    nameKey: "",
+    imageKey: ""
 };

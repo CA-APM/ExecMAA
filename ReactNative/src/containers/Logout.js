@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {userLogoutAction} from "../redux/Authentication/Action";
 import {Image, View} from "react-native";
-import {componentStyle} from "../styles/componentStyle";
+import {ComponentStyle} from "../styles/componentStyle";
+import {Icon} from "react-native-elements";
 
 class Logout extends Component {
     static navigationOptions = {
@@ -10,9 +11,10 @@ class Logout extends Component {
         // this should be conected to datastore
         drawerLabel: 'Logout',
         drawerIcon: ({ tintColor }) => (
-            <Image
-                source={require('../../res/chats-icon.jpg')}
-                style={[componentStyle.drawerIcon, {tintColor: tintColor}]}
+            <Icon
+                containerStyle={{transform: [{ rotate: '180deg'}]}}
+                name='sign-out'
+                type='font-awesome'
             />
         ),
     };

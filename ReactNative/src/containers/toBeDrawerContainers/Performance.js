@@ -5,7 +5,7 @@ import {
     StyleSheet, Text,
     View
 } from 'react-native'
-import {componentStyle} from "../../styles/componentStyle";
+import {ComponentStyle} from "../../styles/componentStyle";
 import NavigatorBar from "../NavigationBar";
 
 
@@ -13,10 +13,8 @@ export default class Performance extends Component {
     static navigationOptions = {
         drawerLabel: 'Performance',
         drawerIcon: ({ tintColor }) => (
-            <Image
-                source={require('../../../res/chats-icon.jpg')}
-                style={[componentStyle.drawerIcon, {tintColor: tintColor}]}
-            />
+            <View/>
+
         ),
     };
 
