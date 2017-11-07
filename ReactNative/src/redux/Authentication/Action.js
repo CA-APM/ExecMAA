@@ -23,6 +23,9 @@ export const loading = (status = true, defaultScreen = false) => {
     }
 };
 
+export const resetAuthentication = () =>{
+    return userLogoutAction();
+}
 
 const loginResultsReceieved = (success, isLoading, defaultLogin, token, tenant, error) => {
     return {
@@ -32,7 +35,13 @@ const loginResultsReceieved = (success, isLoading, defaultLogin, token, tenant, 
             appTenant: tenant,
             error: error,
             isLoading: isLoading,
-            defaultLogin: defaultLogin
+            defaultLogin: defaultLogin,
+            username: "",
+            password: "",
+            tenant: "",
+            usernameError: "",
+            passwordError: "",
+            tenantError: "",
         }
     }
 };

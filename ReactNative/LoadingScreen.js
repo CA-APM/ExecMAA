@@ -24,8 +24,10 @@ class LoadingScreen extends Component {
         this.tryDefaultLogin();
     }
 
+
     tryDefaultLogin() {
 
+        this.props.Loading(false, false);
 
         getLoginCredentials().then(([username, password, tenant]) => {
 
@@ -41,6 +43,7 @@ class LoadingScreen extends Component {
             }
 
 
+            this.props.Loading(true, true);
             this.props.UserLoginAction(username, password, tenant).then((loginToken) => {
                 this.props.LoadWholeProfile(loginToken, this.props.metadata);
             });
@@ -57,6 +60,7 @@ class LoadingScreen extends Component {
 
      */
     render() {
+
 
 
 

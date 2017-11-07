@@ -21,7 +21,7 @@ import AppSelector from "./src/presentationViews/Other/AppSelector";
 //TODO : We need to periodically sign back in and get a new refresh token
 let serverTesting = function (dispatch) {
     console.log("Testing begin");
-    Tester.loadToken("krish02","manisha","dost1234@").then(() => {
+    Tester.loadToken("krish02", "manisha", "dost1234@").then(() => {
         testGetApps();
         testCrashes();
         testUsersByRegion();
@@ -55,10 +55,11 @@ export default class App extends Component {
 
 
 
+
         return (
-            <Provider store={DataStore}>
-                <LoadingScreen/>
-            </Provider>
+                <Provider store={DataStore}>
+                    <LoadingScreen/>
+                </Provider>
 
         );
     }
