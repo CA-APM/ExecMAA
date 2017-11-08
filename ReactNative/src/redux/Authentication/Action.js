@@ -42,6 +42,7 @@ export const logoutAndReset = (dispatch) =>{
         dispatch({type:"AUTH_LOGOUT",payload:null});
         dispatch({type:"PROFILE_LOGOUT",payload:null});
         dispatch({type:"UTIL_LOGOUT",payload:null});
+
     });
 
 
@@ -66,7 +67,8 @@ const loginResultsReceieved = (success, isLoading, defaultLogin, token, appTenan
     }
 };
 
-export const userLoginAction = async (user, password, tenant, dispatch) => {
+export const userLoginAction = async (user, password, tenant, dispatch,defaultScreen = false) => {
+    dispatch(loading(true,defaultScreen,null));
     return UserLogin(user, password, tenant).then((res) => {
         let encoded = res.token;
         dispatch(loginResultsReceieved(true, false, false, encoded, tenant, null,user,password,tenant));

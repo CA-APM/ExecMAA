@@ -194,7 +194,7 @@ class NavigatorBar extends Component {
                                             }]}>{this.state.meta.app_id}</Text>
                                         </View>
 
-                                        <Icon containerStyle={{width: 70}}
+                                        <Icon containerStyle={{width: 50}}
                                               name="navigate-before"
                                               color="#205796"
                                               size={CONSTANTS.scale(35)}

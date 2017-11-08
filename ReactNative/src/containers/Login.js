@@ -14,6 +14,7 @@ import {WIDTH} from "../constants";
 import {logoutAndReset} from "../redux/Authentication/Action";
 import {setCredentials} from "../utils/InfoLogger";
 import {handledLoginError} from "../redux/Authentication/Action";
+import Spinner from "react-native-loading-spinner-overlay";
 
 
 /**
@@ -56,10 +57,12 @@ class Login extends Component {
     loginRequest(login) {
         let saveLogin = this.state.rememberLogin;
         // is loading and is default login screen
-        this.props.UserLoginAction(login.username, login.password, login.tenant).then((loginToken) => {
+        this.props.UserLoginAction(login.username, login.password, login.tenant,true).then((loginToken) => {
             this.props.LoadWholeProfile(loginToken, this.props.metadata);
             if (saveLogin) {
                 setCredentials(login.username, login.password, login.tenant);
+            }else{
+                setCredentials("", "", "");
             }
         }).catch((err) => {
 
@@ -161,7 +164,9 @@ class Login extends Component {
 
     renderActivityIndicator() {
         if (this.props.auth.isLoading) {
-            return (        <ActivityIndicator color='rgb(0, 0, 255)' animating={true} size={'large'}/>
+
+            return (
+                <Spinner visible={true} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
             );
         } else {
             return undefined;
@@ -238,8 +243,8 @@ class Login extends Component {
 
 
 const mapDispatchToActions = (dispatch) => ({
-    UserLoginAction: (user, password, tenant) => {
-        return Auth.userLoginAction(user, password, tenant, dispatch)
+    UserLoginAction: (user, password, tenant,defaultScreen) => {
+        return Auth.userLoginAction(user, password, tenant, dispatch,defaultScreen)
     }, // We are not dispatching this, let is control how it wants to be dispatched
     LoadWholeProfile: (token, meta) => {
         LoadWholeProfile(token, meta, dispatch);

@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {View, ActivityIndicator, Text} from 'react-native'
 import {DataStatus} from "../../redux/ReduxUtil";
 import {Button} from "react-native-elements";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export const LoadView = (props) => {
     return (
@@ -31,7 +32,7 @@ export class LoadRestView extends Component {
             return (
                 <View style={{width: width, height: height, alignItems: "center", alignContent: "center"}}>
                     <View style={{flex: 1}}/>
-                    <Button title="Tap to load" onPress={callback}></Button>
+                    <Text>{"Unable to load, please refresh"}</Text>
                     <View style={{flex: 1}}/>
                 </View>
             )
@@ -39,7 +40,7 @@ export class LoadRestView extends Component {
             return (
                 <View style={{width: width, height: height, alignItems: "center", alignContent: "center"}}>
                     <View style={{flex: 1}}/>
-                    <ActivityIndicator isLoading={true}/>
+                    <Spinner visible={true} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
                     <View style={{flex: 1}}/>
                 </View>
             )
@@ -50,7 +51,6 @@ export class LoadRestView extends Component {
                     <Text>
                         {`There was an error loading this data`}
                     </Text>
-                    <Button title="Tap to re-load" onPress={callback}></Button>
                     <View style={{flex: 1}}/>
                 </View>
             )
