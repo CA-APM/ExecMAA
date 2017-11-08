@@ -32,3 +32,12 @@ export const WIDTH = width;
 export const HEIGHT = height;
 // DIMENSIONS END
 
+// https://blog.solutotlv.com/size-matters/
+const guidelineBaseWidth = 350;
+const guidelineBaseHeight = 680;
+
+const scale = size => width / guidelineBaseWidth * size;
+const verticalScale = size => height / guidelineBaseHeight * size;
+const moderateScale = (size, factor = 0.5) => size + ( scale(size) - size ) * factor;
+
+export {scale, verticalScale, moderateScale};

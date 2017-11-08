@@ -10,13 +10,6 @@ export const switchConfigPicker = (details) => {
     };
 
 };
-export const shouldRememberLogin = (shouldRemember) => {
-    return {
-        type: ACTIONS.rememberLogin,
-        shouldRemember: shouldRemember
-    };
-};
-
 
 //region App List loading actions
 const loadingAppList = () => {

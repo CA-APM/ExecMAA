@@ -7,6 +7,7 @@ import {ACTION_TYPES} from "./Reducer";
 import * as GET  from "../../networking/GetProfile";
 import * as Util from "../Util/Action";
 import {LoadAllVersions} from "../Util/Action";
+import * as Auth from "../Authentication/Action";
 
 export const AllProfile = "All";
 
@@ -59,7 +60,12 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
             }
         }));
     }
-    Promise.all(promises);
+    Promise.all(promises).then(()=>{
+    }).catch((err)=>{
+        // not loading
+        // failed
+        dispatch(Auth.loading(false,true,err));
+    });
 
 
 

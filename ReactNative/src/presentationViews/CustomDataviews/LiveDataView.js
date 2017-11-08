@@ -63,6 +63,7 @@ export default class LiveDataView extends Component {
 
         let didIncrease = deltaPercent > 0;
         let sign = didIncrease ? "+" : "-";
+
         let verb = didIncrease ? "more" : "less";
 
         if (!positiveIsGood) {
@@ -71,6 +72,9 @@ export default class LiveDataView extends Component {
         current = Util.formatNumber(current, 1000);
         delta = Util.formatNumber(delta, 1000);
         deltaPercent = Util.formatToDecimal(deltaPercent, 100);
+        if(deltaPercent == 0){
+            didIncrease = "";
+        }
 
 
         deltaPercent = deltaPercent.toString().replace(/-/, "");

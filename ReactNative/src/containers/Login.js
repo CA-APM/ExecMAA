@@ -11,7 +11,9 @@ import {LoadWholeProfile} from "../redux/Profile/Action";
 import {HEIGHT} from "../constants";
 import {ComponentStyle} from "../styles/componentStyle";
 import {WIDTH} from "../constants";
-import {resetAuthentication} from "../redux/Authentication/Action";
+import {logoutAndReset} from "../redux/Authentication/Action";
+import {setCredentials} from "../utils/InfoLogger";
+import {handledLoginError} from "../redux/Authentication/Action";
 
 
 /**
@@ -25,8 +27,9 @@ class Login extends Component {
         let auth = props.auth;
         let authCopy = Object.assign({}, auth);
         this.state = {
-            failedLoading: authCopy.error !== null,
+            failedLoading: authCopy.error != null,
             auth: authCopy,
+            rememberLogin: true
         };
 
         this.loginRequest = this.loginRequest.bind(this);
@@ -35,24 +38,33 @@ class Login extends Component {
         this.checkFormsAndSubmit = this.checkFormsAndSubmit.bind(this);
         this.errorView = this.errorView.bind(this);
         this.resetFields = this.resetFields.bind(this);
+        this.renderActivityIndicator = this.renderActivityIndicator.bind(this);
     }
 
 
     componentWillReceiveProps(props) {
         let auth = props.auth;
         let authCopy = Object.assign({}, auth);
+        let failed = true;
         this.setState({
-            failedLoading: authCopy.error !== null,
-            auth: authCopy
+            failedLoading: authCopy.error != null,
+            auth: authCopy,
+            rememberLogin: true
         })
     }
 
     loginRequest(login) {
-        this.props.Loading(true, false);
+        let saveLogin = this.state.rememberLogin;
+        // is loading and is default login screen
         this.props.UserLoginAction(login.username, login.password, login.tenant).then((loginToken) => {
             this.props.LoadWholeProfile(loginToken, this.props.metadata);
+            if (saveLogin) {
+                setCredentials(login.username, login.password, login.tenant);
+            }
         }).catch((err) => {
+
         });
+
     }
 
     didChangeText(key, text) {
@@ -76,7 +88,7 @@ class Login extends Component {
         let login = Object.assign({}, this.state.auth);
 
         for (let i = 0; i < strings.length; i++) {
-            if (strings[i] === "" || emptyString.test(strings[i])) {
+            if (strings[i] == null || strings[i] === "" || emptyString.test(strings[i])) {
                 let errorMessage = `Please enter a ${descriptions[i]}`;
                 login[stateDescriptions[i]] = errorMessage;
                 err = true;
@@ -100,35 +112,57 @@ class Login extends Component {
 
     didCheckBox(state) {
         console.log("Did check box with state " + state);
-        this.props.ShouldRememberLogin(state);
+        this.setState({
+            rememberLogin: !this.state.rememberLogin
+        });
 
     }
 
     resetFields() {
-        for (let input of this.inputs) {
-            if (input) {
-                input.clearText();
-            }
-        }
-        this.props.resetAuth();
+        // for (let input of this.inputs) {
+        //     if (input) {
+        //         input.clearText();
+        //     }
+        // }
+        this.props.handledError();
+
     }
 
     errorView() {
         if (this.state.failedLoading) {
             return <View style={{position: 'absolute', width: WIDTH, height: HEIGHT, backgroundColor: "#f0f0f0AA"}}>
-                    <View style={{flex: 1}}>
-                        <View style={{flex: 1}}/>
-                        <Button buttonStyle={{backgroundColor: "#FFFFFF", borderWidth: 3, borderColor: "#205796"}}
-                                title="Failed logging in please try again" textStyle={ComponentStyle.label}
-                                onPress={() => {
-                                    this.resetFields();
-                                }}></Button>
-                        <View style={{flex: 1}}/>
-                    </View>
-                <TouchableHighlight underlayColor="#00000000" style={{position: 'absolute', width: WIDTH, height: HEIGHT}} onPress={()=>{this.resetFields()}}>
+                <View style={{flex: 1}}>
+                    <View style={{flex: 1}}/>
+                    <Button buttonStyle={{
+                        borderRadius: 10,
+                        backgroundColor: "#FFFFFF",
+                        borderWidth: 3,
+                        borderColor: "#205796"
+                    }}
+                            title="Failed logging in, please try again"
+                            textStyle={[ComponentStyle.label, {fontSize: 18}]}
+                            onPress={() => {
+                                this.resetFields();
+                            }}></Button>
+                    <View style={{flex: 1}}/>
+                </View>
+                <TouchableHighlight underlayColor="#00000000"
+                                    style={{position: 'absolute', width: WIDTH, height: HEIGHT}} onPress={() => {
+                    this.resetFields()
+                }}>
                     <View></View>
                 </TouchableHighlight>
             </View>
+        } else {
+            return undefined;
+        }
+
+    }
+
+    renderActivityIndicator() {
+        if (this.props.auth.isLoading) {
+            return (        <ActivityIndicator color='rgb(0, 0, 255)' animating={true} size={'large'}/>
+            );
         } else {
             return undefined;
         }
@@ -140,15 +174,19 @@ class Login extends Component {
         return (
 
 
-            <View style={{paddingTop: 30}}>
-                <View style={{height: HEIGHT / 4}}>
-                    <Image
-                        style={{marginTop: -30, alignContent: 'center', alignSelf: 'center'}}
-                        source={require("../../res/ca-technologies-logo.png")}/>
-                </View>
-                <View>
-                    <ActivityIndicator animating={this.state.auth.isLoading} size={'large'}/>
-                    <FormLabel labelStyle={[ComponentStyle.smallLabel, {textAlign: 'left'}]}>Username</FormLabel>
+            <View style={{paddingTop: 30, flex: 1}}>
+
+
+                <Image
+
+                    resizeMode='contain'
+                    style={{height: 150, marginTop: -25, alignSelf: 'center'}}
+                    source={require("../../res/ca-technologies-logo.png")}/>
+                <View style={{marginTop: -40}}>
+                    {this.renderActivityIndicator()}
+
+                    <FormLabel
+                        labelStyle={[ComponentStyle.smallLabel, {fontSize: 20, textAlign: 'left'}]}>Username</FormLabel>
                     <FormInput
                         ref={input => this.inputs.push(input)}
                         autoCorrect={false}
@@ -157,7 +195,8 @@ class Login extends Component {
                         inputStyle={{color: constants.PRIMARY_COLOR_900}}
                         onChangeText={(text) => this.didChangeText("username", text)}/>
                     <FormValidationMessage>{this.state.auth.usernameError == "" ? undefined : this.state.auth.usernameError}</FormValidationMessage>
-                    <FormLabel labelStyle={[ComponentStyle.smallLabel, {textAlign: 'left'}]}>Password</FormLabel>
+                    <FormLabel
+                        labelStyle={[ComponentStyle.smallLabel, {fontSize: 20, textAlign: 'left'}]}>Password</FormLabel>
                     <FormInput
                         ref={input => this.inputs.push(input)}
                         autoCorrect={false}
@@ -165,7 +204,8 @@ class Login extends Component {
                         inputStyle={{color: constants.PRIMARY_COLOR_900}} secureTextEntry={true}
                         onChangeText={(text) => this.didChangeText("password", text)}/>
                     <FormValidationMessage>{this.state.auth.passwordError == "" ? undefined : this.state.auth.passwordError}</FormValidationMessage>
-                    <FormLabel labelStyle={[ComponentStyle.smallLabel, {textAlign: 'left'}]}>Tenant</FormLabel>
+                    <FormLabel
+                        labelStyle={[ComponentStyle.smallLabel, {fontSize: 20, textAlign: 'left'}]}>Tenant</FormLabel>
                     <FormInput
                         ref={input => this.inputs.push(input)}
                         autoCorrect={false}
@@ -175,14 +215,16 @@ class Login extends Component {
                     <FormValidationMessage>{this.state.auth.tenantError == "" ? undefined : this.state.auth.tenantError}</FormValidationMessage>
 
                     <CheckBox
-                        checked={this.props.util.shouldRemember} title="Remember default login" iconRight
+                        checked={this.state.rememberLogin} title="Remember default login" iconRight
                         containerStyle={{alignItems: 'center', backgroundColor: "#FFFFFF"}}
                         uncheckedColor={constants.PRIMARY_COLOR_800}
-                        onPress={() => this.didCheckBox(!this.props.util.shouldRemember)}
+                        onPress={() => this.didCheckBox()}
                         checkedColor={constants.PRIMARY_COLOR_800}/>
                     <Button raised large title="Login" backgroundColor={constants.PRIMARY_COLOR_800}
                             rightIcon={{name: 'check'}} onPress={() => this.checkFormsAndSubmit()}/>
                 </View>
+
+
                 {this.errorView()}
 
             </View>
@@ -199,17 +241,14 @@ const mapDispatchToActions = (dispatch) => ({
     UserLoginAction: (user, password, tenant) => {
         return Auth.userLoginAction(user, password, tenant, dispatch)
     }, // We are not dispatching this, let is control how it wants to be dispatched
-    Loading: (status, defaultScreen) => {
-        dispatch(Auth.loading(status, defaultScreen))
-    },
     LoadWholeProfile: (token, meta) => {
         LoadWholeProfile(token, meta, dispatch);
     },
-    ShouldRememberLogin: (should) => {
-        dispatch(shouldRememberLogin(should));
-    },
     resetAuth: () => {
-        dispatch(resetAuthentication());
+        dispatch(logoutAndReset());
+    },
+    handledError:()=>{
+        dispatch(handledLoginError())
     }
 
 });

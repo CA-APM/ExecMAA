@@ -1,4 +1,6 @@
 import {UserLogin} from "../../networking/UserLogin";
+import {InitialState} from "../ReduxUtil";
+import {setCredentials} from "../../utils/InfoLogger";
 
 
 const setLoginDetails = (details) => {
@@ -9,36 +11,54 @@ const setLoginDetails = (details) => {
 
 };
 
-export const loading = (status = true, defaultScreen = false) => {
+export const loading = (status = true, defaultScreen = false,error=null) => {
 
     return {
         type: 'LOADING',
         payload: {
             appToken: null,
             appTenant: null,
-            error: null,
+            error: error,
             defaultLogin: defaultScreen,
             isLoading: status,
         }
     }
 };
 
-export const resetAuthentication = () =>{
-    return userLogoutAction();
+export const handledLoginError = () =>{
+    return {
+        type: 'FAILED_LOGIN_HANDLED',
+        payload: {
+            error: null,
+            isLoading: false
+        }
+    }
 }
 
-const loginResultsReceieved = (success, isLoading, defaultLogin, token, tenant, error) => {
+export const logoutAndReset = (dispatch) =>{
+    setCredentials("","","").then(()=>{
+
+    }).then(()=>{
+        dispatch({type:"AUTH_LOGOUT",payload:null});
+        dispatch({type:"PROFILE_LOGOUT",payload:null});
+        dispatch({type:"UTIL_LOGOUT",payload:null});
+    });
+
+
+}
+
+const loginResultsReceieved = (success, isLoading, defaultLogin, token, appTenant, error,user,password,tenant) => {
     return {
         type: success == false ? "FAILED_FETCH_TOKEN" : "FETCHED_TOKEN",
         payload: {
             appToken: token,
-            appTenant: tenant,
+            appTenant: appTenant,
             error: error,
             isLoading: isLoading,
             defaultLogin: defaultLogin,
-            username: "",
-            password: "",
-            tenant: "",
+            username: user,
+            password: password,
+            tenant: tenant,
             usernameError: "",
             passwordError: "",
             tenantError: "",
@@ -46,31 +66,13 @@ const loginResultsReceieved = (success, isLoading, defaultLogin, token, tenant, 
     }
 };
 
-export const userLogoutAction = () => {
-    return {
-        type: 'LOGOUT',
-        payload: {
-            username: "",
-            password: "",
-            tenant: "",
-            usernameError: "",
-            passwordError: "",
-            tenantError: "",
-            appToken: null,
-            appTenant: null,
-            error: null,
-            defaultLogin: false,
-            isLoading: false
-        }
-    };
-};
 export const userLoginAction = async (user, password, tenant, dispatch) => {
     return UserLogin(user, password, tenant).then((res) => {
         let encoded = res.token;
-        dispatch(loginResultsReceieved(true, true, false, encoded, tenant, null));
+        dispatch(loginResultsReceieved(true, false, false, encoded, tenant, null,user,password,tenant));
         return encoded;
     }).catch((err) => {
-        dispatch(loginResultsReceieved(false, false, false, null, null, err));
+        dispatch(loginResultsReceieved(false, false, false, null, null, err,user,password,tenant));
         throw err;
     });
 };

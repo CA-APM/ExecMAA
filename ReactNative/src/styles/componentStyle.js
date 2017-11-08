@@ -42,7 +42,7 @@ const ComponentStyle = StyleSheet.create({
     },
     header: {
         color: "#FFFFFF",
-        fontSize: 40,
+        fontSize: CONSTANTS.scale(36),
         textAlign: 'center',
         fontFamily: 'Helvetica Neue'
     },

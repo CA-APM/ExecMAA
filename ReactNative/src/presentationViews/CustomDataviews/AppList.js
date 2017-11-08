@@ -15,6 +15,7 @@ export default class AppList extends Component {
         super(props);
 
         this.state = {
+            selected :(new Map(): Map<string, boolean>),
             selectedApp: this.props.selectedApp
         };
         // set state
@@ -24,6 +25,15 @@ export default class AppList extends Component {
 
     didSelectApp(app) {
         this.props.onPress(app);
+
+
+        this.setState((state) => {
+            // copy the map rather than modifying state.
+            const selected = new Map(state.selected);
+            selected.set(id, !selected.get(id)); // toggle
+            return {selected};
+        });
+
     }
 
 
@@ -37,6 +47,7 @@ export default class AppList extends Component {
         let image = obj[imageKey];
 
         let appPicture = obj[imageKey];
+        // TODO change to use the new map selected
         if (name === this.state.selectedApp) {
             return (
                 <ListItem
@@ -73,7 +84,7 @@ export default class AppList extends Component {
         return (
             <FlatList
                 scrollEnabled={true}
-                extraData={this.props.data}
+                extraData={this.state.selected}
                 data={this.props.data}
                 renderItem={(obj) => {
                     return this.renderItem(obj);

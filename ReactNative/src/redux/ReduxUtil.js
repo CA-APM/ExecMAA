@@ -15,6 +15,11 @@ export const Aggregation = {
     week: "week",
     month: "month"
 };
+
+const Default= {
+    aggregation : Aggregation.day,
+    app_id :"All",
+}
 const state = {
     util: {
         shouldRemember: true,
@@ -63,9 +68,9 @@ const state = {
         metadata: {
             metaChanged: false,
             errorMessage: "",
-            aggregation: "month",
+            aggregation: Default.aggregation,
             app_id: "All",
-            timeFilter: Util.getBatchTimeFilter(new Date(), "month"),
+            timeFilter: Util.getBatchTimeFilter(new Date(), Default.aggregation),
             version : ""
 
             // this is what the time filter object actually looks like!! :D

@@ -18,6 +18,9 @@ const profile = (state = InitialState("profile"), action) => {
         case ACTION_TYPES.CHANGE_DATA:{
             return CopyAndOverrideKey(state,action.payload,action.keyList);
         }
+        case  'PROFILE_LOGOUT' : {
+            return InitialState("profile");
+        }
         default:
             return state;
     }

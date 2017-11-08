@@ -41,9 +41,9 @@ export default class App extends Component {
         // test();
         console.disableYellowBox = true;
 
-        setTesting(AUTO_LOGIN_INFO);
+        // setTesting(AUTO_LOGIN_INFO);
         // turn auto login off
-        setLogLevel(LOG_NETWORK);
+        // setLogLevel(LOG_NETWORK);
 
         // if(getTest()){
         //     serverTesting();

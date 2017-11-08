@@ -23,6 +23,9 @@ import AppList from "../presentationViews/CustomDataviews/AppList";
 import {DataStatus} from "../redux/ReduxUtil";
 import AppSelector from "../presentationViews/Other/AppSelector";
 import {formatDate} from "../utils/Util";
+import * as CONSTANTS from "../constants";
+import {getBatchTimeFilter} from "../utils/Util";
+import {getCalendarTimeFilter} from "../utils/Util";
 
 
 formatMonitoringTitle = (meta) => {
@@ -63,6 +66,7 @@ class NavigatorBar extends Component {
         this.renderPicker = this.renderPicker.bind(this);
         this.updateProfileVersion = this.updateProfileVersion.bind(this);
         this.getAppVersionsFor = this.getAppVersionsFor.bind(this);
+        this.changeDate = this.changeDate.bind(this);
     }
 
 
@@ -74,17 +78,16 @@ class NavigatorBar extends Component {
 
     selectedApp(app) {
         let oldApp = this.state.meta.app_id;
-        if (app !== oldApp) {
-            let newMeta = Object.assign({}, this.state.meta);
-            newMeta.app_id = app;
-            this.setState({
-                version: "default",
-                showAppList: false,
-                shouldSendRequest: true,
-                changed: true,
-                meta: newMeta
-            });
-        }
+        let changed = app !== oldApp;
+        let newMeta = Object.assign({}, this.state.meta);
+        newMeta.app_id = app;
+        this.setState({
+            version: "default",
+            showAppList: false,
+            shouldSendRequest: true,
+            changed: changed,
+            meta: newMeta
+        });
     }
 
     render() {
@@ -112,12 +115,13 @@ class NavigatorBar extends Component {
             return (
                 <View>
                     <View style={[{
-                        width: Dimensions.get('window').width,
-                        height: HEIGHT / 8.0,
+
+                        height: CONSTANTS.moderateScale(HEIGHT / 8.0, 0),
                         backgroundColor: constants.PRIMARY_COLOR_800,
                     }, ComponentStyle.center]}>
-                        <View style={{flex: 1.0, paddingTop: 10}}>
+                        <View style={{flex: 1.0, paddingTop: 15}}>
                             <Icon
+
                                 raised
                                 name='bars'
                                 type='font-awesome'
@@ -125,7 +129,7 @@ class NavigatorBar extends Component {
                                 containerStyle={{backgroundColor: constants.WHITE}}
                                 onPress={() => this.showDrawer()}/>
                         </View>
-                        <View>
+                        <View style={{marginTop:10}}>
 
                             <Text numberOfLines={1}
                                   style={ComponentStyle.header}>
@@ -138,9 +142,12 @@ class NavigatorBar extends Component {
 
                         <View style={{flex: 1.0}}>
 
-                            <View style={{alignItems: 'flex-end', paddingTop: 12}}>
+                            <View style={{alignItems: 'flex-end', paddingTop: 15}}>
                                 <CheckBox
-                                    containerStyle={{width: 50, height: 50}}
+                                    containerStyle={{
+                                        width: CONSTANTS.moderateScale(50),
+                                        height: CONSTANTS.moderateScale(50)
+                                    }}
                                     checkedIcon="chevron-down"
                                     uncheckedIcon="chevron-up"
                                     checked={this.props.util.showConfigPicker}
@@ -152,7 +159,6 @@ class NavigatorBar extends Component {
                                     }}/>
                             </View>
                         </View>
-
                     </View>
                     {this.props.util.showConfigPicker ? undefined :
                         <View style={{backgroundColor: "#f7f7f7"}}>
@@ -162,18 +168,61 @@ class NavigatorBar extends Component {
                                 }}
                             >
                                 <View style={{
-                                    alignContent: 'center',
+
                                     marginTop: 5,
-                                    borderBottomWidth: 3,
-                                    borderTopWidth: 3,
+                                    borderBottomWidth: 1.5,
+                                    borderTopWidth: 1.5,
                                     borderColor: "#205796",
-                                    flexDirection: 'column',
                                     backgroundColor: "#ffffff",
                                     height: HEIGHT / 12.0,
                                     width: WIDTH
                                 }}>
-                                    <Text style={[ComponentStyle.description]}>{`${begin}-${end}`}</Text>
-                                    <Text style={[ComponentStyle.description]}>{this.state.meta.app_id}</Text>
+
+                                    <View style={{flexDirection: 'row',flex:1, alignItems:'center'}}>
+                                        <Icon containerStyle={{width: 50}}
+                                              name="calendar"
+                                              color="#205796"
+                                              type="font-awesome"
+                                              onPress={()=>{this.dismissedCalendar()}}
+                                        />
+                                        <View style={{paddingRight: 30}}>
+                                            <Text
+                                                style={[ComponentStyle.description, {fontWeight: "bold"}]}>{`${begin}-${end}`}</Text>
+                                            <Text style={[ComponentStyle.description, {
+                                                fontSize: 16,
+                                                textAlign: "left"
+                                            }]}>{this.state.meta.app_id}</Text>
+                                        </View>
+
+                                        <Icon containerStyle={{width: 70}}
+                                              name="navigate-before"
+                                              color="#205796"
+                                              size={CONSTANTS.scale(35)}
+                                              onPress={() => {
+
+                                                  //set state
+                                                  this.changeDate(getBatchTimeFilter(tf.jsStartDate,this.state.meta.aggregation),()=>{
+                                                      this.reloadProfile();
+                                                  });
+                                              }
+
+                                              }
+                                        />
+                                        <Icon containerStyle={{width: 70}}
+                                              size={CONSTANTS.scale(35)}
+                                              name="navigate-next"
+                                              color="#205796"
+                                              onPress={() => {
+
+                                                  this.changeDate(getBatchTimeFilter(tf.jsEndDate,this.state.meta.aggregation,false),()=>{
+                                                      this.reloadProfile();
+                                                  });
+
+                                              }
+                                              }
+                                        />
+
+                                    </View>
                                 </View>
                             </TouchableHighlight>
                         </View>
@@ -222,15 +271,18 @@ class NavigatorBar extends Component {
         this.setState({meta: newProfile, changed: true});
     }
 
+    changeDate(filter,cb){
+        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter});
+        this.setState({meta: newProfile, changed: true},cb);
+
+    }
     datePressed(dateObject) {
         // get the current aggregation type
         let aggregation = this.state.meta.aggregation;
         let timeNow = new Date();
         let end = new Date(dateObject.year, dateObject.month - 1, dateObject.day, timeNow.getHours(), timeNow.getMinutes());
         let filter = Util.getCalendarTimeFilter(end, aggregation);
-        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter});
-        this.setState({meta: newProfile, changed: true});
-
+        this.changeDate(filter);
     }
 
 

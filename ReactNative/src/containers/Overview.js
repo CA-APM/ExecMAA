@@ -71,7 +71,6 @@ class Overview extends Component {
 
     render() {
 
-
         let crashData = this.props.crashes;
         let userVisits = this.props.userVisits;
         const padding = 20;
@@ -113,13 +112,12 @@ class Overview extends Component {
                                         titleView={
                                             <View style={{flex: 1, alignItems:'center'}}>
                                                 <View style={{flex:1}}/>
-                                                <Text>{"Comparing "}</Text>
-                                                <Text style={[ComponentStyle.description]}>
-                                                    {d2}
-                                                </Text>
-                                                <Text>{"to"}</Text>
                                                 <Text style={[ComponentStyle.description]}>
                                                     {d1}
+                                                </Text>
+                                                <Text>{"vs."}</Text>
+                                                <Text style={[ComponentStyle.description]}>
+                                                    {d2}
                                                 </Text>
 
                                                 <View style={{flex:1}}/>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
-import {userLogoutAction} from "../redux/Authentication/Action";
+import {logoutAndReset, resetAuth} from "../redux/Authentication/Action";
 import {Image, View} from "react-native";
 import {ComponentStyle} from "../styles/componentStyle";
 import {Icon} from "react-native-elements";
@@ -33,7 +33,7 @@ class Logout extends Component {
 
 
 const mapDispatchToActions = (dispatch) => ({
-    logout : () => dispatch(userLogoutAction())
+    logout : () => logoutAndReset(dispatch)
 });
 
 

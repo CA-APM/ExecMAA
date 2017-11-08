@@ -8,7 +8,7 @@ import Performance from "../toBeDrawerContainers/Performance";
 import Sessions from "../toBeDrawerContainers/Sessions";
 import Usage from "../toBeDrawerContainers/Usage";
 import Settings from "../toBeDrawerContainers/Settings";
-import {userLogoutAction} from "../../redux/Authentication/Action";
+import {resetAuth} from "../../redux/Authentication/Action";
 import {connect} from "react-redux";
 import Logout from "../Logout";
 // import AppPicker from "../AppPicker";
@@ -16,9 +16,11 @@ import Logout from "../Logout";
 
 
 
+
+
 const DashNavigator = function () {
     const configuration = {
-        drawerWidth: Dimensions.get('window').width - 200
+        drawerWidth: 200
     };
     DrawerNavigator.DrawerNavigatorConfig
     const TheNav = DrawerNavigator({

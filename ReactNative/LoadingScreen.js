@@ -27,8 +27,9 @@ class LoadingScreen extends Component {
 
     tryDefaultLogin() {
 
-        this.props.Loading(false, false);
 
+        // it is loading and it is not the default login
+        this.props.Loading(true, false);
         getLoginCredentials().then(([username, password, tenant]) => {
 
             if (getAutoLogin().length > 0) {
@@ -38,22 +39,26 @@ class LoadingScreen extends Component {
                 tenant = l1[2];
             }
             if (username === "" || username === null) {
-                this.props.Loading(false, false);
+                // not loading transition to default login
+                this.props.Loading(false, true);
                 return;
             }
 
 
-            this.props.Loading(true, true);
             this.props.UserLoginAction(username, password, tenant).then((loginToken) => {
                 this.props.LoadWholeProfile(loginToken, this.props.metadata);
             });
 
         }).catch((err) => {
             console.log(err);
-            this.props.Loading(false, false);
+            // not loading transition to default login
+            this.props.Loading(false, true);
         });
 
     }
+
+
+
 
     /*
 
@@ -64,8 +69,10 @@ class LoadingScreen extends Component {
 
 
 
-
-        if (this.props.auth.isLoading && this.props.auth.defaultLogin) {
+        if (this.props.auth.appToken ) {
+            return DashNavigator();
+        }
+        else if (this.props.auth.isLoading && !this.props.auth.defaultLogin) {
             return (
                 <View style={ComponentStyle.columnContainer}>
 
@@ -90,8 +97,6 @@ class LoadingScreen extends Component {
 
 
                 </View>);
-        } else if (this.props.auth.appToken && this.props.auth.appTenant) {
-            return DashNavigator();
         } else {
             return (
                 <Login/>
@@ -107,8 +112,8 @@ const mapDispatchToActions = (dispatch) => ({
     UserLoginAction: (user, password, tenant) => {
         return Auth.userLoginAction(user, password, tenant, dispatch)
     }, // We are not dispatching this, let is control how it wants to be dispatched
-    Loading: (status, defaultScreen) => {
-        dispatch(Auth.loading(status, defaultScreen))
+    Loading: (status, defaultScreen,err=null) => {
+        dispatch(Auth.loading(status, defaultScreen,err))
     },
     LoadWholeProfile: (auth, meta) => {
         LoadWholeProfile(auth, meta, dispatch);

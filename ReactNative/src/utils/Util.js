@@ -1,45 +1,58 @@
+
 /**
  ** @note this is different than getCalendarTimeFilter because this puts the data in a form the server will understand
  *
  * @param endDate The last date of the viewing period
  * @param aggregation The type of data aggregation, viewing by day,week,month,year
+ * @param backwards if backwards than get the previous time frame, else get forward
  * @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
  */
-export const getBatchTimeFilter = (endDate, aggregation) => {
+export const getBatchTimeFilter = (endDate, aggregation,backwards=true) => {
     //
 
     aggregation = aggregation.toLowerCase();
 
     let timeNow = new Date();
     let startDate = new Date();
+    let direction = backwards ? 1 : -1;
 
 
     const hour = 60 * 60 * 1000;
     const day = 24 * hour;
     switch (aggregation) {
         case "hour": // This might be a pain later but hour will return a day behind
-            startDate.setTime(endDate.getTime() - (day - hour));
+            startDate.setTime(endDate.getTime() - (direction * (day - hour)));
             break;
         case "day":
-            startDate.setTime(endDate.getTime() - 6 * day);
+            startDate.setTime(endDate.getTime() - (6 * direction) * day);
             break;
         case "week":
-            startDate.setTime(endDate.getFullYear(),endDate.getMonth()-1);
+            startDate.setTime(endDate.getFullYear(),endDate.getMonth()-(1 * direction));
             break;
         case"month":
-            startDate = new Date(endDate.getFullYear()-1, endDate.getMonth()+1);
+            startDate = new Date(endDate.getFullYear()-(1*direction)), endDate.getMonth()+(1*direction);
             break;
         default:
             throw new Error("Error unrecognized time aggregration : " + aggregation);
 
     }
 
-    return {
-        startDate: startDate.toString(),
-        endDate: endDate.toString(),
-        jsStartDate: startDate,
-        jsEndDate: endDate,
+    if(backwards) {
+        return {
+            startDate: startDate.toString(),
+            endDate: endDate.toString(),
+            jsStartDate: startDate,
+            jsEndDate: endDate,
 
+        }
+    }else{
+        return {
+            endDate: startDate.toString(),
+            startDate: endDate.toString(),
+            jsEndDate: startDate,
+            jsStartDate: endDate,
+
+        }
     }
 
 };
@@ -49,42 +62,54 @@ export const getBatchTimeFilter = (endDate, aggregation) => {
  *
  * @param endDate The last date of the viewing period
  * @param aggregation The type of data aggregation, viewing by day,week,month,year
+ * @param backwards if backwards than we get the previous time frame, else get forward
  * @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
  */
-export const getCalendarTimeFilter = (endDate,aggregation) =>{
+export const getCalendarTimeFilter = (endDate,aggregation,backwards=true) =>{
 
     aggregation = aggregation.toLowerCase();
 
     let timeNow = new Date();
     let startDate = new Date();
+    let direction = backwards ? 1 : -1;
 
 
     const hour = 60 * 60 * 1000;
     const day = 24 * hour;
     switch (aggregation) {
         case "hour": // This might be a pain later but hour will return a day behind
-            startDate.setTime(endDate.getTime() - (day));
+            startDate.setTime(endDate.getTime() - (direction * day));
             break;
         case "day":
-            startDate.setTime(endDate.getTime() - 7 * day);
+            startDate.setTime(endDate.getTime() - ( direction *7) * day);
             break;
         case "week":
-            startDate.setTime(endDate.getTime() - (28 * day));
+            startDate.setTime(endDate.getTime() - ((28 * direction) * day));
             break;
         case"month":
-            startDate = new Date(endDate.getFullYear()-1, endDate.getMonth()+1);
+            startDate = new Date(endDate.getFullYear()-1 * direction, endDate.getMonth()+1 * direction);
             break;
         default:
             throw new Error("Error unrecognized time aggregration : " + aggregation);
 
     }
 
-    return {
-        startDate: startDate.toString(),
-        endDate: endDate.toString(),
-        jsStartDate: startDate,
-        jsEndDate: endDate,
+    if(backwards) {
+        return {
+            startDate: startDate.toString(),
+            endDate: endDate.toString(),
+            jsStartDate: startDate,
+            jsEndDate: endDate,
 
+        }
+    }else{
+        return {
+            endDate: startDate.toString(),
+            startDate: endDate.toString(),
+            jsEndDate: startDate,
+            jsStartDate: endDate,
+
+        }
     }
 };
 
@@ -134,19 +159,17 @@ export const getTimeFilter = (endDate, aggregation) => {
 
 };
 
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 // returns dd/mm/yyyy
 export const formatDate = (d) => {
-    let day,month,year;
-    day = d.getDate(); month = d.getMonth() + 1; year = d.getFullYear();
+    let day,month;
+    day = d.getDate(); month = d.getMonth();
     if(day < 10){
         day = "0" + day;
     }
-    if(month < 10){
-        month = "0" + month;
-    }
 
-    return `${month}/${day}/${year}`;
+    return `${months[month]} ${day}`;
 
 }
 export const dateToReactCalendar = (tf, addMonth) => {
