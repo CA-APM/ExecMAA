@@ -1,4 +1,3 @@
-
 /**
  ** @note this is different than getCalendarTimeFilter because this puts the data in a form the server will understand
  *
@@ -7,7 +6,7 @@
  * @param backwards if backwards than get the previous time frame, else get forward
  * @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
  */
-export const getBatchTimeFilter = (endDate, aggregation,backwards=true) => {
+export const getBatchTimeFilter = (endDate, aggregation, backwards = true) => {
     //
 
     aggregation = aggregation.toLowerCase();
@@ -27,17 +26,17 @@ export const getBatchTimeFilter = (endDate, aggregation,backwards=true) => {
             startDate.setTime(endDate.getTime() - (6 * direction) * day);
             break;
         case "week":
-            startDate.setTime(endDate.getFullYear(),endDate.getMonth()-(1 * direction));
+            startDate.setTime(endDate.getFullYear(), endDate.getMonth() - (1 * direction));
             break;
         case"month":
-            startDate = new Date(endDate.getFullYear()-(1*direction)), endDate.getMonth()+(1*direction);
+            startDate = new Date(endDate.getFullYear() - (1 * direction)), endDate.getMonth() + (1 * direction);
             break;
         default:
             throw new Error("Error unrecognized time aggregration : " + aggregation);
 
     }
 
-    if(backwards) {
+    if (backwards) {
         return {
             startDate: startDate.toString(),
             endDate: endDate.toString(),
@@ -45,7 +44,7 @@ export const getBatchTimeFilter = (endDate, aggregation,backwards=true) => {
             jsEndDate: endDate,
 
         }
-    }else{
+    } else {
         return {
             endDate: startDate.toString(),
             startDate: endDate.toString(),
@@ -65,7 +64,7 @@ export const getBatchTimeFilter = (endDate, aggregation,backwards=true) => {
  * @param backwards if backwards than we get the previous time frame, else get forward
  * @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
  */
-export const getCalendarTimeFilter = (endDate,aggregation,backwards=true) =>{
+export const getCalendarTimeFilter = (endDate, aggregation, backwards = true) => {
 
     aggregation = aggregation.toLowerCase();
 
@@ -81,20 +80,20 @@ export const getCalendarTimeFilter = (endDate,aggregation,backwards=true) =>{
             startDate.setTime(endDate.getTime() - (direction * day));
             break;
         case "day":
-            startDate.setTime(endDate.getTime() - ( direction *7) * day);
+            startDate.setTime(endDate.getTime() - ( direction * 7) * day);
             break;
         case "week":
             startDate.setTime(endDate.getTime() - ((28 * direction) * day));
             break;
         case"month":
-            startDate = new Date(endDate.getFullYear()-1 * direction, endDate.getMonth()+1 * direction);
+            startDate = new Date(endDate.getFullYear() - 1 * direction, endDate.getMonth() + 1 * direction);
             break;
         default:
             throw new Error("Error unrecognized time aggregration : " + aggregation);
 
     }
 
-    if(backwards) {
+    if (backwards) {
         return {
             startDate: startDate.toString(),
             endDate: endDate.toString(),
@@ -102,7 +101,7 @@ export const getCalendarTimeFilter = (endDate,aggregation,backwards=true) =>{
             jsEndDate: endDate,
 
         }
-    }else{
+    } else {
         return {
             endDate: startDate.toString(),
             startDate: endDate.toString(),
@@ -114,12 +113,12 @@ export const getCalendarTimeFilter = (endDate,aggregation,backwards=true) =>{
 };
 
 /**
-** If you pass in month it will return last months start date and end date as a range
-*
-* @param endDate The last date of the viewing period
-* @param aggregation The type of data aggregation, viewing by day,week,month,year
-* @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
-*/
+ ** If you pass in month it will return last months start date and end date as a range
+ *
+ * @param endDate The last date of the viewing period
+ * @param aggregation The type of data aggregation, viewing by day,week,month,year
+ * @returns {{startDate: string, endDate: string, jsStartDate: Date, jsEndDate: *}}
+ */
 export const getTimeFilter = (endDate, aggregation) => {
     //
 
@@ -133,7 +132,7 @@ export const getTimeFilter = (endDate, aggregation) => {
     const day = 24 * hour;
     switch (aggregation) {
         case "hour": // This might be a pain later but hour will return a day behind
-            startDate.setTime(endDate.getTime()  - hour);
+            startDate.setTime(endDate.getTime() - hour);
             break;
         case "day":
             startDate.setTime(endDate.getTime() - day);
@@ -159,13 +158,14 @@ export const getTimeFilter = (endDate, aggregation) => {
 
 };
 
-const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 // returns dd/mm/yyyy
 export const formatDate = (d) => {
-    let day,month;
-    day = d.getDate(); month = d.getMonth();
-    if(day < 10){
+    let day, month;
+    day = d.getDate();
+    month = d.getMonth();
+    if (day < 10) {
         day = "0" + day;
     }
 
@@ -187,9 +187,11 @@ export const dateToReactCalendar = (tf, addMonth) => {
 
 }
 
-export const formatNumber = (num,decimalPlaces=1000) => {
+export const formatNumber = (num, decimalPlaces = 1000) => {
     let divider = 1;
-    if(num < 0){num *= -1;}
+    if (num < 0) {
+        num *= -1;
+    }
     let size = "";
     if (num > 1000) {
         divider = 1000;
@@ -205,14 +207,22 @@ export const formatNumber = (num,decimalPlaces=1000) => {
         num = Math.round(num);
     } else {
         // Round to 3 decimal places
-        num = Math.round(num * decimalPlaces) / decimalPlaces;
+        if (num < 100) {
+            num = Math.round(num * decimalPlaces) / decimalPlaces;
+        }
 
     }
-    let toReturn = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    return toReturn + size;
+    num = num.toString();
+    if(num.length  > 2){
+        num = num.substring(0,3);
+        if(num[2] === '.'){
+            num = num.replace(/\./,'');
+        }
+    }
+    return num.toString().substring(0,3) + size;
 
 };
-export const formatToDecimal = (num,decimalPlaces) =>{
+export const formatToDecimal = (num, decimalPlaces) => {
     return (Math.round(num * decimalPlaces) / decimalPlaces).toString();
 }

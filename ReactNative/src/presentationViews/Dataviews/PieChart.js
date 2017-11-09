@@ -210,6 +210,7 @@ export default class PieChart extends Component {
 
 
             <LoadRestView metadata={metadata} width={width} height={height} props={props}>
+
                 <View style={{alignItems:'center' ,backgroundColor:"#00000000"}}>
                     <Text style={ComponentStyle.label}>{title}</Text>
 
@@ -233,20 +234,24 @@ export default class PieChart extends Component {
                                 // does it need .value????
                                 let data = arcs[i].value;
 
-                                let percent = Math.round((data / total) * 100);
+                                let percent = Math.round((data / total) * 100).toString() +"%";
                                 let pos = label.centroid(arcs[i]);
                                 let x = pos[0];
                                 let y = pos[1];
                                 // 2 pi = 360
                                 // anything less than 20 percent gets not label
 
+                                if(elem == "No Data"){
+                                    percent = "";
+
+                                }
                                 const minimumLabel=  0.5;
                                 if(arcs[i].endAngle - arcs[i].startAngle < minimumLabel){
                                     // no label
                                     return undefined;
                                 }
                                 return (
-                                    <Text  style={[ComponentStyle.label,{alignSelf:'center',fontSize:18,color:"#000000", transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}]}>{elem +" " + percent +"%"}</Text>
+                                    <Text  style={[ComponentStyle.label,{alignSelf:'center',fontSize:18,color:"#000000", transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}]}>{elem +" " + percent}</Text>
                                 )
                             })
                         }

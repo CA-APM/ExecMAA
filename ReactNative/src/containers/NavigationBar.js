@@ -129,7 +129,7 @@ class NavigatorBar extends Component {
                                 containerStyle={{backgroundColor: constants.WHITE}}
                                 onPress={() => this.showDrawer()}/>
                         </View>
-                        <View style={{marginTop:10}}>
+                        <View style={{marginTop: 10}}>
 
                             <Text numberOfLines={1}
                                   style={ComponentStyle.header}>
@@ -161,70 +161,75 @@ class NavigatorBar extends Component {
                         </View>
                     </View>
                     {this.props.util.showConfigPicker ? undefined :
-                        <View style={{backgroundColor: "#f7f7f7"}}>
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.dismissedCalendar();
-                                }}
-                            >
-                                <View style={{
+                        <View style={{borderBottomWidth:CONSTANTS.scale(7),borderBottomColor:"#205796"}}>
 
-                                    marginTop: 5,
-                                    borderBottomWidth: 1.5,
-                                    borderTopWidth: 1.5,
-                                    borderColor: "#205796",
-                                    backgroundColor: "#ffffff",
-                                    height: HEIGHT / 12.0,
-                                    width: WIDTH
-                                }}>
+                            <View style={{   height: CONSTANTS.scale(HEIGHT / 12.0), backgroundColor: "#ffffff"}}>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.dismissedCalendar();
+                                    }}
+                                >
+                                    <View
+                                        id="dtShower"
+                                        style={{
 
-                                    <View style={{flexDirection: 'row',flex:1, alignItems:'center'}}>
-                                        <Icon containerStyle={{width: 50}}
-                                              name="calendar"
-                                              color="#205796"
-                                              type="font-awesome"
-                                              onPress={()=>{this.dismissedCalendar()}}
-                                        />
-                                        <View style={{paddingRight: 30}}>
-                                            <Text
-                                                style={[ComponentStyle.description, {fontWeight: "bold"}]}>{`${begin}-${end}`}</Text>
-                                            <Text style={[ComponentStyle.description, {
-                                                fontSize: 16,
-                                                textAlign: "left"
-                                            }]}>{this.state.meta.app_id}</Text>
+                                            marginTop: 5,
+                                            backgroundColor: "#ffffff",
+                                            height: CONSTANTS.scale(HEIGHT / 12.0),
+                                            width: WIDTH
+                                        }}>
+
+                                        <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
+                                            <Icon containerStyle={{width: 50}}
+                                                  name="calendar"
+
+                                                  color="#205796"
+                                                  type="font-awesome"
+                                                  onPress={() => {
+                                                      this.dismissedCalendar()
+                                                  }}
+                                            />
+                                            <View style={{paddingRight: 30}}>
+                                                <Text
+                                                    style={[ComponentStyle.description, {fontWeight: "bold"}]}>{`${begin}-${end}`}</Text>
+                                                <Text style={[ComponentStyle.description, {
+                                                    fontSize: 16,
+                                                    textAlign: "left"
+                                                }]}>{this.state.meta.app_id}</Text>
+                                            </View>
+
+                                            <Icon containerStyle={{flex: 1, alignItems: "flex-end"}}
+                                                  name="navigate-before"
+                                                  color="#205796"
+                                                  size={CONSTANTS.scale(35)}
+                                                  onPress={() => {
+
+                                                      //set state
+                                                      let tf = getBatchTimeFilter(this.state.meta.timeFilter.jsStartDate, this.state.meta.aggregation);
+                                                      let newProfile = Object.assign({}, this.state.meta, {timeFilter: tf});
+                                                      this.reloadProfile(newProfile);
+                                                  }
+
+                                                  }
+                                            />
+                                            <Icon containerStyle={{flex: 1, alignItems: "flex-end"}}
+                                                  size={CONSTANTS.scale(35)}
+                                                  name="navigate-next"
+                                                  color="#205796"
+                                                  onPress={() => {
+                                                      let tf = getBatchTimeFilter(this.state.meta.timeFilter.jsEndDate, this.state.meta.aggregation, false);
+                                                      let newProfile = Object.assign({}, this.state.meta, {timeFilter: tf});
+                                                      this.reloadProfile(newProfile);
+
+                                                  }
+                                                  }
+                                            />
+
                                         </View>
-
-                                        <Icon containerStyle={{width: 50}}
-                                              name="navigate-before"
-                                              color="#205796"
-                                              size={CONSTANTS.scale(35)}
-                                              onPress={() => {
-
-                                                  //set state
-                                                  this.changeDate(getBatchTimeFilter(tf.jsStartDate,this.state.meta.aggregation),()=>{
-                                                      this.reloadProfile();
-                                                  });
-                                              }
-
-                                              }
-                                        />
-                                        <Icon containerStyle={{width: 70}}
-                                              size={CONSTANTS.scale(35)}
-                                              name="navigate-next"
-                                              color="#205796"
-                                              onPress={() => {
-
-                                                  this.changeDate(getBatchTimeFilter(tf.jsEndDate,this.state.meta.aggregation,false),()=>{
-                                                      this.reloadProfile();
-                                                  });
-
-                                              }
-                                              }
-                                        />
-
                                     </View>
-                                </View>
-                            </TouchableHighlight>
+                                </TouchableHighlight>
+
+                            </View>
                         </View>
                     }
 
@@ -257,8 +262,9 @@ class NavigatorBar extends Component {
 
     }
 
-    reloadProfile() {
-        this.props.LoadWholeProfile(this.props.token, this.state.meta);
+    reloadProfile(meta = this.state.meta) {
+
+        this.props.LoadWholeProfile(this.props.token, meta);
     }
 
 
@@ -271,11 +277,12 @@ class NavigatorBar extends Component {
         this.setState({meta: newProfile, changed: true});
     }
 
-    changeDate(filter,cb){
+    changeDate(filter, cb) {
         let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter});
-        this.setState({meta: newProfile, changed: true},cb);
+        this.setState({meta: newProfile, changed: true}, cb);
 
     }
+
     datePressed(dateObject) {
         // get the current aggregation type
         let aggregation = this.state.meta.aggregation;

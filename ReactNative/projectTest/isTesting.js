@@ -11,7 +11,7 @@ export const LOG_NETWORK = 4;
 
 let profile = 0;
 let testLevel= 0;
-let logLevel = LOG_ALL;
+let logLevel = LOG_SILENT;
 let autoLogin = ["krish02","dost1234@","manisha"];
 
 export var getAutoLogin = () =>{

@@ -25,12 +25,14 @@ export default class AppSelector extends Component {
 
     transform(data, filter) {
         let key = this.props.nameKey;
+        let copy = data.slice();
         if (filter !== "") {
-            data = data.filter((val) => {
-                return val[key].indexOf(filter) >= 0;
+            copy = copy.filter((val) => {
+                return val[key].indexOf(filter) >= 0 ;
+
             });
         }
-        return data.sort((a, b,) => {
+         copy.sort((a, b,) => {
             if (a[key].toLowerCase() > b[key].toLowerCase()) {
                 return 1;
             } else if (a[key].toLowerCase() < b[key].toLowerCase()) {
@@ -39,6 +41,10 @@ export default class AppSelector extends Component {
                 return 0;
             }
         });
+        let toAdd = {};
+        toAdd[key] = "All";
+        copy.unshift(toAdd);
+        return copy;
     }
 
     render() {
@@ -54,7 +60,7 @@ export default class AppSelector extends Component {
                     alignItems: "center",
                     flexDirection: "row",
                     height: HEIGHT / 8,
-                    backgroundColor: "#1429ff"
+                    backgroundColor: "#205796"
                 }}>
                     <View style={{flex: 1}}>
                         <Icon
@@ -94,8 +100,8 @@ export default class AppSelector extends Component {
                     selectedApp={selectedApp}
                     nameKey={this.props.nameKey}
                     imageKey={this.props.imageKey}
-                    onPress={(finalData) => {
-                        this.setState({selectedApp: finalData});
+                    onPress={(d) => {
+                        this.setState({selectedApp: d});
                     }}
                 />
             </View>

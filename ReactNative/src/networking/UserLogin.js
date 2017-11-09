@@ -3,6 +3,7 @@ import react from 'react'
 import {getTest} from "../../projectTest/isTesting";
 
 import * as TestData from '../../projectTest/data'
+import Base64 from "../utils/Base64";
 
 
 const URL = 'http://google.com/';
@@ -37,7 +38,7 @@ const getAuthTokenObject = function () {
 const UserLogin = function (user, pass, tenant) {
     appTenant = tenant;
     var url1 = BASE_URL;
-    var tenantbase64 = "Basic " + btoa(tenant);
+    var tenantbase64 = "Basic " + Base64.btoa(tenant);
     var queryString = `grant_type=PASSWORD&username=${user}&password=${pass}`;
 
     return fetch(url1 + TOKEN_URL, {
@@ -61,7 +62,7 @@ const UserLogin = function (user, pass, tenant) {
         }).then((json) => {
             console.log(json);
             // convert to base64
-            appToken = "Bearer " + btoa("{\"tkn\":\"" + json.tkn + "\",\"all\":true}");
+            appToken = "Bearer " + Base64.btoa("{\"tkn\":\"" + json.tkn + "\",\"all\":true}");
             return {"Success": true, token: appToken};
         }).catch((error) => {
             console.log("Error " + error);

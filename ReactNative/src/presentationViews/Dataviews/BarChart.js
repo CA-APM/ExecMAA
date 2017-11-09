@@ -170,10 +170,10 @@ export default class BarChart extends Component {
             return LoadView({width: this.props.width, height: this.props.height});
         }
 
-        let alignment = this.props.barAlignment === 'vertical';
+        let verticalAlignment = this.props.barAlignment === 'vertical';
         let data = this.state.data;
         let theMax = this.state.max;
-        let margin = {top: alignment ? 20 : 50, right: 40, bottom: 60, left: alignment ? 40 : 60},
+        let margin = {top: verticalAlignment ? 20 : 50, right: 40, bottom: 60, left: 50},
             width = this.props.width - margin.left - margin.right,
             height = this.props.height - margin.top - margin.bottom;
 
@@ -235,14 +235,14 @@ export default class BarChart extends Component {
                                 y1={y(val) + margin.top}
                                 y2={y(val) + margin.top}/>
                             <Text
-                                x={margin.left - leftPadding - (10 * 2.25)}
-                                y={alignment ? y(val) + margin.top - 12 : x(labels[i]) + (1 / 2 * bandwidth - .75 * fontSize) + margin.top}
+                                x={20}
+                                y={verticalAlignment ? y(val) + margin.top -17 : x(labels[i]) + (1 / 2 * bandwidth - .75 * fontSize) + margin.top}
                                 fontSize={fontSize}
                                 textAnchor="middle"
                                 fontWeight="bold"
 
                             >
-                                {alignment ? Util.formatNumber(val, 100) : labels[i]}
+                                {verticalAlignment ? Util.formatNumber(val, 10) : labels[i]}
                             </Text>
                         </G>
                     ))}
@@ -274,7 +274,7 @@ export default class BarChart extends Component {
                                 fontWeight="bold"
 
                             >
-                                {alignment ? labels[i] : Util.formatNumber((leftValues[leftValues.length - i - 1], 100) + unit)}
+                                {verticalAlignment ? labels[i] : Util.formatNumber((leftValues[leftValues.length - i - 1], 100) + unit)}
                             </Text>
 
                         </G>

@@ -18,6 +18,8 @@ import {AUTO_LOGIN_INFO, getTest, LOG_NETWORK, setLogLevel, setTesting} from "./
 import AppList from "./src/presentationViews/CustomDataviews/AppList";
 import {WIDTH} from "./src/constants";
 import AppSelector from "./src/presentationViews/Other/AppSelector";
+import Spinner from "react-native-loading-spinner-overlay";
+
 //TODO : We need to periodically sign back in and get a new refresh token
 let serverTesting = function (dispatch) {
     console.log("Testing begin");
@@ -37,8 +39,15 @@ let serverTesting = function (dispatch) {
 };
 //TODO : Otherwise the data flow will not work some times
 export default class App extends Component {
+
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         // test();
+
         console.disableYellowBox = true;
 
         // setTesting(AUTO_LOGIN_INFO);
@@ -57,9 +66,9 @@ export default class App extends Component {
 
 
         return (
-                <Provider store={DataStore}>
-                    <LoadingScreen/>
-                </Provider>
+            <Provider store={DataStore}>
+                <LoadingScreen/>
+            </Provider>
 
         );
     }

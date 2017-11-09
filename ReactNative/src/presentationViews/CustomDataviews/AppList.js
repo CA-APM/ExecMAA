@@ -9,13 +9,17 @@ import {
     List, ListItem
 } from 'react-native-elements'
 
+
+
 export default class AppList extends Component {
 
     constructor(props) {
         super(props);
 
+        let m = (new Map(): Map<string, boolean>);
+        m.set(this.props.selectedApp,true);
         this.state = {
-            selected :(new Map(): Map<string, boolean>),
+            selected :m,
             selectedApp: this.props.selectedApp
         };
         // set state
@@ -26,6 +30,8 @@ export default class AppList extends Component {
     didSelectApp(app) {
         this.props.onPress(app);
 
+        let nameKey = this.props.nameKey;
+        let id = app[nameKey];
 
         this.setState((state) => {
             // copy the map rather than modifying state.

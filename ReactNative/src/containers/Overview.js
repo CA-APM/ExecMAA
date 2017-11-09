@@ -87,12 +87,25 @@ class Overview extends Component {
         //                {this.props.updateStatus === UpdateStatus.failed  ? <Text>Error loading please try again</Text>: undefined}
 
 
+
+
+        let pie1;
+        let pie2;
+        let pie3;
+        if(crashData.metadata.status == DataStatus.success){
+           pie1 = crashData.crashesByDevice;
+           pie2 = crashData.crashesByPlatform;
+           pie3 = crashData.crashesByCarrier;
+            if(pie1.length === 0){pie1.push({"value":1,"label":"No Data"});}
+            if(pie2.length === 0){pie2.push({"value":1,"label":"No Data"});}
+            if(pie3.length === 0){pie3.push({"value":1,"label":"No Data"});}
+
+        }
         return (
 
 
             // REMEMBER TO PUT FLEX : 1 here so the nav bar will render list corect
             <View style={{flex: 1}}>
-
 
                 <NavigatorBar {...this.props}/>
 
@@ -134,11 +147,11 @@ class Overview extends Component {
                                                   aggregation={this.props.metadata.aggregation}
                                                   bardirection={"vertical"}/>
 
-                                    <PieChart title="Crashes by Device" data={crashData.crashesByDevice}
+                                    <PieChart title="Crashes by Device" data={pie1}
                                               metadata={crashData.metadata}></PieChart>
-                                    <PieChart title="Crashes by Platform" data={crashData.crashesByPlatform}
+                                    <PieChart title="Crashes by Platform" data={pie2}
                                               metadata={crashData.metadata}></PieChart>
-                                    <PieChart title="Crashes by Carrier" data={crashData.crashesByCarrier}
+                                    <PieChart title="Crashes by Carrier" data={pie3}
                                               metadata={crashData.metadata}></PieChart>
 
                                 </FlatLayout>

@@ -71,8 +71,7 @@ class LoadingScreen extends Component {
 
         if (this.props.auth.appToken ) {
             return DashNavigator();
-        }
-        else if (this.props.auth.isLoading && !this.props.auth.defaultLogin) {
+        } else if (this.props.auth.isLoading && !this.props.auth.defaultLogin) {
             return (
                 <View style={ComponentStyle.columnContainer}>
 

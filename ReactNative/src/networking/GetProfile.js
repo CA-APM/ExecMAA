@@ -57,9 +57,9 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
                     console.log(`${NETWORK_PREFIX} Bad user token!!`);
                 }
             }
-            if (verbose) {
-                console.log(`${NETWORK_PREFIX} ${nameOfCaller} FAILED receiving : ${JSON.stringify(res, null, 2)}`);
-            }
+            // always log network exceptions
+            console.log(`${NETWORK_PREFIX} ${nameOfCaller} FAILED receiving : ${JSON.stringify(res, null, 2)}`);
+
             throw Error(` ${nameOfCaller} Got status : ${res.status} `);
         }
     });
@@ -103,7 +103,7 @@ export const getApps = (authorization) => {
         return data.map((item) => {
             return {
                 app_id: item.appId,
-                appLogo : item.appLogo
+                appLogo: item.appLogo
             }
         });
     });
