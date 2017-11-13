@@ -7,6 +7,7 @@ import {
 import {HEIGHT} from "../../constants";
 import {Icon, SearchBar} from "react-native-elements";
 import AppList from "../CustomDataviews/AppList";
+import * as CONSTANTS from "../../constants";
 
 
 export default class AppSelector extends Component {
@@ -22,27 +23,27 @@ export default class AppSelector extends Component {
         };
     }
 
-
     transform(data, filter) {
-        let key = this.props.nameKey;
+
+        let nameKey = this.props.nameKey;
         let copy = data.slice();
         if (filter !== "") {
             copy = copy.filter((val) => {
-                return val[key].indexOf(filter) >= 0 ;
+                return val[nameKey].indexOf(filter) >= 0;
 
             });
         }
-         copy.sort((a, b,) => {
-            if (a[key].toLowerCase() > b[key].toLowerCase()) {
+        copy.sort((a, b,) => {
+            if (a[nameKey].toLowerCase() > b[nameKey].toLowerCase()) {
                 return 1;
-            } else if (a[key].toLowerCase() < b[key].toLowerCase()) {
+            } else if (a[nameKey].toLowerCase() < b[nameKey].toLowerCase()) {
                 return -1;
             } else {
                 return 0;
             }
         });
         let toAdd = {};
-        toAdd[key] = "All";
+        toAdd[nameKey] = "All";
         copy.unshift(toAdd);
         return copy;
     }
@@ -62,7 +63,7 @@ export default class AppSelector extends Component {
                     height: HEIGHT / 8,
                     backgroundColor: "#205796"
                 }}>
-                    <View style={{flex: 1}}>
+                    <View>
                         <Icon
 
                             reverse
@@ -76,12 +77,12 @@ export default class AppSelector extends Component {
 
                         />
                     </View>
-
-                    <Text style={{fontSize: 30}}>
-                        {selectedApp}
-                    </Text>
-                    <View style={{flex: 1}}/>
-
+                    <View style={{width:CONSTANTS.scale(50)}}/>
+                    <View style={{flex:1}}>
+                        <Text numberOfLines={1} style={{fontSize: 30,textAlign:"left"}}>
+                            {selectedApp}
+                        </Text>
+                    </View>
 
                 </View>
 

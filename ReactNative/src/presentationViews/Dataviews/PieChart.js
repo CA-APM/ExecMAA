@@ -143,7 +143,7 @@ export default class PieChart extends Component {
             }
 
             // Get the delta on how far long in our animation we are.
-            const delta = (timestamp - start) / 2000;
+            const delta = (timestamp - start) / 2500;
 
             // If we're above 1 then our animation should be complete.
             if (delta > 1) {
@@ -251,7 +251,7 @@ export default class PieChart extends Component {
                                     return undefined;
                                 }
                                 return (
-                                    <Text  style={[ComponentStyle.label,{alignSelf:'center',fontSize:18,color:"#000000", transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}]}>{elem +" " + percent}</Text>
+                                    <Text key={i} style={[ComponentStyle.label,{alignSelf:'center',fontSize:18,color:"#000000", transform:[{translateX : x},{translateY:y}], position: 'absolute',backgroundColor:"#00000000"}]}>{elem +" " + percent}</Text>
                                 )
                             })
                         }

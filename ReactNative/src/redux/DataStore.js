@@ -8,6 +8,7 @@ import InitialState from "./ReduxUtil";
 import {util} from "./Util/Reducer";
 import {profile} from "./Profile/Reducer";
 import {getLogLevel, LOG_VERBOSE} from "../../projectTest/isTesting";
+import {composeWithDevTools} from "redux-devtools-extension";
 
 // Middleware
 const logger = store => next => action => {
@@ -39,5 +40,5 @@ const crashReporter = store => next => action => {
 
 // Reducers = datastore
 const reducer = combineReducers({authentication, util, profile});
-const middleware = applyMiddleware(logger, crashReporter, thunk);
+const middleware = composeWithDevTools(applyMiddleware(logger, crashReporter, thunk));
 export default createStore(reducer, InitialState, middleware);

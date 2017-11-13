@@ -14,7 +14,7 @@ import {
     testAppVersions
 } from "./tester"
 import * as Tester from "./tester"
-import {AUTO_LOGIN_INFO, getTest, LOG_NETWORK, setLogLevel, setTesting} from "./projectTest/isTesting";
+import {AUTO_LOGIN_INFO, getTest, LOG_ALL, LOG_NETWORK, setLogLevel, setTesting} from "./projectTest/isTesting";
 import AppList from "./src/presentationViews/CustomDataviews/AppList";
 import {WIDTH} from "./src/constants";
 import AppSelector from "./src/presentationViews/Other/AppSelector";
@@ -52,7 +52,7 @@ export default class App extends Component {
 
         // setTesting(AUTO_LOGIN_INFO);
         // turn auto login off
-        // setLogLevel(LOG_NETWORK);
+        // setLogLevel(LOG_ALL);
 
         // if(getTest()){
         //     serverTesting();

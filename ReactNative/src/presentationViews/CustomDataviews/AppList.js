@@ -1,15 +1,43 @@
-import React, {Component} from 'react'
+import React, {Component, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import {
     FlatList, Image,
-    StyleSheet, Text,
+    StyleSheet, Text, TouchableHighlight,
     View
 } from 'react-native'
 import {
+    Icon,
     List, ListItem
 } from 'react-native-elements'
 
 
+// TODO Implement the pure component to make the FlatList faster
+class CustomListItem extends React.PureComponent {
+    /*
+        {this.props.selected ?
+                        <Icon name="chevron-right" type="Navigation" style={{alignSelf: "right"}}/> : undefined}
+
+                        <Icon name="chevron-right" type="Navigation" style={{alignSelf: "right"}}/>
+
+         */
+    render() {
+        const props = this.props;
+        return (
+            <View key={props.name}>
+                <TouchableHighlight onPress={()=>{props.onPress(this.props.name)}}
+                                    style={{flex: 1, flexDirection: "row"}}>
+
+                    <View>
+                        <Text>
+                            {props.name}
+                        </Text>
+                        <Text>{"Chevron here"}</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+        );
+    }
+}
 
 export default class AppList extends Component {
 
@@ -17,9 +45,9 @@ export default class AppList extends Component {
         super(props);
 
         let m = (new Map(): Map<string, boolean>);
-        m.set(this.props.selectedApp,true);
+        m.set(this.props.selectedApp, true);
         this.state = {
-            selected :m,
+            selected: m,
             selectedApp: this.props.selectedApp
         };
         // set state
@@ -37,7 +65,8 @@ export default class AppList extends Component {
             // copy the map rather than modifying state.
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id)); // toggle
-            return {selected};
+            const selectedApp = app;
+            return {selected, selectedApp};
         });
 
     }
@@ -53,33 +82,33 @@ export default class AppList extends Component {
         let image = obj[imageKey];
 
         let appPicture = obj[imageKey];
+
+
         // TODO change to use the new map selected
         if (name === this.state.selectedApp) {
             return (
                 <ListItem
 
                     leftIcon={
-                        <Image source={{uri:`data:image/jpg;base64,${image}`}}/>
+                        <Image source={{uri: `data:image/jpg;base64,${image}`}}/>
                     }
                     rightIcon={{type: "Navigation", name: "check"}}
                     title={name}
                     onPress={() => {
-                        this.setState({selectedApp: name});
                         this.didSelectApp(name)
                     }}/>
             )
         } else {
             return (
                 <ListItem
-                        leftIcon={
-                            <Image source={{uri:`data:image/jpg;base64,${image}`}}/>
-                        }
-                        rightIcon={{name: "chevron-right"}}
-                        title={name}
-                          onPress={() => {
-                              this.setState({selectedApp: name});
-                              this.didSelectApp(name)
-                          }}/>
+                    leftIcon={
+                        <Image source={{uri: `data:image/jpg;base64,${image}`}}/>
+                    }
+                    rightIcon={{name: "chevron-right"}}
+                    title={name}
+                    onPress={() => {
+                        this.didSelectApp(name)
+                    }}/>
             )
         }
 
@@ -92,6 +121,7 @@ export default class AppList extends Component {
                 scrollEnabled={true}
                 extraData={this.state.selected}
                 data={this.props.data}
+                keyExtractor={(item, index) => item[this.props.nameKey]}
                 renderItem={(obj) => {
                     return this.renderItem(obj);
                 }}/>

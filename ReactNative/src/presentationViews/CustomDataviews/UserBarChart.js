@@ -27,11 +27,7 @@ export default class UserBarChart extends Component {
 
     render() {
 
-        let style = this.props.bardirection === "Vertical" ? 1 : 0;
-        let data = this.props.data;
         let title = titles[this.props.aggregation];
-
-
         return (
             <LoadRestView metadata={this.props.metadata} width={this.props.width} props={this.props}>
                 <View>

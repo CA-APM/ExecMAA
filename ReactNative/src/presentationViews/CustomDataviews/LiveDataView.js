@@ -120,8 +120,9 @@ export default class LiveDataView extends Component {
                                 height={200}
                     >
                         {
-                            this.state.data.map((d) => {
-                                return (<View style={{flex: 1, alignSelf: "center", alignItems: "center"}}>
+                            // when using static data using array index should be good
+                            this.state.data.map((d,index) => {
+                                return (<View key={index} style={{flex: 1, alignSelf: "center", alignItems: "center"}}>
                                         <Text style={
                                             [ComponentStyle.label,
                                                 {

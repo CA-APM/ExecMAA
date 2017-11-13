@@ -67,6 +67,8 @@ class GridLayout extends Component {
         let heightPerElement = height / rows;
         let arrRows = [];
         let j = -1;
+        // when using static data this type of indexing should be fine
+        let keyIndex = 0;
         let defaultColumnStyle = {
             backgroundColor: backgroundColor,
                 flexDirection: 'row',
@@ -84,18 +86,18 @@ class GridLayout extends Component {
                 // push new row
                 arrRows.push([]);
                 // push row seperator
-                arrRows.push((<View style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
+                arrRows.push((<View key={keyIndex++}style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
             }
 
             if(arrRows[j * 2].length == 0){
-                arrRows[j * 2].push((<View style={{
+                arrRows[j * 2].push((<View key={keyIndex++} style={{
                     width: colSeperatorWidth,
                     backgroundColor: seperatorColor
                 }}/>));
             }
             arrRows[j * 2].push(child);
             // push row element seperator
-                arrRows[j * 2].push((<View style={{
+                arrRows[j * 2].push((<View key={keyIndex++} style={{
                     width: colSeperatorWidth,
                     backgroundColor: seperatorColor
                 }}/>));
@@ -103,24 +105,24 @@ class GridLayout extends Component {
 
         if(this.props.titleView){
             // push row seperator
-            arrRows.unshift((<View style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
+            arrRows.unshift((<View key={keyIndex++} style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
             arrRows.unshift([
-                <View style={{
+                <View key={keyIndex++} style={{
                 width: colSeperatorWidth,
                 backgroundColor: seperatorColor
             }}/>,
-                <View style={{flex:1}}>{this.props.titleView}</View>,
-                <View style={{
+                <View key={keyIndex++} style={{flex:1}}>{this.props.titleView}</View>,
+                <View key={keyIndex++} style={{
                     width: colSeperatorWidth,
                     backgroundColor: seperatorColor
                 }}/>]);
         }
         return (
-            <View style={[this.props.containerStyle, {flexDirection: 'column'}]}>
-                <View style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>
+            <View key={keyIndex++} style={[this.props.containerStyle, {flexDirection: 'column'}]}>
+                <View key={keyIndex++} style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>
                 {arrRows.map((row, i) => {
                     return (
-                        i % 2 === 0 ? <View style={[defaultColumnStyle,newColumnStyle]}>
+                        i % 2 === 0 ? <View key={keyIndex++} style={[defaultColumnStyle,newColumnStyle]}>
                             {row}
                         </View> : row
                     )
