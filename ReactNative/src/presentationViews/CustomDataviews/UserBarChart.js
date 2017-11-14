@@ -27,12 +27,17 @@ export default class UserBarChart extends Component {
 
     render() {
 
-        let title = titles[this.props.aggregation];
+        let title = "";
+        if(this.props.aggregation) {
+            title = `Total ${titles[this.props.aggregation]} Users`
+        }else{
+            title = this.props.title;
+        }
         return (
             <LoadRestView metadata={this.props.metadata} width={this.props.width} props={this.props}>
                 <View>
                     <Text style={[ComponentStyle.label, {marginTop: 10}]}>
-                        {`Total ${title} Users`}
+                        {title}
                     </Text>
                     <BarChart
                         data={this.props.data}
@@ -58,7 +63,8 @@ UserBarChart.defaultProps = {
     bardirection: 'vertical',
     aggregation: "day",
     data: [],
-    metadata: {}
+    metadata: {},
+    title : ""
 
 };
 

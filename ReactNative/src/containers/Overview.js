@@ -80,27 +80,52 @@ class Overview extends Component {
         let currentMeta = this.props.metadata;
         let tf1 = getTimeFilter(currentMeta.timeFilter.jsEndDate, currentMeta.aggregation);
         let tf2 = getTimeFilter(tf1.jsStartDate, currentMeta.aggregation);
-        let d1 =  `${formatDate(tf1.jsStartDate)}-${formatDate(tf1.jsEndDate)}`;
-        let d2 =  `${formatDate(tf2.jsStartDate)}-${formatDate(tf2.jsEndDate)}`;
+        let d1 = `${formatDate(tf1.jsStartDate)}-${formatDate(tf1.jsEndDate)}`;
+        let d2 = `${formatDate(tf2.jsStartDate)}-${formatDate(tf2.jsEndDate)}`;
 
 // /*style={{opacity:this.props.updateStatus === UpdateStatus.failed ? 0.8 : 0.0}*/
         //                {this.props.updateStatus === UpdateStatus.failed  ? <Text>Error loading please try again</Text>: undefined}
 
 
-
-
         let pie1;
         let pie2;
         let pie3;
-        if(crashData.metadata.status == DataStatus.success){
-           pie1 = crashData.crashesByDevice;
-           pie2 = crashData.crashesByPlatform;
-           pie3 = crashData.crashesByCarrier;
-            if(pie1.length === 0){pie1.push({"value":1,"label":"No Data"});}
-            if(pie2.length === 0){pie2.push({"value":1,"label":"No Data"});}
-            if(pie3.length === 0){pie3.push({"value":1,"label":"No Data"});}
+        if (crashData.metadata.status === DataStatus.success) {
+            pie1 = crashData.crashesByDevice;
+            pie2 = crashData.crashesByPlatform;
+            pie3 = crashData.crashesByCarrier;
+            if (pie1.length === 0) {
+                pie1.push({"value": 1, "label": "No Data"});
+            }
+            if (pie2.length === 0) {
+                pie2.push({"value": 1, "label": "No Data"});
+            }
+            if (pie3.length === 0) {
+                pie3.push({"value": 1, "label": "No Data"});
+            }
 
         }
+
+        let usersCopy = [];
+        // only take top 12
+        let ubc = this.props.usersByCountry;
+        if (ubc.metadata.status === DataStatus.success && ubc.data.length) {
+            usersCopy = this.props.usersByCountry.data.map((item) => {
+                return Object.assign({}, item);
+            }).sort((v1, v2) => {
+                if (v1.value == v2.value) {
+                    return 0;
+                }
+                if (v1.value < v2.value) {
+                    return 1
+                }
+                return -1;
+            });
+            usersCopy = usersCopy.filter((item, i) => {
+                return i < 12;
+            });
+        }
+
         return (
 
 
@@ -123,8 +148,8 @@ class Overview extends Component {
                                 <FlatLayout widthPercent={"93%"}>
                                     <LiveDataView
                                         titleView={
-                                            <View style={{flex: 1, alignItems:'center'}}>
-                                                <View style={{flex:1}}/>
+                                            <View style={{flex: 1, alignItems: 'center'}}>
+                                                <View style={{flex: 1}}/>
                                                 <Text style={[ComponentStyle.description]}>
                                                     {d1}
                                                 </Text>
@@ -133,7 +158,7 @@ class Overview extends Component {
                                                     {d2}
                                                 </Text>
 
-                                                <View style={{flex:1}}/>
+                                                <View style={{flex: 1}}/>
 
                                             </View>}
                                         style={{width: WIDTH}}
@@ -153,6 +178,12 @@ class Overview extends Component {
                                               metadata={crashData.metadata}></PieChart>
                                     <PieChart title="Crashes by Carrier" data={pie3}
                                               metadata={crashData.metadata}></PieChart>
+
+                                    <UserBarChart data={usersCopy}
+                                                  metadata={ubc.metadata}
+                                                  aggregation={null}
+                                                  bardirection={"horizontal"}
+                                                  title={"Users By Country"}/>
 
                                 </FlatLayout>
 
@@ -191,6 +222,7 @@ class Overview extends Component {
 
 export default connect((state) => ({
     userVisits: state.profile.data.userVisits,
+    usersByCountry: state.profile.data.usersByCountry,
     crashes: state.profile.data.crashes,
     compareSummary: state.profile.compareData.compareSummary,
     metadata: state.profile.metadata,

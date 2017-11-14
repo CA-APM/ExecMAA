@@ -1,3 +1,5 @@
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 /**
  ** @note this is different than getCalendarTimeFilter because this puts the data in a form the server will understand
  *
@@ -158,7 +160,6 @@ export const getTimeFilter = (endDate, aggregation) => {
 
 };
 
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 // returns dd/mm/yyyy
 export const formatDate = (d) => {
@@ -214,15 +215,30 @@ export const formatNumber = (num, decimalPlaces = 1000) => {
     }
 
     num = num.toString();
-    if(num.length  > 2){
-        num = num.substring(0,3);
-        if(num[2] === '.'){
-            num = num.replace(/\./,'');
+    if (num.length > 2) {
+        num = num.substring(0, 3);
+        if (num[2] === '.') {
+            num = num.replace(/\./, '');
         }
     }
-    return num.toString().substring(0,3) + size;
+    return num.toString().substring(0, 3) + size;
 
 };
+export const dateStringToLabel = (label, aggregation) => {
+
+    let toReturn = label;
+    if (aggregation === "month") {
+        let monthStr = toReturn.substr(5, 2);
+        let monthNo = monthStr.replace(/^0/, '') - 1;
+        toReturn = months[monthNo];
+    } else if (aggregation === "week" || aggregation === "day") {
+        toReturn = toReturn.substr(5, 5);
+    } else if (aggregation === "hour") {
+        toReturn = toReturn.substr(11, 2);
+    }
+    return toReturn;
+
+}
 export const formatToDecimal = (num, decimalPlaces) => {
     return (Math.round(num * decimalPlaces) / decimalPlaces).toString();
 }

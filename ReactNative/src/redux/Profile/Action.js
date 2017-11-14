@@ -36,6 +36,7 @@ export const changeMeta = (meta) => {
 };
 
 
+let maxProfileReloads = 2;
 export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=true) =>{
 
     // I do not think its possible for the metaObject to change but perfect the object is a week
@@ -62,9 +63,19 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
     }
     Promise.all(promises).then(()=>{
     }).catch((err)=>{
-        // not loading
-        // failed
-        dispatch(Auth.loading(false,true,err));
+        if(err.authTokenError && maxProfileReloads){
+            Auth.reloadToken(auth.username,auth.password,auth.tenant,dispatch).then((token)=>{
+                LoadWholeProfile(auth,metaObject,dispatch,loadProfileVersions);
+                maxProfileReloads = 2;
+            }).catch((err)=>{
+                maxProfileReloads--;
+                LoadWholeProfile(auth,metaObject,dispatch,loadProfileVersions);
+            })
+            // reload auth  than clal LoadWholeProfile again
+            // if it failed reduces maxProfileReloads by 1, if succeeded put back to 2
+        }else {
+            dispatch(Auth.loading(false, true, err));
+        }
     });
 
 

@@ -46,7 +46,7 @@ export class LoadRestView extends Component {
             )
         } else if (status === DataStatus.failed) {
             return (
-                <View style={{textAlign:'center',width: width, height: height, alignItems: "center", alignContent: "center"}}>
+                <View style={{width: width, height: height, alignItems: "center", alignContent: "center"}}>
                     <View style={{flex: 1}}/>
                     <Text style={{textAlign:'center'}}>
                         {`There was an error loading this data`}

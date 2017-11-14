@@ -66,7 +66,9 @@ export const getFilterParameters =  (meta)=>{
 export const getQueryString= (obj)=>{
     let start = "/?";
     let initialize = true;
-    return Object.keys(obj).reduce((builder,key)=>{
+    let keys = Object.keys(obj);
+    if(keys.length == 0){return "";}
+    return keys.reduce((builder,key)=>{
         if(initialize){
             initialize = false;
             return builder + `${key}=${obj[key]}`;

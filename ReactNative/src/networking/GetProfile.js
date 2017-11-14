@@ -3,7 +3,7 @@ import {
     getFilterParameters, getPreviousTimeMeta, getFilterQueryString, getPreviousAggregation,
     getQueryString
 } from "./NetworkUtil";
-import {getLogLevel, LOG_NETWORK} from "../../projectTest/isTesting";
+import {getLogLevel, LOG_NETWORK, LOG_NETWORK_REQUESTS} from "../../projectTest/isTesting";
 import {AllApps, DataStatus} from "../redux/ReduxUtil";
 import {getTimeFilter} from "../utils/Util";
 
@@ -24,14 +24,15 @@ const APP_VERSIONS = '/mdo/v3/master_data/versionsByPlatform';
 const NETWORK_PREFIX = "<--NETWORKING-->";
 const getRequest = (nameOfCaller, authorization, url, meta) => {
     let verbose = false;
+    let logLevel = getLogLevel();
     // get apps returns a ton of data i do not use
-    if (getLogLevel() & LOG_NETWORK && nameOfCaller !== "getApps") {
+    if (logLevel & LOG_NETWORK && nameOfCaller !== "getApps") {
         verbose = true;
     }
 
     const finalURL = url + (meta !== null ? getQueryString(getFilterParameters(meta)) : "");
-    if (verbose) {
-        console.log(`${NETWORK_PREFIX} ${nameOfCaller} sending ${finalURL}`);
+    if (verbose || logLevel & LOG_NETWORK_REQUESTS) {
+        console.log(`${NETWORK_PREFIX} ${nameOfCaller} sending ${finalURL} meta was ${JSON.stringify(meta)}`);
     }
     return fetch(finalURL, {
         method: 'GET',
@@ -51,16 +52,20 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
                 return res.json();
             }
         } else {
+            let authTokenError = false;
             if (res.status == 401) {
                 let json = JSON.parse(res._bodyText);
-                if (json.msg === "Invalid authentication token") {
-                    console.log(`${NETWORK_PREFIX} Bad user token!!`);
+                if (json.msg === "Invalid authentication token"||
+                    json.msg === "Access denied, inactivity time out.") {
+                    authTokenError = true;
+                    console.log(`${NETWORK_PREFIX} Authentication timed out resending auth request`);
+
                 }
             }
             // always log network exceptions
             console.log(`${NETWORK_PREFIX} ${nameOfCaller} FAILED receiving : ${JSON.stringify(res, null, 2)}`);
 
-            throw Error(` ${nameOfCaller} Got status : ${res.status} `);
+            throw Error({authTokenError:authTokenError,status:res.status});
         }
     });
 }
@@ -171,11 +176,11 @@ export const getUsersByPlatform = (authorization, meta) => {
 
 export const getUsersByRegion = (authorization, meta) => {
     return getRequest("getUsersByRegion", authorization, BASE_URL + GEO_URL, meta).then((json) => {
-        let toReturn = {usersByCountry: []};
+        let toReturn = {data: []};
         let {countries} = json;
         countries.shift();
         countries.forEach((data) => {
-            toReturn.usersByCountry.push({label: data[0], value: data[1]});
+            toReturn.data.push({label: data[0], value: data[1]});
         });
         return toReturn;
     });

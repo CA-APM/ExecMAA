@@ -67,6 +67,17 @@ const loginResultsReceieved = (success, isLoading, defaultLogin, token, appTenan
     }
 };
 
+export const reloadToken= async (user, password, tenant, dispatch,defaultScreen = false) => {
+    return UserLogin(user, password, tenant).then((res) => {
+        let encoded = res.token;
+        dispatch(loginResultsReceieved(true, false, false, encoded, tenant, null,user,password,tenant));
+        return encoded;
+    }).catch((err) => {
+        dispatch(loginResultsReceieved(false, false, false, null, null, err,user,password,tenant));
+        throw err;
+    });
+};
+
 export const userLoginAction = async (user, password, tenant, dispatch,defaultScreen = false) => {
     dispatch(loading(true,defaultScreen,null));
     return UserLogin(user, password, tenant).then((res) => {

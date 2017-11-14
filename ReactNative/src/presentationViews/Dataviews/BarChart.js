@@ -12,6 +12,7 @@ import {PRIMARY_COLOR_800, WIDTH} from "../../constants";
 import {LoadView} from "../Other/PresentationUtil";
 import * as Util from "../../utils/Util";
 import {DataStatus} from "../../redux/ReduxUtil";
+import {dateStringToLabel} from "../../utils/Util";
 
 const d3 = {
     shape,
@@ -27,60 +28,38 @@ export default class BarChart extends Component {
         super(props);
 
 
-        this.rebuild = this.rebuild.bind(this);
+        this.buildData = this.buildData.bind(this);
         this.animate = this.animate.bind(this);
-        this.getTransformedLabels = this.getTransformedLabels.bind(this);
+        this.rect = this.rect.bind(this);
 
     }
 
 
+    shouldComponentUpdate(nextProps, nextState) {
 
-    shouldComponentUpdate(nextProps,nextState){
-
-        if(this.state !== nextState){
+        if (this.state !== nextState) {
             return true;
         }
         if (nextProps.metadata.status === DataStatus.success) {
-            if(nextProps.data === this.props.data) {
+            if (nextProps.data === this.props.data) {
                 return false;
-            }else{
-                this.rebuild(nextProps);
+            } else {
+                this.buildData(nextProps);
                 return true;
             }
         }
         return true;
     }
-    // componentWillReceiveProps(props) {
-    //     // we did get the data
-    //
-    // }
+
 
     componentWillMount() {
         if (this.props) {
-            this.rebuild(this.props);
+            this.buildData(this.props);
         }
     }
 
-    getTransformedLabels(aggregation,labels){
-        // the time labels come in as yyyy-mm-dd hh:mm:ss
-        // "2016-10-01 00:00:00"
-        //       5  8  1  4  7
-        const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        let toReturn = [];
-        for(let label of labels) {
-            if(aggregation === "month") {
-                let date = new Date(label);
-                label = months[date.getMonth()];
-            }else if(aggregation === "week" || aggregation === "day"){
-                label = label.substr(5,5);
-            }else if(aggregation === "hour"){
-                label = label.substr(11,2);
-            }
-            toReturn.push(label);
-        }
-        return toReturn;
-    }
-    rebuild(props) {
+
+    buildData(props) {
 
         if (!props) {
             return;
@@ -88,16 +67,16 @@ export default class BarChart extends Component {
         if (props.data === null) {
             return;
         }
-        let final = [];
+        let final = [], copy = [], labels = [];
         let data = props.data;
-
-        let copy = [];
-
-        let labels = this.getTransformedLabels(this.props.aggregation,props.data.map((ele)=>{return ele.label}))
-
         let theMax = 0;
         for (let index = 0; index < data.length; index++) {
 
+            if (this.props.aggregation) {
+                labels.push(dateStringToLabel(data[index].label, this.props.aggregation));
+            } else {
+                labels.push(data[index].label);
+            }
             copy.push(data[index].value);
             final.push(data[index].value);
             copy[index] = 0;
@@ -105,7 +84,6 @@ export default class BarChart extends Component {
                 theMax = data[index].value;
             }
         }
-
         this.setState({
             stateBuilt: true,
             data: copy,
@@ -124,9 +102,6 @@ export default class BarChart extends Component {
             if (!start) {
                 start = timestamp;
             }
-
-            // Get the delta on how far long in our animation we are.
-
             let delta = timestamp - start / self.props.animationDuration;
 
             // If we're above 1 then our animation should be complete.
@@ -144,12 +119,8 @@ export default class BarChart extends Component {
 
             let data = self.state.data.slice();
             for (let i = 0; i < data.length; i++) {
-
                 data[i] = delta * self.state.finalData[i];
-
             }
-            // Update our state with the new tween value and then jump back into
-            // this loop.
             self.setState({data: data}, () => {
                 self.animate(start);
             });
@@ -177,25 +148,41 @@ export default class BarChart extends Component {
             width = this.props.width - margin.left - margin.right,
             height = this.props.height - margin.top - margin.bottom;
 
-        let labels = this.state.labels;
+        let labels = this.state.labels.slice();
+        let scaleWidth = width;
+        let scaleHeight = height;
+        if (!verticalAlignment) {
+            let tmp = scaleHeight;
+            scaleHeight = scaleWidth;
+            scaleWidth = tmp;
+
+        }
         let x = d3.scale.scaleBand()
             .domain(labels)
-            .range([0, width])
+            .range([0, scaleWidth])
             .paddingInner(0.2); // padding between bars
 
         let y = d3.scale.scaleLinear()
             .domain([0, this.state.max])
-            .range([height, 0])
+            .range([scaleHeight, 0])
             .nice(); // rounds to the nearest nice numbers whatever that means
-        let bandwidth = x.bandwidth();
+        const bandwidth = x.bandwidth();
         let leftPadding = 3.5;
         let bottomPadding = 1.5;
-        let pixelsPerVerticalSeperator = 40;
-        let numberVerticalSeperators = height / pixelsPerVerticalSeperator;
+        let pixelsPerSeperator = 40;
+        let numberVerticalSeperators = height / pixelsPerSeperator;
+        let numberHorizontalSeperators = labels.length;
         let leftValues = [];
         let fontSize = 10;
-        for (let i = 0; i < numberVerticalSeperators; i++) {
-            leftValues.push((numberVerticalSeperators - i) * (theMax / numberVerticalSeperators));
+        if (verticalAlignment) {
+            for (let i = 0; i < numberVerticalSeperators; i++) {
+                leftValues.push((numberVerticalSeperators - i) * (theMax / numberVerticalSeperators));
+            }
+        } else {
+            for (let i = 0; i < numberHorizontalSeperators; i++) {
+                leftValues.push((numberHorizontalSeperators - i) * (theMax / numberHorizontalSeperators));
+
+            }
         }
         let unit = "";
         let divisor = 1;
@@ -228,15 +215,15 @@ export default class BarChart extends Component {
                     {leftValues.map((val, i) => (
                         <G>
                             <Line
-                                stroke='#000'
-                                strokeWidth='1'
+                                stroke={verticalAlignment ? '#000' : '#000000FF'}
+                                strokeWidth={'1'}
                                 x1={margin.left - leftPadding - 10}
                                 x2={margin.left - leftPadding}
-                                y1={y(val) + margin.top}
-                                y2={y(val) + margin.top}/>
+                                y1={(verticalAlignment ? y(val) : x(labels[i])) + margin.top}
+                                y2={(verticalAlignment ? y(val) : x(labels[i])) + margin.top}/>
                             <Text
                                 x={20}
-                                y={verticalAlignment ? y(val) + margin.top -17 : x(labels[i]) + (1 / 2 * bandwidth - .75 * fontSize) + margin.top}
+                                y={verticalAlignment ? y(val) + margin.top - 17 : x(labels[i]) + (1 / 2 * bandwidth - .75 * fontSize) + margin.top}
                                 fontSize={fontSize}
                                 textAnchor="middle"
                                 fontWeight="bold"
@@ -274,7 +261,7 @@ export default class BarChart extends Component {
                                 fontWeight="bold"
 
                             >
-                                {verticalAlignment ? labels[i] : Util.formatNumber((leftValues[leftValues.length - i - 1], 100) + unit)}
+                                {verticalAlignment ? labels[i] : Util.formatNumber(leftValues[leftValues.length - 1 - i], 10)}
                             </Text>
 
                         </G>
@@ -291,7 +278,7 @@ export default class BarChart extends Component {
                                       fill={PRIMARY_COLOR_800}/>
                             )
                         } else {
-                            return ( <Path d={this.rect(0, x(labels[i]), width - y(val), bandwidth)}
+                            return ( <Path d={this.rect(0, x(labels[i]), width - y(val), bandwidth - 2)}
                                            fill={PRIMARY_COLOR_800}/>)
                         }
                     })}

@@ -6,12 +6,13 @@ export const LOG_ALL = 1 << 0 | 1 << 1 | 1 << 2;
 export const LOG_SILENT = 0;
 export const LOG_VERBOSE = 2;
 export const LOG_NETWORK = 4;
+export const LOG_NETWORK_REQUESTS = 8;
 
 
 
 let profile = 0;
 let testLevel= 0;
-let logLevel = LOG_SILENT;
+let logLevel = LOG_SILENT ;
 let autoLogin = ["krish02","dost1234@","manisha"];
 
 export var getAutoLogin = () =>{
