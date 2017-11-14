@@ -13,7 +13,7 @@ export const LOG_NETWORK_REQUESTS = 8;
 let profile = 0;
 let testLevel= 0;
 let logLevel = LOG_SILENT ;
-let autoLogin = ["krish02","dost1234@","manisha"];
+let autoLogin = ["","",""];
 
 export var getAutoLogin = () =>{
     if(testLevel & AUTO_LOGIN_INFO) {
