@@ -76,7 +76,8 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
             // reload auth  than clal LoadWholeProfile again
             // if it failed reduces maxProfileReloads by 1, if succeeded put back to 2
         }else {
-            dispatch(Auth.loading(false, true, err));
+            // failed to re login, just reset all
+            dispatch(Auth.logoutAndReset());
         }
     });
 

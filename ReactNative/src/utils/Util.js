@@ -28,7 +28,7 @@ export const getBatchTimeFilter = (endDate, aggregation, backwards = true) => {
             startDate.setTime(endDate.getTime() - (6 * direction) * day);
             break;
         case "week":
-            startDate.setTime(endDate.getFullYear(), endDate.getMonth() - (1 * direction));
+            startDate.setTime( endDate.getTime() - (28 *  day * direction));
             break;
         case"month":
             startDate = new Date(endDate.getFullYear() - (1 * direction)), endDate.getMonth() + (1 * direction);
