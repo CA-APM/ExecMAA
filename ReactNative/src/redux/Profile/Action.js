@@ -37,7 +37,7 @@ export const changeMeta = (meta) => {
 
 
 let maxProfileReloads = 2;
-export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=true) =>{
+export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=true,username="",password="",tenant="") =>{
 
     // I do not think its possible for the metaObject to change but perfect the object is a week
     // ref in which case we want to make a copy
@@ -45,7 +45,6 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
     dispatch(changeMeta(metaObject));
 
     let promises = [
-
         ProfileFetcher.userVisits(auth,meta,dispatch),
         ProfileFetcher.usersByPlatform(auth,meta,dispatch),
         ProfileFetcher.usersByCountry(auth,meta,dispatch),
@@ -62,14 +61,17 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
         }));
     }
     Promise.all(promises).then(()=>{
+        console.log("PROMISES SUCCEEDED");
+        maxProfileReloads = 2;
+
     }).catch((err)=>{
-        if(err.authTokenError && maxProfileReloads){
-            Auth.reloadToken(auth.username,auth.password,auth.tenant,dispatch).then((token)=>{
-                LoadWholeProfile(auth,metaObject,dispatch,loadProfileVersions);
-                maxProfileReloads = 2;
+        if(err.authTokenError && maxProfileReloads > 0){
+            Auth.reloadToken(username,password,tenant,dispatch).then((token)=>{
+                maxProfileReloads--;
+                LoadWholeProfile(token,metaObject,dispatch,loadProfileVersions,username,password,tenant,);
             }).catch((err)=>{
                 maxProfileReloads--;
-                LoadWholeProfile(auth,metaObject,dispatch,loadProfileVersions);
+                LoadWholeProfile(auth,metaObject,dispatch,loadProfileVersions,username,password,tenant,);
             })
             // reload auth  than clal LoadWholeProfile again
             // if it failed reduces maxProfileReloads by 1, if succeeded put back to 2
@@ -85,12 +87,12 @@ export const LoadWholeProfile = (auth,metaObject,dispatch,loadProfileVersions=tr
 export const ProfileFetcher ={
     // I realize the promise is ignore but i need to label the function async in order
     // for the reducer to accept it, or at least i think i do.
-    userVisits : (auth,meta,dispatch) =>{updateData(["data","userVisits"],auth,meta,GET.getUsers,dispatch)},
-    usersByPlatform : (auth,meta,dispatch) =>{updateData(["data","usersByPlatform"],auth,meta,GET.getUsersByPlatform,dispatch)},
-    usersByCountry : (auth,meta,dispatch) =>{updateData(["data","usersByCountry"],auth,meta,GET.getUsersByRegion,dispatch)},
-    crashes : (auth,meta,dispatch) =>{updateData(["data","crashes"],auth,meta,GET.getCrashData,dispatch)},
-    sessionsStatistics : (auth,meta,dispatch) =>{updateData(["data","sessionsStatistics"],auth,meta,GET.getSessionStats,dispatch)},
-    average : (auth,meta,dispatch) =>{updateData(["data","average"],auth,meta,GET.getPerformance,dispatch)},
+    userVisits : (auth,meta,dispatch) =>{return updateData(["data","userVisits"],auth,meta,GET.getUsers,dispatch)},
+    usersByPlatform : (auth,meta,dispatch) =>{return updateData(["data","usersByPlatform"],auth,meta,GET.getUsersByPlatform,dispatch)},
+    usersByCountry : (auth,meta,dispatch) =>{return updateData(["data","usersByCountry"],auth,meta,GET.getUsersByRegion,dispatch)},
+    crashes : (auth,meta,dispatch) =>{return updateData(["data","crashes"],auth,meta,GET.getCrashData,dispatch)},
+    sessionsStatistics : (auth,meta,dispatch) =>{return updateData(["data","sessionsStatistics"],auth,meta,GET.getSessionStats,dispatch)},
+    average : (auth,meta,dispatch) =>{return updateData(["data","average"],auth,meta,GET.getPerformance,dispatch)},
 
     //compareData
     compareSummary: (auth,meta,dispatch) =>{updateCompareData(["compareData","compareSummary"],auth,meta,GET.getAppSummary,dispatch)},

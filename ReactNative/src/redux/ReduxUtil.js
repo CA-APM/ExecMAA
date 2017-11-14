@@ -17,7 +17,7 @@ export const Aggregation = {
 };
 
 const Default= {
-    aggregation : Aggregation.day,
+    aggregation : Aggregation.hour,
     app_id :"All",
 }
 const state = {
@@ -270,7 +270,7 @@ export const updateData = (keyList, auth, meta, request, dispatch) => {
         return data;
     }).catch((err) => {
         dispatch(failedFetchingDataFor(keyList, err));
-        return err;
+        throw err;
     });
 
 };
@@ -295,7 +295,7 @@ export const updateCompareData = (keyList, auth, meta, request, dispatch) => {
             return data;
         }).catch((err) => {
             dispatch(failedFetchingDataFor(keyList, err));
-            return err;
+            throw err;
         });
 
 };

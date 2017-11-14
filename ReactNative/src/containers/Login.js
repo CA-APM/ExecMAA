@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 
-import {ActivityIndicator, Image, View, StyleSheet, TouchableHighlight} from 'react-native'
+import {Image,View, StyleSheet, TouchableHighlight} from 'react-native'
 import {Button, CheckBox, FormInput, FormLabel, FormValidationMessage} from 'react-native-elements'
 
 import {connect} from "react-redux";
 import * as Auth from "../redux/Authentication/Action";
 import * as constants from "../constants";
-import {shouldRememberLogin} from "../redux/Util/Action";
 import {LoadWholeProfile} from "../redux/Profile/Action";
 import {HEIGHT} from "../constants";
 import {ComponentStyle} from "../styles/componentStyle";
@@ -18,8 +17,9 @@ import Spinner from "react-native-loading-spinner-overlay";
 
 
 /**
- Login : description
- **/
+ * @description The Login container is responsible for the logic and presentation views
+ * that go into making the Login responsible
+ */
 class Login extends Component {
 
     constructor(props) {
@@ -37,12 +37,17 @@ class Login extends Component {
         this.didCheckBox = this.didCheckBox.bind(this);
         this.didChangeText = this.didChangeText.bind(this);
         this.checkFormsAndSubmit = this.checkFormsAndSubmit.bind(this);
-        this.errorView = this.errorView.bind(this);
+        this.renderErrorView = this.renderErrorView.bind(this);
         this.resetFields = this.resetFields.bind(this);
         this.renderActivityIndicator = this.renderActivityIndicator.bind(this);
     }
 
-
+    /**
+     * @description creates a copy of the authentication object and computes
+     * whether the a failed login occured or not
+     *
+     * @param props passed in from super view
+     */
     componentWillReceiveProps(props) {
         let auth = props.auth;
         let authCopy = Object.assign({}, auth);
@@ -54,22 +59,31 @@ class Login extends Component {
         })
     }
 
+
     loginRequest(login) {
         let saveLogin = this.state.rememberLogin;
-        // is loading and is default login screen
         this.props.UserLoginAction(login.username, login.password, login.tenant,true).then((loginToken) => {
-            this.props.LoadWholeProfile(loginToken, this.props.metadata);
+            this.props.LoadWholeProfile(loginToken, this.props.metadata,login.username,login.password,login.tenant);
             if (saveLogin) {
+                // Save credentials to disk
                 setCredentials(login.username, login.password, login.tenant);
             }else{
+                // Do not save and remove old credentials if they were there
                 setCredentials("", "", "");
             }
         }).catch((err) => {
-
+            // catch error, don't report however
         });
 
     }
 
+    /**
+     * @description When a text field is changed it calls the function with
+     * the corresponding key and value(text)
+     *
+     * @param {String} key
+     * @param {String} text
+     */
     didChangeText(key, text) {
         let {auth} = this.props;
         let copy = Object.assign({}, this.state.auth);
@@ -78,9 +92,12 @@ class Login extends Component {
         this.setState({auth: copy});
     }
 
+    /**
+     * @description Checks the validity of the 3 fields before sending a request
+     * upond failing it will set the state with the appropriate error messages, for example
+     * if you fail to type a password
+     */
     checkFormsAndSubmit() {
-
-
         const descriptions = ["username", "password", "tenant"];
         const stateDescriptions = ["usernameError", "passwordError", "tenantError"];
         let strings = [this.state.auth.username, this.state.auth.password, this.state.auth.tenant];
@@ -113,25 +130,32 @@ class Login extends Component {
 
     }
 
+    /**
+     * @description Whether or not to save the login information
+     * @param state
+     */
     didCheckBox(state) {
-        console.log("Did check box with state " + state);
         this.setState({
             rememberLogin: !this.state.rememberLogin
         });
 
     }
 
+    /**
+     * @description This is called after we have handled a login failure in order
+     * to reset the redux state
+     */
     resetFields() {
-        // for (let input of this.inputs) {
-        //     if (input) {
-        //         input.clearText();
-        //     }
-        // }
         this.props.handledError();
-
     }
 
-    errorView() {
+    /**
+     * @description Renders an error view if we failed to load  the login information
+     * else returns undefined(no view)
+     *
+     * @returns {*}
+     */
+    renderErrorView() {
         if (this.state.failedLoading) {
             return <View style={{position: 'absolute', width: WIDTH, height: HEIGHT, backgroundColor: "#f0f0f0AA"}}>
                 <View style={{flex: 1}}>
@@ -230,7 +254,7 @@ class Login extends Component {
                 </View>
 
 
-                {this.errorView()}
+                {this.renderErrorView()}
 
             </View>
 
@@ -246,8 +270,8 @@ const mapDispatchToActions = (dispatch) => ({
     UserLoginAction: (user, password, tenant,defaultScreen) => {
         return Auth.userLoginAction(user, password, tenant, dispatch,defaultScreen)
     }, // We are not dispatching this, let is control how it wants to be dispatched
-    LoadWholeProfile: (token, meta) => {
-        LoadWholeProfile(token, meta, dispatch);
+    LoadWholeProfile: (token, meta,uname,password,tenant) => {
+        LoadWholeProfile(token, meta, dispatch,true,uname,password,tenant);
     },
     resetAuth: () => {
         dispatch(logoutAndReset());

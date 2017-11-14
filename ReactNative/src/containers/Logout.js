@@ -5,6 +5,10 @@ import {Image, View} from "react-native";
 import {ComponentStyle} from "../styles/componentStyle";
 import {Icon} from "react-native-elements";
 
+/**
+ * @description The logout class simply calls the logout action upon clicked in the
+ * the drawer navigator
+ */
 class Logout extends Component {
     static navigationOptions = {
 

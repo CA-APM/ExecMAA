@@ -1,10 +1,9 @@
 import react from 'react'
 import {
-    getFilterParameters, getPreviousTimeMeta, getFilterQueryString, getPreviousAggregation,
+    getFilterParameters,
     getQueryString
 } from "./NetworkUtil";
 import {getLogLevel, LOG_NETWORK, LOG_NETWORK_REQUESTS} from "../../projectTest/isTesting";
-import {AllApps, DataStatus} from "../redux/ReduxUtil";
 import {getTimeFilter} from "../utils/Util";
 
 export const BASE_URL = 'https://cloud.ca.com';
@@ -20,12 +19,29 @@ const USERS_URL = '/mdo/v3/usage/users';
 const APP_SUMMARY = '/mdo/v3/performance/apps_summary';
 const APP_VERSIONS = '/mdo/v3/master_data/versionsByPlatform';
 
-
 const NETWORK_PREFIX = "<--NETWORKING-->";
+
+
+/**
+ * @fileOverview GetProfile makes the majority of the network data fetch calls
+ * and does minor transformations on the data
+ */
+
+/**
+ *
+ * @param {String} nameOfCaller - name of calling function, used for debugging purposes
+ * @param {String} authorization - authorization bearer token
+ * @param {String} url - the url we are going to fetch
+ * @param {Object} meta - the current metadata
+ * @param {String} meta.aggregation - the aggregation of the time
+ * @param {Object} meta.timeFilter - the current timeFilter
+ * @returns {Promise.<TResult>|*|Promise.<*>}
+ */
 const getRequest = (nameOfCaller, authorization, url, meta) => {
     let verbose = false;
     let logLevel = getLogLevel();
-    // get apps returns a ton of data i do not use
+    // get apps returns a ton of data and image data which is pretty useless when debugging
+    // it also drastically slows down the application
     if (logLevel & LOG_NETWORK && nameOfCaller !== "getApps") {
         verbose = true;
     }
@@ -55,7 +71,8 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
             let authTokenError = false;
             if (res.status == 401) {
                 let json = JSON.parse(res._bodyText);
-                if (json.msg === "Invalid authentication token"||
+                if (json.msg === "Request has missing or invalid authorization header" ||
+                    json.msg === "Invalid authentication token"||
                     json.msg === "Access denied, inactivity time out.") {
                     authTokenError = true;
                     console.log(`${NETWORK_PREFIX} Authentication timed out resending auth request`);
@@ -65,7 +82,7 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
             // always log network exceptions
             console.log(`${NETWORK_PREFIX} ${nameOfCaller} FAILED receiving : ${JSON.stringify(res, null, 2)}`);
 
-            throw Error({authTokenError:authTokenError,status:res.status});
+            throw {authTokenError:authTokenError,status:res.status};
         }
     });
 }
@@ -318,9 +335,8 @@ export const getSessionList = (authorization, meta) => {
     return getRequest("getSessionList ", authorization, BASE_URL + SESSIONS_URL + "/list", meta).then((json) => {
         let toReturn = {sessionsList: []};
         let {result} = json;
-        // from this you can break down into daily and weekly active users
         result.forEach((data) => {
-            if (data[0] != "time_unit") { // why this check? I am guessing the first item is platform 0 :D
+            if (data[0] != "time_unit") {
                 toReturn.sessionsList.push({label: data[0], value: data[1]});
             }
         });

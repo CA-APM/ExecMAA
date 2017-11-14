@@ -46,7 +46,7 @@ class LoadingScreen extends Component {
 
 
             this.props.UserLoginAction(username, password, tenant).then((loginToken) => {
-                this.props.LoadWholeProfile(loginToken, this.props.metadata);
+                this.props.LoadWholeProfile(loginToken, this.props.metadata,true,username,password,tenant);
             });
 
         }).catch((err) => {
@@ -114,8 +114,8 @@ const mapDispatchToActions = (dispatch) => ({
     Loading: (status, defaultScreen,err=null) => {
         dispatch(Auth.loading(status, defaultScreen,err))
     },
-    LoadWholeProfile: (auth, meta) => {
-        LoadWholeProfile(auth, meta, dispatch);
+    LoadWholeProfile: (auth, meta,uname,pass,tenant) => {
+        LoadWholeProfile(auth, meta, dispatch,true,uname,pass,tenant);
     }
 });
 const mapStateToProps = (state) => {

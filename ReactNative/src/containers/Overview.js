@@ -42,6 +42,11 @@ const Style = StyleSheet.create({
     }
 });
 
+/**
+ * @description The overview is responsible for showing a brief overview of the data as a whole
+ * It will show crashses, total users, and other important information based on aggregation selectin
+ *
+ */
 class Overview extends Component {
 
     static navigationOptions = {
@@ -56,18 +61,34 @@ class Overview extends Component {
 
     constructor(props) {
         super(props);
-
-        // default load
-
     }
 
+    /**
+     * @description Used to transform the data into a form the live data view can understand!
+     *
+     * @param {Array} compareData - the data to be transformed
+     * @param {Number} status - the status indicating success of not
+     * @returns {Array}
+     */
+    transformCompareSummary(compareData, status) {
+        // only going to grab these keys
+        const keys = ["http_request", "http_request_errors", "crashes", "session_counter", "active_users",];
+        const labels = ["HTTP Requests", "HTTP Errors", "Crashes", "Sessions", "Active Users"];
+        const config = [true, false, false, true, true];
+        if (status !== DataStatus.success) {
+            return [];
+        }
+        let current = compareData[0];
+        let previous = compareData[1];
 
-    random(num) {
-        let toReturn = (.10 * Math.random() * num + num);
-        toReturn = Math.round(toReturn);
-        return toReturn.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        let data = [];
+        keys.forEach((key, i) => {
+            data.push({label: labels[i], current: current[key], past: previous[key], moreOfValueIsGood: config[i]})
+        });
 
+        return data;
     }
+
 
     render() {
 
@@ -82,9 +103,6 @@ class Overview extends Component {
         let tf2 = getTimeFilter(tf1.jsStartDate, currentMeta.aggregation);
         let d1 = `${formatDate(tf1.jsStartDate)}-${formatDate(tf1.jsEndDate)}`;
         let d2 = `${formatDate(tf2.jsStartDate)}-${formatDate(tf2.jsEndDate)}`;
-
-// /*style={{opacity:this.props.updateStatus === UpdateStatus.failed ? 0.8 : 0.0}*/
-        //                {this.props.updateStatus === UpdateStatus.failed  ? <Text>Error loading please try again</Text>: undefined}
 
 
         let pie1;
@@ -127,9 +145,6 @@ class Overview extends Component {
         }
 
         return (
-
-
-            // REMEMBER TO PUT FLEX : 1 here so the nav bar will render list corect
             <View style={{flex: 1}}>
 
                 <NavigatorBar {...this.props}/>
@@ -198,24 +213,6 @@ class Overview extends Component {
         );
     }
 
-    transformCompareSummary(compareData, status) {
-        // only going to grab these keys
-        const keys = ["http_request", "http_request_errors", "crashes", "session_counter", "active_users",];
-        const labels = ["HTTP Requests", "HTTP Errors", "Crashes", "Sessions", "Active Users"];
-        const config = [true, false, false, true, true];
-        if (status !== DataStatus.success) {
-            return [];
-        }
-        let current = compareData[0];
-        let previous = compareData[1];
-
-        let data = [];
-        keys.forEach((key, i) => {
-            data.push({label: labels[i], current: current[key], past: previous[key], moreOfValueIsGood: config[i]})
-        });
-
-        return data;
-    }
 
 
 }

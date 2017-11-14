@@ -19,11 +19,15 @@ import AppList from "./src/presentationViews/CustomDataviews/AppList";
 import {WIDTH} from "./src/constants";
 import AppSelector from "./src/presentationViews/Other/AppSelector";
 import Spinner from "react-native-loading-spinner-overlay";
+import * as CONSTANTS from "./src/constants";
+import Svg from "react-native-svg/elements/Svg";
+import Axis from "./src/presentationViews/Dataviews/Axis";
+import {G} from "react-native-svg";
 
 //TODO : We need to periodically sign back in and get a new refresh token
 let serverTesting = function (dispatch) {
     console.log("Testing begin");
-    Tester.loadToken("krish02", "manisha", "dost1234@").then(() => {
+    Tester.loadToken("", "", "").then(() => {
         testGetApps();
         testCrashes();
         testUsersByRegion();
@@ -61,8 +65,6 @@ export default class App extends Component {
         // }
 
         // serverTesting();
-
-
 
 
         return (

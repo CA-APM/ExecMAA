@@ -27,21 +27,13 @@ import * as CONSTANTS from "../constants";
 import {getBatchTimeFilter} from "../utils/Util";
 import {getCalendarTimeFilter} from "../utils/Util";
 
-
-formatMonitoringTitle = (meta) => {
-    let start = meta.timeFilter.jsStartDate;
-    let end = meta.timeFilter.jsEndDate;
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let startString = `${months[start.getMonth()]} ${start.getDate()}`;
-    let endString = `${months[end.getMonth()]} ${end.getDate()}`;
-    if (meta.aggregation === "month") { // add the year
-        startString = `${startString} ${start.getFullYear()}`;
-        endString = `${endString} ${end.getFullYear()}`;
-    }
-    return `${startString}-${endString}`;
-}
-
-class NavigatorBar extends Component {
+/**
+ * @description The NavigationBar is responsible for displaying important information
+ * such as the Current time period which is being monitored, the app which is being monitored and
+ * also allows the user to tap for a drawer view or select a different time period with a calendar view
+ *
+ */
+class NavigationBar extends Component {
 
 
     constructor(props) {
@@ -58,7 +50,7 @@ class NavigatorBar extends Component {
         this.renderCalendar = this.renderCalendar.bind(this);
         this.datePressed = this.datePressed.bind(this);
         this.getDateRange = this.getDateRange.bind(this);
-        this.buttonPressed = this.buttonPressed.bind(this);
+        this.didChangeAggregation = this.didChangeAggregation.bind(this);
         this.reloadProfile = this.reloadProfile.bind(this);
         this.userDidChangeApp = this.userDidChangeApp.bind(this);
         this.dismissedCalendar = this.dismissedCalendar.bind(this);
@@ -67,6 +59,7 @@ class NavigatorBar extends Component {
         this.updateProfileVersion = this.updateProfileVersion.bind(this);
         this.getAppVersionsFor = this.getAppVersionsFor.bind(this);
         this.changeDate = this.changeDate.bind(this);
+
     }
 
 
@@ -76,6 +69,10 @@ class NavigatorBar extends Component {
         }
     }
 
+    /**
+     * @description Called when a user selects a new app to monitor
+     * @param {String} app
+     */
     selectedApp(app) {
         let oldApp = this.state.meta.app_id;
         let changed = app !== oldApp;
@@ -88,6 +85,167 @@ class NavigatorBar extends Component {
             changed: changed,
             meta: newMeta
         });
+    }
+
+
+    dismissedCalendar() {
+        this.props.togglePicker();
+        if (this.state.shouldSendRequest && this.state.changed) {
+            this.reloadProfile();
+        }
+        this.setState({
+            shouldSendRequest: !this.state.shouldSendRequest
+        });
+    }
+
+
+    componentWillReceiveProps(props) {
+        // we did get the data
+        this.setState({meta: Object.assign({}, props.metadata)});
+
+    }
+
+    /**
+     * This is called when we are sure that we need to reload the whole profile
+     * @param meta
+     */
+    reloadProfile(meta = this.state.meta,auth = this.props.auth) {
+        this.props.LoadWholeProfile(this.props.token, meta,auth.username,auth.password,auth.tenant);
+    }
+
+    /**
+     * @description This function takes the currently selected date range from the state
+     * and fills an array with the properly formatted date times.
+     */
+    getDateRange(employees) {
+        const formatter = function (date) {
+            return Util.dateToReactCalendar(date, 1);
+
+        };
+
+        let toReturn = {};
+        let end = new Date(this.state.meta.timeFilter.jsEndDate);
+
+        let theColor = '#00AAFF';
+        let start = new Date(this.state.meta.timeFilter.jsStartDate);
+        let realStart = new Date(start);
+
+        const day = 24 * 60 * 60 * 1000;
+
+        var copy;
+
+        switch (this.state.meta.aggregation) {
+            case "hour":
+                break;
+            case "day":
+                //
+                copy = new Date(start);
+                for (let i = 0; i < 7; i++) {
+                    copy.setTime(copy.getTime() + day);
+                    if (copy.getTime() > end.getTime()) {
+                        break;
+                    }
+                    toReturn[formatter(copy)] = [{color: theColor}]
+                }
+                break;
+            case    "week" :
+                copy = new Date(start);
+                for (let i = 0; i < 28; i++) {
+                    copy.setTime(copy.getTime() + day);
+                    if (copy.getTime() > end.getTime()) {
+                        break;
+                    }
+                    toReturn[formatter(copy)] = [{color: theColor}]
+                }
+                break;
+            case    "month" :
+                // this will be a lot of comp
+
+                copy = new Date(start);
+                for (let i = 0; i < 365; i++) {
+                    copy.setTime(copy.getTime() + day);
+                    if (copy.getTime() > end.getTime()) {
+                        break;
+                    }
+                    toReturn[formatter(copy)] = [{color: theColor}]
+                }
+                break;
+            default:
+                break;
+
+        }
+
+        toReturn[formatter(realStart)] = [{startingDay: true, color: theColor, textColor: 'gray'}];
+        toReturn[formatter(end)] = [{endingDay: true, color: theColor, textColor: 'gray'}];
+
+        return toReturn;
+    }
+    /**
+     * @description This is called when a user changes the aggregation
+     *
+     * @param {String} update - The new type of aggregation
+     */
+    didChangeAggregation(update) {
+
+        let end = this.state.meta.timeFilter.jsEndDate;
+        let filter = Util.getCalendarTimeFilter(end, update);
+        console.log(`Button Pressed. Update = ${update}\nNew filter : ${JSON.stringify(filter)}`);
+        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter}, {aggregation: update.toLowerCase()});
+        this.setState({meta: newProfile, changed: true});
+    }
+
+    /**
+     * @description Called when the users selects a different time zone from within the calendar
+     *
+     * @param {Object} filter - The date filter
+     * @param {Date} filter.jsStartDate
+     * @param {Date} filter.jsEndDate
+     * @param {String} filter.startDate
+     * @param {String} filter.endDate
+     * @param {(null|function)} cb - optional callback
+     */
+    changeDate(filter, cb) {
+        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter});
+        this.setState({meta: newProfile, changed: true}, cb);
+
+    }
+
+    datePressed(dateObject) {
+        // get the current aggregation type
+        let aggregation = this.state.meta.aggregation;
+        let timeNow = new Date();
+        let end = new Date(dateObject.year, dateObject.month - 1, dateObject.day, timeNow.getHours(), timeNow.getMinutes());
+        let filter = Util.getCalendarTimeFilter(end, aggregation);
+        this.changeDate(filter);
+    }
+
+    updateProfileVersion(ver) {
+        let oldVersion = this.state.meta.version;
+        if (ver !== oldVersion) {
+            let newMeta = Object.assign({}, this.state.meta);
+            newMeta.version = ver;
+            this.setState({
+                showAppList: false,
+                shouldSendRequest: true,
+                changed: true,
+                meta: newMeta
+            });
+        }
+    }
+
+    getAppVersionsFor(app, data) {
+        let choseAllApps = app === "All";
+        let notLoaded = data.metadata.status !== DataStatus.success;
+        data = data.data;
+        if (!(choseAllApps || notLoaded)) {
+            let toReturn = [];
+            let items = data[app];
+            toReturn = toReturn.concat(items["iOS"]);
+            toReturn = toReturn.concat(items["Android"]);
+            return toReturn;
+        } else {
+            return [];
+        }
     }
 
     render() {
@@ -242,57 +400,15 @@ class NavigatorBar extends Component {
 
     }
 
-    dismissedCalendar() {
-        this.props.togglePicker();
-        if (this.state.shouldSendRequest && this.state.changed) {
-            this.reloadProfile();
-        }
-        // It should not matter if we return after loading the whole profile, seeing as we are
-        // updating the view this should not get called.
 
-        this.setState({
-            shouldSendRequest: !this.state.shouldSendRequest
-        });
-    }
-
-
-    componentWillReceiveProps(props) {
-        // we did get the data
-        this.setState({meta: Object.assign({}, props.metadata)});
-
-    }
-
-    reloadProfile(meta = this.state.meta) {
-
-        this.props.LoadWholeProfile(this.props.token, meta);
-    }
-
-
-    buttonPressed(update) {
-
-        let end = this.state.meta.timeFilter.jsEndDate;
-        let filter = Util.getCalendarTimeFilter(end, update);
-        console.log(`Button Pressed. Update = ${update}\nNew filter : ${JSON.stringify(filter)}`);
-        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter}, {aggregation: update.toLowerCase()});
-        this.setState({meta: newProfile, changed: true});
-    }
-
-    changeDate(filter, cb) {
-        let newProfile = Object.assign({}, this.state.meta, {timeFilter: filter});
-        this.setState({meta: newProfile, changed: true}, cb);
-
-    }
-
-    datePressed(dateObject) {
-        // get the current aggregation type
-        let aggregation = this.state.meta.aggregation;
-        let timeNow = new Date();
-        let end = new Date(dateObject.year, dateObject.month - 1, dateObject.day, timeNow.getHours(), timeNow.getMinutes());
-        let filter = Util.getCalendarTimeFilter(end, aggregation);
-        this.changeDate(filter);
-    }
-
-
+    /**
+     * This renders the entire dropdown menu from the nav bar which includes the current app, the app pikcer
+     * The calendar picker and a button list
+     *
+     * calls renderPicker(), renderCalendar()
+     *
+     * @returns {*}
+     */
     renderDropDrown() {
 
         const buttonMap = {"hour": "Hour", "day": "Day", "week": "Week", "month": "Month"};
@@ -333,7 +449,7 @@ class NavigatorBar extends Component {
                 <View style={{
                     height: 70, width: WIDTH
                 }}>
-                    <ButtonGroup onPress={(index) => this.buttonPressed(buttons[index].toLowerCase())}
+                    <ButtonGroup onPress={(index) => this.didChangeAggregation(buttons[index].toLowerCase())}
                                  selectedIndex={buttons.indexOf(buttonMap[this.state.meta.aggregation])}
                                  buttons={buttons}
                                  containerStyle={{height: 50, backgroundColor: "#FFAA00"}}/>
@@ -343,35 +459,12 @@ class NavigatorBar extends Component {
     }
 
 
-    updateProfileVersion(ver) {
-        let oldVersion = this.state.meta.version;
-        if (ver !== oldVersion) {
-            let newMeta = Object.assign({}, this.state.meta);
-            newMeta.version = ver;
-            this.setState({
-                showAppList: false,
-                shouldSendRequest: true,
-                changed: true,
-                meta: newMeta
-            });
-        }
-    }
-
-    getAppVersionsFor(app, data) {
-        let choseAllApps = app === "All";
-        let notLoaded = data.metadata.status !== DataStatus.success;
-        data = data.data;
-        if (!(choseAllApps || notLoaded)) {
-            let toReturn = [];
-            let items = data[app];
-            toReturn = toReturn.concat(items["iOS"]);
-            toReturn = toReturn.concat(items["Android"]);
-            return toReturn;
-        } else {
-            return [];
-        }
-    }
-
+    /**
+     * @description A picker that allows the user to chose from different versions of the app
+     * if there are any
+     *
+     * @returns {*}
+     */
     renderPicker() {
         let data = this.getAppVersionsFor(this.state.meta.app_id, this.props.util.appVersions);
         if (data.length) {
@@ -398,70 +491,7 @@ class NavigatorBar extends Component {
 
     }
 
-    // This nasty function is needed to render the dates to the calendar
-    getDateRange() {
-        const formatter = function (date) {
-            return Util.dateToReactCalendar(date, 1);
 
-        };
-
-        let toReturn = {};
-        let end = new Date(this.state.meta.timeFilter.jsEndDate);
-
-        let theColor = '#00AAFF';
-        let start = new Date(this.state.meta.timeFilter.jsStartDate);
-        let realStart = new Date(start);
-
-        const day = 24 * 60 * 60 * 1000;
-
-        var copy;
-
-        switch (this.state.meta.aggregation) {
-            case "hour":
-                break;
-            case "day":
-                //
-                copy = new Date(start);
-                for (let i = 0; i < 7; i++) {
-                    copy.setTime(copy.getTime() + day);
-                    if (copy.getTime() > end.getTime()) {
-                        break;
-                    }
-                    toReturn[formatter(copy)] = [{color: theColor}]
-                }
-                break;
-            case    "week" :
-                copy = new Date(start);
-                for (let i = 0; i < 28; i++) {
-                    copy.setTime(copy.getTime() + day);
-                    if (copy.getTime() > end.getTime()) {
-                        break;
-                    }
-                    toReturn[formatter(copy)] = [{color: theColor}]
-                }
-                break;
-            case    "month" :
-                // this will be a lot of comp
-
-                copy = new Date(start);
-                for (let i = 0; i < 365; i++) {
-                    copy.setTime(copy.getTime() + day);
-                    if (copy.getTime() > end.getTime()) {
-                        break;
-                    }
-                    toReturn[formatter(copy)] = [{color: theColor}]
-                }
-                break;
-            default:
-                break;
-
-        }
-
-        toReturn[formatter(realStart)] = [{startingDay: true, color: theColor, textColor: 'gray'}];
-        toReturn[formatter(end)] = [{endingDay: true, color: theColor, textColor: 'gray'}];
-
-        return toReturn;
-    }
 
     renderCalendar() {
         if (this.props.util.showConfigPicker) {
@@ -501,7 +531,7 @@ class NavigatorBar extends Component {
 }
 
 
-NavigatorBar.propTypes = {
+NavigationBar.propTypes = {
     navigation: PropTypes.object
 };
 
@@ -509,8 +539,8 @@ const mapDispatchToActions = (dispatch) => ({
     togglePicker: () => {
         dispatch(switchConfigPicker())
     },
-    LoadWholeProfile: (auth, meta) => {
-        LoadWholeProfile(auth, meta, dispatch, false);
+    LoadWholeProfile: (auth, meta,uname,pass,tenant) => {
+        LoadWholeProfile(auth, meta, dispatch, false,uname,pass,tenant);
     },
 
 
@@ -518,7 +548,8 @@ const mapDispatchToActions = (dispatch) => ({
 export default connect((state) => ({
     util: state.util,
     metadata: state.profile.metadata,
-    token: state.authentication.appToken
-}), mapDispatchToActions)(NavigatorBar);
+    token: state.authentication.appToken,
+    auth : state.authentication
+}), mapDispatchToActions)(NavigationBar);
 
 
