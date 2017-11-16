@@ -73,6 +73,13 @@ export default class BarChart extends Component {
         for (let index = 0; index < data.length; index++) {
 
             if (this.props.aggregation) {
+                if(this.props.aggregation === 'hour' ){
+                    if(index % 3 !== 0) {
+                        continue;
+                    }else if(index >=2){
+                        data[index].value += data[index-1].value + data[index-2].value;
+                    }
+                }
                 labels.push(dateStringToLabel(data[index].label, this.props.aggregation));
             } else {
                 labels.push(data[index].label);
@@ -138,7 +145,9 @@ export default class BarChart extends Component {
     render() {
 
         if (!this.props.data || this.props.data.length == 0) {
-            return LoadView({width: this.props.width, height: this.props.height});
+            return (<View>
+                <Text>{'No Data'}</Text>
+            </View>)
         }
 
         let verticalAlignment = this.props.barAlignment === 'vertical';

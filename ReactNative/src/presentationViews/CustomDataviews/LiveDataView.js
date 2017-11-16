@@ -13,6 +13,11 @@ import {LoadRestView} from "../Other/PresentationUtil";
 import {ComponentStyle} from "../../styles/componentStyle";
 
 
+/**
+ * @description This presentation view was originally meant to display constantly changing data
+ * It will show the changes in previous and current data and display positive changes in gree
+ * and negative changes in red
+ */
 export default class LiveDataView extends Component {
 
     constructor(props) {
@@ -44,11 +49,11 @@ export default class LiveDataView extends Component {
      * Formats the data based on previous and current values.
      * Will display views accordingly
      *
-     * @param old  : number           old value
-     * @param current : number           current value
-     * @param agg : String
-     * @param label : String
-     * @param positiveIsGood  indicates if an increase ((current-old)>0) is a good thing
+     * @param {Number}  old
+     * @param {Number}  current
+     * @param {String}  agg
+     * @param {String}  label
+     * @param {Bool}    positiveIsGood indicates if an increase ((current-old)>0) is a good thing
      * @returns {{title: string, value: string, changeString: string, color: (string|*)}}
      */
     getDataInfo(old, current, agg, label, positiveIsGood) {
@@ -72,7 +77,7 @@ export default class LiveDataView extends Component {
         current = Util.formatNumber(current, 1000);
         delta = Util.formatNumber(delta, 1000);
         deltaPercent = Util.formatToDecimal(deltaPercent, 100);
-        if(deltaPercent == 0){
+        if (deltaPercent == 0) {
             didIncrease = "";
         }
 
@@ -97,9 +102,7 @@ export default class LiveDataView extends Component {
     }
 
     computeState(props) {
-
         let data = props.data;
-
 
         let computeData = [];
         let agg = props.aggregation[0].toUpperCase() + props.aggregation.slice(1);
@@ -120,8 +123,7 @@ export default class LiveDataView extends Component {
                                 height={200}
                     >
                         {
-                            // when using static data using array index should be good
-                            this.state.data.map((d,index) => {
+                            this.state.data.map((d, index) => {
                                 return (<View key={index} style={{flex: 1, alignSelf: "center", alignItems: "center"}}>
                                         <Text style={
                                             [ComponentStyle.label,
@@ -143,7 +145,8 @@ export default class LiveDataView extends Component {
                                                             fontWeight: "bold",
                                                             color: d.color
                                                         }
-                                                    ]}>{d.changeString}</Text></Blink>
+                                                    ]}>{d.changeString}
+                                            </Text></Blink>
 
                                     </View>
 

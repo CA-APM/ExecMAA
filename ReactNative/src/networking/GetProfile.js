@@ -32,9 +32,11 @@ const NETWORK_PREFIX = "<--NETWORKING-->";
  * @param {String} nameOfCaller - name of calling function, used for debugging purposes
  * @param {String} authorization - authorization bearer token
  * @param {String} url - the url we are going to fetch
- * @param {Object} meta - the current metadata
- * @param {String} meta.aggregation - the aggregation of the time
- * @param {Object} meta.timeFilter - the current timeFilter
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
  * @returns {Promise.<TResult>|*|Promise.<*>}
  */
 const getRequest = (nameOfCaller, authorization, url, meta) => {
@@ -97,10 +99,12 @@ const getRequest = (nameOfCaller, authorization, url, meta) => {
  *
  * @param theFunction
  * @param authorization
- * @param meta
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
  * @returns {Promise.<TResult>}
- *
- *   [theFunction(currentMeta).json,theFunction(previousMeta).json]
  */
 export const getCompareRequest = (theFunction, authorization, meta) => {
     let currentMeta = Object.assign({}, meta);
@@ -117,7 +121,7 @@ export const getCompareRequest = (theFunction, authorization, meta) => {
 
 /**
  *
- * @param authorization
+ * @param authorization - the auth token
  * @returns {Promise.<TResult>|*|Promise.<*>}
  */
 export const getApps = (authorization) => {
@@ -130,7 +134,13 @@ export const getApps = (authorization) => {
         });
     });
 };
-
+/**
+ * @description Note this will make 1 request per application passed in the authorization
+ *
+ * @param {String} authorization - auth token
+ * @param {[String]} appIDList - the string names of the applications you want to fetch
+ * @returns {Promise.<TResult>}
+ */
 export const getAllAppVersions = (authorization, appIDList) => {
     let promiseList = appIDList.map((app) => {
         return getRequest("getAppVersions", authorization, BASE_URL + APP_VERSIONS + `?app_id=${app}`, null).then((data) => {
@@ -156,7 +166,17 @@ export const getAllAppVersions = (authorization, appIDList) => {
 
 
 };
-
+/**
+ * @description Gets the crash data for a given profile and authorization
+ *
+ * @param authorization
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
+ * @returns {Promise.<TResult>}
+ */
 export const getCrashData = (authorization, meta) => {
 
     return getRequest("getCrashData", authorization, BASE_URL + CRASHES_URL, meta).then((json) => {
@@ -176,7 +196,16 @@ export const getCrashData = (authorization, meta) => {
     });
 };
 
-
+/**
+ *
+ * @param authorization
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
+ * @returns {Promise.<TResult>}
+ */
 export const getUsersByPlatform = (authorization, meta) => {
 
     return getRequest("usersByPlatform", authorization, BASE_URL + USAGE_BY_PLATFORM_URL, meta).then((json) => {
@@ -190,7 +219,17 @@ export const getUsersByPlatform = (authorization, meta) => {
     });
 
 };
-
+/**
+ * @description
+ *
+ * @param authorization
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
+ * @returns {Promise.<TResult>}
+ */
 export const getUsersByRegion = (authorization, meta) => {
     return getRequest("getUsersByRegion", authorization, BASE_URL + GEO_URL, meta).then((json) => {
         let toReturn = {data: []};
@@ -203,23 +242,18 @@ export const getUsersByRegion = (authorization, meta) => {
     });
 
 };
-
-// This only returns monthly active users
-export const getActiveUsers = (authorization, meta) => {
-    // Before you uncomment this function you must change the Data model to have a property
-    // like maus... or whatever the returned object is
-    // return getRequest("getActiveUsers", authorization, BASE_URL + ACTIVE_USERS_URL, meta).then((json) => {
-    //     let toReturn = {maus: []};
-    //     let {monthly_active_users} = json;
-    //     // from this you can break down into daily and weekly active users
-    //     monthly_active_users.forEach((data) => {
-    //         if (data[0] != "time_unit") { // why this check? I am guessing the first item is platform 0 :D
-    //             toReturn.maus.push({label: data[0], value: data[1]});
-    //         }
-    //     });
-    //     return toReturn;
-    // });
-};
+/**
+ * @description Will return an object composed of 3 arrays which will contain
+ * basic user information.
+ *
+ * @param authorization
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
+ * @returns {Promise.<TResult>}
+ */
 export const getUsers = (authorization, meta) => {
     return getRequest(`getUsers ${meta.aggregation}`, authorization, BASE_URL + USERS_URL, meta).then((json) => {
         let toReturn = {newUsers: [], totalUsers: [], repeatUsers: [], users: 0};
@@ -237,7 +271,13 @@ export const getUsers = (authorization, meta) => {
 
 };
 
-
+/**
+ * @description gets the basic session information such as the sessions by length and by count
+ *
+ * @param authorization
+ * @param meta
+ * @returns {Promise.<TResult>}
+ */
 export const getSessionStats = (authorization, meta) => {
     return getRequest("getSessionStats", authorization, BASE_URL + SESSIONS_URL, meta).then((json) => {
         let toReturn = {sessionsByLength: [], sessionsByCount: []};
@@ -253,7 +293,17 @@ export const getSessionStats = (authorization, meta) => {
 
 };
 
-
+/**
+ * @description returns important performance metrics
+ *
+ * @param authorization
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
+ * @returns {Promise.<TResult>}
+ */
 export const getPerformance = (authorization, meta) => {
     return getRequest("getPerformance", authorization, BASE_URL + PERF_URL, meta).then((json) => {
         let toReturn = {};
@@ -274,31 +324,12 @@ export const getPerformance = (authorization, meta) => {
 /**
  *
  * @param authorization
- * @param meta
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
  * @returns {Promise.<TResult>|*|Promise.<*>}
- *{
-    "app_id" : 0,
-    "http_request" : 0,
-    "http_request_errors" : 0,
-    "active_sessions" : 0,
-    "active_users" : 0,
-    "avg_load_time" : 0,
-    "avg_spin" : 0,
-    "avg_latency" : 0,
-    "avg_data_in" : 0,
-    "avg_data_out" : 0,
-    "avg_disk" : 0,
-    "avg_mem" : 0,
-    "avg_cpu" : 0,
-    "avg_frame_rate" : 0,
-    "crashes" : 0,
-    "errors" : 0,
-    "exceptions" : 0,
-    "session_length" : 0,
-    "session_counter" : 0,
-    "arr_session_counter" : 0,
-    "avg_battery" : 0,
- },
  */
 export const getAppSummary = (authorization, meta) => {
     return getRequest("getAppSummary", authorization, BASE_URL + APP_SUMMARY, meta).then((json) => {
@@ -325,10 +356,13 @@ export const getAppSummary = (authorization, meta) => {
 
 
 /**
- * TODO : Test
  *
  * @param authorization
- * @param meta
+ * @param {Object} meta                 - the current metadata
+ * @param {String} meta.aggregation     - the aggregation of the time
+ * @param {Object} meta.timeFilter      - the current timeFilter
+ * @param {Object} meta.app_id          - the current app
+ * @param {Object} meta.version         - the current app version
  * @returns {Promise.<Array.<String>|String>}
  */
 export const getSessionList = (authorization, meta) => {

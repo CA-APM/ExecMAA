@@ -16,20 +16,22 @@ const titles = {
     "week": "Weekly",
     "month": "Monthly"
 }
+/**
+ * @description this is a basic wrapper around the normal bar chart, it includes a title
+ * and also has a Loading view which will display an error if we fail to load the chart
+ */
 export default class UserBarChart extends Component {
-
     constructor(props) {
         super(props);
         // set state
 
     }
-
-
     render() {
 
         let title = "";
         if(this.props.aggregation) {
             title = `Total ${titles[this.props.aggregation]} Users`
+
         }else{
             title = this.props.title;
         }
@@ -55,10 +57,6 @@ export default class UserBarChart extends Component {
 
 }
 
-const moNum = (new Date()).getMonth();
-const dayNum = (new Date()).getDay();
-const weekNum = 3;
-const yearNum = (new Date()).getYear();
 UserBarChart.defaultProps = {
     bardirection: 'vertical',
     aggregation: "day",

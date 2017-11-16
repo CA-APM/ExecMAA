@@ -39,6 +39,9 @@ class CustomListItem extends React.PureComponent {
     }
 }
 
+/**
+ * @description displays a list of applications
+ */
 export default class AppList extends Component {
 
     constructor(props) {
@@ -57,7 +60,6 @@ export default class AppList extends Component {
 
     didSelectApp(app) {
         this.props.onPress(app);
-
         let nameKey = this.props.nameKey;
         let id = app[nameKey];
 
@@ -72,16 +74,12 @@ export default class AppList extends Component {
     }
 
 
-    //                     {/*<ListItem rightIcon={{name: 'chevron-right'}}  key={index} title={item} onPress={() =>{this.didPress(item,index)}}/>*/}
-
     renderItem(obj) {
         obj = obj.item;
         let nameKey = this.props.nameKey;
         let imageKey = this.props.imageKey;
         let name = obj[nameKey];
         let image = obj[imageKey];
-
-        let appPicture = obj[imageKey];
 
 
         // TODO change to use the new map selected

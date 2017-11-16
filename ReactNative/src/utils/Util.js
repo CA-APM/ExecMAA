@@ -234,7 +234,15 @@ export const dateStringToLabel = (label, aggregation) => {
     } else if (aggregation === "week" || aggregation === "day") {
         toReturn = toReturn.substr(5, 5);
     } else if (aggregation === "hour") {
-        toReturn = toReturn.substr(11, 2);
+        let tmp = parseInt(toReturn.substr(11, 2));
+        if(tmp < 12){
+            if(tmp == 0){tmp = 12;}
+            return  `${tmp} am`;
+        }else{
+            tmp -= 12;
+            if(tmp == 0){tmp = 12;}
+            return `${tmp} pm`;
+        }
     }
     return toReturn;
 
