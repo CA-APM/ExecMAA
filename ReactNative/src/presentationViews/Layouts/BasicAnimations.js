@@ -6,7 +6,11 @@ import {
     View
 } from 'react-native'
 
-
+/**
+ * A very basic component that simply increases and decreases the opacity
+ * of a view, can be called repeatedly
+ *
+ */
 export class Blink extends Component {
 
 

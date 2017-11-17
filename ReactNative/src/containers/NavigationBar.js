@@ -10,7 +10,6 @@ import {
 } from 'react-native'
 import {HEIGHT, PRIMARY_COLOR_300, WIDTH} from "../constants";
 import {ComponentStyle} from "../styles/componentStyle";
-import LoginButton from "../presentationViews/Other/LoginButton";
 import * as constants from "../constants";
 import {Icon, Button, CheckBox, ButtonGroup, Header, List, ListItem, SearchBar} from "react-native-elements";
 import {connect} from "react-redux";

@@ -24,12 +24,6 @@ const state = {
     util: {
         shouldRemember: true,
         showConfigPicker: false,
-        // We keep a copy of the profile metadata here,
-        // because this metadata drives our navigation bar which
-        // will eventually drive the profile meta data
-        // Users might constantly pick new dates,apps and we do not
-        // want to fetch everytime they do so, only upon dismissing the nav bar
-        // this is why I have a copy of the metadata
         loadInitialProfile: true,
         profileList: {
             metadata: {status: DataStatus.notFetching},
@@ -48,8 +42,6 @@ const state = {
 
 
     },
-    // I can get rid of everything except for the token
-    // need to clean it up
     authentication: {
         username: "",
         password: "",
@@ -71,15 +63,14 @@ const state = {
             aggregation: Default.aggregation,
             app_id: "All",
             timeFilter: Util.getBatchTimeFilter(new Date(), Default.aggregation),
-            version : ""
-
-            // this is what the time filter object actually looks like!! :D
             // timeFilter:
             //     starDate: null,
             //     endDate: null,
             //     jsStartDate : null,
             //     jsEndDate : null
             // },
+            version : ""
+
         },
 
 
@@ -123,7 +114,7 @@ const state = {
             }
 
         },
-        // this will be data that is constantly updated
+        // this will be data that is constantly updated in the future
         compareData: {
             compareSummary: {
                 metadata: {status: DataStatus.notFetching},
@@ -189,14 +180,25 @@ export let InitialState = (key) => {
     return state[key]
 };
 
-
-export const CopyAndOverrideKey = (oldObj, toObject, keyList) => {
+/**
+ * @description
+ * oldObj = {hello:{world:"hi"}}
+ * copyAndOverrideKey(oldObj,"i am new!",["hello","hi"]
+ * returns {hello : {world :"i am new!"}}
+ *
+ * @param {Object} oldObj - the object from which we will extra most things
+ * @param {Any} data
+ * @param {Array.String} keyList - this is the nested list of keys that we will use to find the object
+ * @returns {*}
+ * @constructor
+ */
+export const CopyAndOverrideKey = (oldObj, data, keyList) => {
     let obj = Object.assign({}, oldObj);
     let currValue = obj;
     for (let i = 0; i < keyList.length - 1; i++) {
         currValue = currValue[keyList[i]];
     }
-    currValue[keyList[keyList.length - 1]] = toObject;
+    currValue[keyList[keyList.length - 1]] = data;
     return obj;
 };
 

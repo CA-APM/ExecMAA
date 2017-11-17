@@ -26,7 +26,10 @@ const flatStyle = StyleSheet.create({
 
 });
 
-
+/**
+ * The flat layout structures it's children views to have shadows which make it appear
+ * like it is above the rest of the view
+ */
 class FlatLayout extends Component {
     render() {
         const children = this.props.children;
@@ -60,10 +63,13 @@ FlatLayout.defaultProps = {
     topMargin: 0,
     widthPercent: "95%"
 };
+
+/**
+ * The grid layout formats the data into a given N x N grid
+ */
 class GridLayout extends Component {
     render() {
         let {children,containerStyle,columnStyle,backgroundColor,width,height,rows,cols,seperatorColor,rowSeperatorWidth,colSeperatorWidth }= this.props;
-        let widthPerRowElement =  (width  - ((cols + 1) * colSeperatorWidth))/ cols;
         let heightPerElement = height / rows;
         let arrRows = [];
         let j = -1;
@@ -89,7 +95,7 @@ class GridLayout extends Component {
                 arrRows.push((<View key={keyIndex++}style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))
             }
 
-            if(arrRows[j * 2].length == 0){
+            if(arrRows[j * 2].length === 0){
                 arrRows[j * 2].push((<View key={keyIndex++} style={{
                     width: colSeperatorWidth,
                     backgroundColor: seperatorColor
@@ -103,6 +109,7 @@ class GridLayout extends Component {
                 }}/>));
         });
 
+        // adds an extra tittle view that will span the whole grid layout
         if(this.props.titleView){
             // push row seperator
             arrRows.unshift((<View key={keyIndex++} style={{ height: rowSeperatorWidth, backgroundColor: seperatorColor}}/>))

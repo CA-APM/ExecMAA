@@ -5,25 +5,15 @@ import {DataStatus} from "../../redux/ReduxUtil";
 import {Button} from "react-native-elements";
 import Spinner from "react-native-loading-spinner-overlay";
 
-export const LoadView = (props) => {
-    return (
-        <View style={{width: props.width, height: props.height, alignItems: "center", alignContent: "center"}}>
-            <View style={{flex: 1}}/>
-            <ActivityIndicator isLoading={true}/>
-            <View style={{flex: 1}}/>
-        </View>
-    )
-};
 
-// For some reason I am not getting the children, could this be bcause it is technically not a component?
-// and thus wont have children passed?!?!!??!?!
+
+/**
+ * This view displays an activity indicator while we are fetching
+ * it will reveal the contents of its children upon the meta data being successfully
+ * fetched
+ */
 export class LoadRestView extends Component {
 
-
-    /*
-
-    {metadata, callback,width,height ,props}
-     */
     render() {
         let {metadata,height,width,children,callback} = this.props;
         let err = metadata.err ? metadata.err : metadata.error;

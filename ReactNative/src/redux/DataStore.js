@@ -11,6 +11,10 @@ import {getLogLevel, LOG_VERBOSE} from "../../projectTest/isTesting";
 import {composeWithDevTools} from "redux-devtools-extension";
 
 // Middleware
+/**
+ * @description This will log all actions when in verrbose mode
+ * @param store - the datastore
+ */
 const logger = store => next => action => {
     if(action.type){
         console.log('dispatching', action.type);
@@ -28,6 +32,10 @@ const logger = store => next => action => {
 
     return result;
 };
+/**
+ * @description This associates a crash with an action!
+ * @param store
+ */
 const crashReporter = store => next => action => {
     try {
         return next(action)

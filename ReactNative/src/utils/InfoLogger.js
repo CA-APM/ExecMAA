@@ -15,23 +15,22 @@ const errMessage = (errMessage) => {
 }
 
 const setCredentials = function (username, password, tenant) {
-
-
     return new Promise((success, failure) => {
-        AsyncStorage.setItem(USER_KEY, username).then(() => {
-            return AsyncStorage.setItem(PASSWORD_KEY, password);
-        }).then(() => {
-            return AsyncStorage.setItem(TENANT_KEY, tenant);
-        }).then(() => {
+
+        Promise.all([
+            AsyncStorage.setItem(USER_KEY, username),
+            AsyncStorage.setItem(PASSWORD_KEY, password),
+            AsyncStorage.setItem(TENANT_KEY, tenant)
+        ]).then(()=>{
             success(errMessage());
-        }).catch(() => {
+
+        }).catch(()=>{
             AsyncStorage.setItem(USER_KEY, "");
             AsyncStorage.setItem(PASSWORD_KEY, "");
             AsyncStorage.setItem(TENANT_KEY, "");
             failure(errMessage("failed to set username and password"));
-        });
+        })
     });
-
 };
 
 const getLoginCredentials = function () {

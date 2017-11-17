@@ -207,7 +207,7 @@ Axis.defaultProps = {
     reverseLabels: false,
     labelOffset: {x: 0, y: 0},
     offset : 0,
-    extraLineWidth : 20,
+    extraLineWidth : 0,
     paddingBetweenBars : 0.2,
     labelFormatter: (d) => (typeof d === 'number' ? Math.round(d) : d)
 };

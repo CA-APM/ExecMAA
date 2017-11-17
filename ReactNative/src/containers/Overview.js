@@ -13,7 +13,6 @@ import NavigatorBar from "./NavigationBar";
 import {ComponentStyle} from "../styles/componentStyle";
 import {HEIGHT, PRIMARY_COLOR_800, WIDTH} from "../constants";
 import {FlatLayout, GridLayout} from "../presentationViews/Layouts/FlatLayout";
-import Fade from "../presentationViews/Layouts/Fade";
 import UserBarChart from "../presentationViews/CustomDataviews/UserBarChart";
 import PieChart from "../presentationViews/Dataviews/PieChart";
 import {Blink} from "../presentationViews/Layouts/BasicAnimations";
@@ -150,7 +149,6 @@ class Overview extends Component {
                 <NavigatorBar {...this.props}/>
 
                 <View style={{flex: 1}}>
-                    <Fade opacity={0} finalOpacity={1} duration={300}>
                         {/*<View style={{width:WIDTH,height:10}}/>*/}
 
                         <ScrollView bounces={false}>
@@ -207,7 +205,6 @@ class Overview extends Component {
                         </ScrollView>
 
 
-                    </Fade>
                 </View>
             </View>
         );

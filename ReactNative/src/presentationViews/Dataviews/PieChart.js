@@ -6,7 +6,7 @@ import {Text, View, ART} from "react-native";
 import * as Morph from "art/morph/path";
 import {Button} from "react-native-elements";
 import LoadingScreen from "../../../LoadingScreen";
-import {LoadRestView, LoadView} from "../Other/PresentationUtil";
+import {LoadRestView} from "../Other/PresentationUtil";
 import {DataStatus} from "../../redux/ReduxUtil";
 import {WIDTH} from "../../constants";
 import {ComponentStyle} from "../../styles/componentStyle";

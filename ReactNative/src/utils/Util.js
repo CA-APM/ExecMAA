@@ -1,7 +1,12 @@
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+
+//TODO : I think it should be possible to rewrite these time filter functions so they are more usable
+//TODO : however I do remember a lot of problems occuring that came from using react-native-calendar
+//TODO : which initially led me to writing all the various time filter functions
+
 /**
- ** @note this is different than getCalendarTimeFilter because this puts the data in a form the server will understand
+ *@note this is different than getCalendarTimeFilter because this puts the data in a form the server will understand
  *
  * @param endDate The last date of the viewing period
  * @param aggregation The type of data aggregation, viewing by day,week,month,year
@@ -161,7 +166,11 @@ export const getTimeFilter = (endDate, aggregation) => {
 };
 
 
-// returns dd/mm/yyyy
+/**
+ *
+ * @param {Date} d
+ * @returns {string} dd/mm/yyyyy
+ */
 export const formatDate = (d) => {
     let day, month;
     day = d.getDate();
@@ -172,7 +181,18 @@ export const formatDate = (d) => {
 
     return `${months[month]} ${day}`;
 
-}
+};
+/**
+ *
+ * @param {Object} tf
+ * @param {String} tf.startDate - string start date
+ * @param {String} tf.endDate - string end date
+ * @param {Date} tf.jsStartDate - js start date
+ * @param {Date} tf.jsEndDate - js end date
+ * @param {Number} addMonth - whether or not to add a number to the months
+ * in react-native-calendar 0-1-2017 does not equal jan 1st 2017
+ * @returns {string}
+ */
 export const dateToReactCalendar = (tf, addMonth) => {
     // expects '2012-03-92'
     let year = tf.getFullYear();
@@ -224,7 +244,7 @@ export const formatNumber = (num, decimalPlaces = 1000) => {
     return num.toString().substring(0, 3) + size;
 
 };
-export const dateStringToLabel = (label, aggregation) => {
+export const dateStringToAmPm = (label, aggregation) => {
 
     let toReturn = label;
     if (aggregation === "month") {

@@ -9,10 +9,9 @@ import * as shape from "d3-shape";
 import * as scale from "d3-scale";
 import * as axis from 'd3-axis'
 import {PRIMARY_COLOR_800, WIDTH} from "../../constants";
-import {LoadView} from "../Other/PresentationUtil";
 import * as Util from "../../utils/Util";
 import {DataStatus} from "../../redux/ReduxUtil";
-import {dateStringToLabel} from "../../utils/Util";
+import {dateStringToAmPm} from "../../utils/Util";
 
 const d3 = {
     shape,
@@ -80,7 +79,7 @@ export default class BarChart extends Component {
                         data[index].value += data[index-1].value + data[index-2].value;
                     }
                 }
-                labels.push(dateStringToLabel(data[index].label, this.props.aggregation));
+                labels.push(dateStringToAmPm(data[index].label, this.props.aggregation));
             } else {
                 labels.push(data[index].label);
             }
